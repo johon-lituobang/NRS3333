@@ -35,7 +35,7 @@ x<-rexp(4307)
 
 SWA(x)
 
-#compared to robust mean and quantile mean
+#compared to recombined mean and quantile mean
 rqm(x)
 
 #the principle can be extended to central moments
