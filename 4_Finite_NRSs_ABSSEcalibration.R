@@ -91,7 +91,7 @@ simulatedbatch_bias_Monte<-foreach(batchnumber =c((1:length(allkurtWeibull))), .
 
   SEbataches<-c()
   for (batch1 in c(1:batchsize)){
-    batch1=1
+    
     x<-c(dsWeibull(uni=unibatch[,batch1], shape=a/1, scale = 1))
     sortedx<-Sort(x,descending=FALSE,partial=NULL,stable=FALSE,na.last=NULL)
     targetall<-c(targetm=targetm,targetvar=targetvar,targettm=targettm,targetfm=targetfm)
