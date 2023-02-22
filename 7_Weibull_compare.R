@@ -268,7 +268,9 @@ write.csv(simulatedbatch_asymptoticbias,paste("asymptotic_compare_lognorm_raw_Pr
 kurtgnorm<- read.csv(("kurtgnorm_31150.csv"))
 allkurtgnorm<-unlist(kurtgnorm)
 
+#no resullt for the generalized Gaussian distribution
 
+#since the log function cannot handle negative inputs.
 simulatedbatch_asymptoticbias<-foreach(batchnumber = (1:length(allkurtgnorm)), .combine = 'rbind') %dopar% {
   library(Rfast)
   library(matrixStats)
