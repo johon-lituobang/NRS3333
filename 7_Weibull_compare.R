@@ -271,47 +271,35 @@ allkurtgnorm<-unlist(kurtgnorm)
 #no resullt for the generalized Gaussian distribution
 
 #since the log function cannot handle negative inputs.
-simulatedbatch_asymptoticbias<-foreach(batchnumber = (1:length(allkurtgnorm)), .combine = 'rbind') %dopar% {
-  library(Rfast)
-  library(matrixStats)
-  library(NRSReview)
-  a=allkurtgnorm[batchnumber]
-  x<-c(dsgnorm(uni=quasiuni_asymptotic, shape=a/1, scale = 1))
+batchnumber=10
+a=allkurtgnorm[batchnumber]
+x<-c(dsgnorm(uni=quasiuni_asymptotic, shape=a/1, scale = 1))
 
-  targetm<-0
-  targetvar<-gamma(3/a)/((gamma(1/a)))
-  targettm<-0
-  targetfm<-((gamma(3/a)/((gamma(1/a))))^2)*gamma(5/a)*gamma(1/a)/((gamma(3/a))^2)
-  kurtx<-targetfm/(targetvar^(4/2))
-  skewx<-targettm/(targetvar^(3/2))
-  sortedx<-Sort(x,descending=FALSE,partial=NULL,stable=FALSE,na.last=NULL)
+targetm<-0
+targetvar<-gamma(3/a)/((gamma(1/a)))
+targettm<-0
+targetfm<-((gamma(3/a)/((gamma(1/a))))^2)*gamma(5/a)*gamma(1/a)/((gamma(3/a))^2)
+kurtx<-targetfm/(targetvar^(4/2))
+skewx<-targettm/(targetvar^(3/2))
+sortedx<-Sort(x,descending=FALSE,partial=NULL,stable=FALSE,na.last=NULL)
 
-  targetall<-c(targetm=targetm,targetvar=targetvar,targettm=targettm,targetfm=targetfm)
-  
-  x<-c()
-  
-  Huberx<-Huber_estimator(x=sortedx)
-  
-  medianMAD1<-Weibull_median_MAD_estimator(sortedx)
-  
-  QE1<-Weibull_quantile_estimator(x=sortedx,sorted=TRUE)
-  
-  alpha1<-QE1[1]-0.3
-  alpha2<-QE1[1]+0.3
-  
-  RMLE1<-Weibull_RMLE(sortedx,alpha1=alpha1,alpha2=alpha2)
-  
-  moments_medianMAD1<-Weibull_moments(alpha=medianMAD1[1],lambda=medianMAD1[2])
-  
-  moments_QE1<-Weibull_moments(alpha=QE1[1],lambda=QE1[2])
-  
-  moments_RMLE1<-Weibull_moments(alpha=RMLE1[1],lambda=RMLE1[2])
-  
-  momentsx<-unbiasedmoments(x=sortedx)
-  
-  sortedx<-c()
-  all1<-t(c(kurtx,skewx,Huberx,targetall,momentsx,moments_medianMAD1=moments_medianMAD1,moments_QE1=moments_QE1,moments_RMLE1=moments_RMLE1))
-}
+targetall<-c(targetm=targetm,targetvar=targetvar,targettm=targettm,targetfm=targetfm)
 
-write.csv(simulatedbatch_asymptoticbias,paste("asymptotic_compare_gnorm_raw_Process",largesize,".csv", sep = ","), row.names = FALSE)
+x<-c()
 
+Huberx<-Huber_estimator(x=sortedx)
+
+medianMAD1<-Weibull_median_MAD_estimator(sortedx)
+
+QE1<-Weibull_quantile_estimator(x=sortedx,sorted=TRUE)
+
+alpha1<-QE1[1]-0.3
+alpha2<-QE1[1]+0.3
+
+RMLE1<-Weibull_RMLE(sortedx,alpha1=alpha1,alpha2=alpha2)
+
+moments_medianMAD1<-Weibull_moments(alpha=medianMAD1[1],lambda=medianMAD1[2])
+
+moments_QE1<-Weibull_moments(alpha=QE1[1],lambda=QE1[2])
+
+moments_RMLE1<-Weibull_moments(alpha=RMLE1[1],lambda=RMLE1[2])
