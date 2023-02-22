@@ -104,13 +104,16 @@ simulatedbatch_asymptoticbias<-foreach(batchnumber = (1:length(allkurtWeibull)),
   x<-c()
   Huberx<-Huber_estimator(x=sortedx)
   
+  #D Olive, Robust estimators for transformed location scale families. Unpubl. manuscript 1025 available from (www. math. siu. edu/olive/preprints. htm) (2006).
   medianMAD1<-Weibull_median_MAD_estimator(sortedx)
   
+  #NB Marks, Estimation of weibull parameters from common percentiles. J. applied Stat. 32, 17–24 (2005). 
   QE1<-Weibull_quantile_estimator(x=sortedx,sorted=TRUE)
   
   alpha1<-QE1[1]-0.3
   alpha2<-QE1[1]+0.3
   
+  #X He, WK Fung, Method of medians for lifetime data with weibull models. Stat. medicine 18, 1993–2009 (1999)
   RMLE1<-Weibull_RMLE(sortedx,alpha1=alpha1,alpha2=alpha2)
   
   moments_medianMAD1<-Weibull_moments(alpha=medianMAD1[1],lambda=medianMAD1[2])
