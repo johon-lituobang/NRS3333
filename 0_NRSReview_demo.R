@@ -84,3 +84,5 @@ istandardizedmoments(x)
 standardizedmoments(x)
 
 #even for the kurtosis, the bias is relatively small, in fact, this can be further improved, but due to length limit, this is all at this stage.
+
+#related statistical tests will updated after this manuscript published.
