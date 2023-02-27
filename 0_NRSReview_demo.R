@@ -59,7 +59,8 @@ medianstandardizedmoments(x)
 #for example
 x<-rPareto(21307,shape=1, scale=1)
 
-medianstandardizedmoments(x)
+#for infinite mean, the checking is not valid.
+medianstandardizedmoments(x,check=FALSE)
 #sample moments are invalid.
 standardizedmoments(x)
 
