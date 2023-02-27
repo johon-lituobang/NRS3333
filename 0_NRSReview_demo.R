@@ -24,9 +24,9 @@ library(matrixStats)
 
 #this is a demo file explaining this package, NRS.
 
-#This file is totally not relevant to the reviewing of NRS. I will gradually update one I have time..
+#This file is totally not relevant to the reviewing of NRS. I will gradually update once I have time..
 
-#you can simulate a distribution with any sample size (better larger than 1000, since the finite sample bias hasn't not been integrated into this package yet.
+#you can simulate a distribution with any sample size (better larger than 1000, since the finite sample bias hasn't not been integrated into this package yet. Will update after publication of this manuscript.)
 x<-rexp(4307)
 
 #all robust location estimators are highly bias, e.g.
