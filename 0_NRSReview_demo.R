@@ -26,7 +26,7 @@ library(matrixStats)
 
 #This file is totally not relevant to the reviewing of NRS. I will gradually update once I have time..
 
-#you can simulate a distribution with any sample size (better larger than 1000, since the finite sample bias hasn't not been integrated into this package yet. Will update after publication of this manuscript.)
+#you can simulate a distribution with any sample size (better larger than 1000, since the finite sample bias hasn't not been integrated into this package yet.)
 x<-rexp(4307)
 
 #all robust location estimators are highly bias, e.g.
@@ -85,4 +85,3 @@ standardizedmoments(x)
 
 #even for the kurtosis, the bias is relatively small, in fact, this can be further improved, but due to length limit, this is all at this stage.
 
-#related statistical tests will updated after this manuscript published.
