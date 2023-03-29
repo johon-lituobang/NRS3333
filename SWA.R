@@ -235,10 +235,10 @@ SWAall<-function(x,IntKsamples,target1,blocknumber,sorted=FALSE){
   BM3result<-0
   
   for (i in 1:floor(blocknumber / 8)) {
-    BM3term1 <- intervalsum1[i]+intervalsum1[length(intervalsum1)-(i-1)]
-    BM3term2 <- intervalsum1[i+1]+intervalsum1[length(intervalsum1)-(i)]
-    BM3term3 <- intervalsum1[i+2]+intervalsum1[length(intervalsum1)-(i+1)]
-    BM3term4 <- intervalsum1[i+3]+intervalsum1[length(intervalsum1)-(i+2)]
+    BM3term1 <- intervalsum1[1+(i-1)*4]+intervalsum1[length(intervalsum1)-(1-1+(i-1)*4)]
+    BM3term2 <- intervalsum1[1+1+(i-1)*4]+intervalsum1[length(intervalsum1)-(1+(i-1)*4)]
+    BM3term3 <- intervalsum1[1+2+(i-1)*4]+intervalsum1[length(intervalsum1)-(1+1+(i-1)*4)]
+    BM3term4 <- intervalsum1[1+3+(i-1)*4]+intervalsum1[length(intervalsum1)-(1+2+(i-1)*4)]
     BM3result <- BM3result + (BM3term1*0 + BM3term2*4-BM3term3*2+BM3term4*2)
   }
   if(((target1/IntKsamples)/8)%%1==0){
@@ -379,9 +379,9 @@ SWA9<-function (x,interval=9,batch="auto",sorted=FALSE){
 
 
 
-x <- c(1, 2, 3, 4, 5, 6, 7, 8,9,10,11,12,13,14,15,16)
+x<-rexp(20480)
 SWA (x,percentage=1/16,blocknumber=16,batch="auto",sorted=FALSE)
-x <- c(1, 2, 3, 4, 5, 6, 7, 8)
+x<-rexp(20480)
 SWA (x,percentage=1/8,blocknumber=8,batch="auto",sorted=FALSE)
 31/256
 
