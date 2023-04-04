@@ -85,6 +85,8 @@ quasiuni_sorted4_asymptotic<-c()
 d_values<- read.csv(("d_SWA.csv"))
 I_values<- read.csv(("I_SWA.csv"))
 Imoments_values<- read.csv(("Imoments_SWA.csv"))
+
+
 #set the stop criterion
 criterionset=1e-10
 
@@ -114,29 +116,31 @@ simulatedbatch_asymptoticbias<-foreach(batchnumber = (1:length(allkurtWeibull)),
   imoments1<-imoments(x=sortedx,dtype1=1,releaseall=TRUE,standist_d=d_values,standist_I=I_values,standist_Imoments=Imoments_values,orderlist1_sorted20=orderlist1_AB2_asymptotic,orderlist1_sorted30=orderlist1_AB3_asymptotic,orderlist1_sorted40=orderlist1_AB4_asymptotic,orderlist1_sorted2=orderlist1_AB2_asymptotic,orderlist1_sorted3=orderlist1_AB3_asymptotic,orderlist1_sorted4=orderlist1_AB4_asymptotic,percentage=1/16,batch="auto",stepsize=1000,criterion=criterionset,boot=TRUE)
   imoments1<-unlist(imoments1)
   momentsx<-unbiasedmoments(x=sortedx)
-
+  
   sortedx<-c()
-  momentssd<-c(sd=sqrt(momentsx[2]),imoments1[1476],imoments1[1477],imoments1[1478])
+  momentssd<-c(sd=sqrt(momentsx[2]),imoments1[1522],imoments1[1523],imoments1[1524])
   
   allrawmoBias<-c(
-    firstbias=abs(c(Huberx,SMWM9,imoments1[1],momentsx[1],imoments1[1345:1372])-targetm)/momentssd[1],
-    secondbias=abs(c(imoments1[2],momentsx[2],imoments1[1396:1417])-targetvar)/momentssd[2],
-    thirdbias=abs(c(imoments1[3],momentsx[3],imoments1[1435:1448])-targettm)/momentssd[3],
-    fourbias=abs(c(imoments1[4],momentsx[4],imoments1[1459:1468])-targetfm)/momentssd[4])
-  allrawmo1<-c(first=c(Huberx,SMWM9,imoments1[1],momentsx[1],imoments1[1345:1372]),
-               second=c(imoments1[2],momentsx[2],imoments1[1396:1417]),
-               third=c(imoments1[3],momentsx[3],imoments1[1435:1448]),
-               fourth=c(imoments1[4],momentsx[4],imoments1[1459:1468])
+    firstbias=abs(c(Huberx,SMWM9,imoments1[1],momentsx[1],imoments1[1391:1418])-targetm)/momentssd[1],
+    secondbias=abs(c(imoments1[2],momentsx[2],imoments1[1442:1463])-targetvar)/momentssd[2],
+    thirdbias=abs(c(imoments1[3],momentsx[3],imoments1[1481:1494])-targettm)/momentssd[3],
+    fourbias=abs(c(imoments1[4],momentsx[4],imoments1[1505:1514])-targetfm)/momentssd[4])
+  allrawmo1<-c(first=c(Huberx,SMWM9,imoments1[1],momentsx[1],imoments1[1391:1418]),
+               second=c(imoments1[2],momentsx[2],imoments1[1442:1463]),
+               third=c(imoments1[3],momentsx[3],imoments1[1481:1494]),
+               fourth=c(imoments1[4],momentsx[4],imoments1[1505:1514])
   )
-  medianmoments<-c(imoments1[1352],imoments1[1403],imoments1[1440],imoments1[1464])
-  standardizedm<-c(imoments1[1352]/momentssd[1],imoments1[1403]/momentssd[2],imoments1[1440]/momentssd[3],imoments1[1464]/momentssd[4])
+  
+
+  medianmoments<-c(imoments1[1398],imoments1[1449],imoments1[1486],imoments1[1510])
+  standardizedm<-c(imoments1[1398]/momentssd[1],imoments1[1449]/momentssd[2],imoments1[1486]/momentssd[3],imoments1[1510]/momentssd[4])
   all1<-(c(kurtx,skewx,momentsx,allrawmoBias,momentssd,medianmoments,standardizedm=standardizedm,allrawmo1,Huberx,SMWM9,imoments1,targetall))
 }
 
 write.csv(simulatedbatch_asymptoticbias,paste("asymptotic_Weibull_raw_Process",largesize,".csv", sep = ","), row.names = FALSE)
 
-write.csv(cbind(simulatedbatch_asymptoticbias[1:length(allkurtWeibull),1],simulatedbatch_asymptoticbias[1:length(allkurtWeibull),c(1:103)]),paste("asymptotic_Weibull",largesize,".csv", sep = ","), row.names = FALSE)
-
+write.csv(cbind(simulatedbatch_asymptoticbias[1:length(allkurtWeibull),1],simulatedbatch_asymptoticbias[1:length(allkurtWeibull),c(1:425)]),paste("asymptotic_Weibull",largesize,".csv", sep = ","), row.names = FALSE)
+largesize1<-2048*9
 samplesize=2048*2
 batchsizebase=100
 orderlist1_AB20<-createorderlist(quni1=quasiuni_sorted2,size=samplesize,interval=16,dimension=2)
@@ -160,7 +164,6 @@ setSeed(1)
 unibatchran<-matrix(SFMT(samplesize*batchsize),ncol=batchsize)
 
 unibatch<-colSort(unibatchran, descend = FALSE, stable = FALSE, parallel = TRUE)
-
 
 simulatedbatch_ABSE<-foreach(batchnumber =c((1:length(allkurtWeibull))), .combine = 'rbind') %dopar% {
   library(Rfast)
@@ -192,20 +195,22 @@ simulatedbatch_ABSE<-foreach(batchnumber =c((1:length(allkurtWeibull))), .combin
     
     sortedx<-c()
     
-    momentssd<-c(sd=sqrt(momentsx[2]),imoments1[1476],imoments1[1477],imoments1[1478])
+    momentssd<-c(sd=sqrt(momentsx[2]),imoments1[1522],imoments1[1523],imoments1[1524])
     
     allrawmoBias<-c(
-      firstbias=abs(c(Huberx,SMWM9,imoments1[1],momentsx[1],imoments1[1345:1372])-targetm)/momentssd[1],
-      secondbias=abs(c(imoments1[2],momentsx[2],imoments1[1396:1417])-targetvar)/momentssd[2],
-      thirdbias=abs(c(imoments1[3],momentsx[3],imoments1[1435:1448])-targettm)/momentssd[3],
-      fourbias=abs(c(imoments1[4],momentsx[4],imoments1[1459:1468])-targetfm)/momentssd[4])
-    allrawmo1<-c(first=c(Huberx,SMWM9,imoments1[1],momentsx[1],imoments1[1345:1372]),
-                 second=c(imoments1[2],momentsx[2],imoments1[1396:1417]),
-                 third=c(imoments1[3],momentsx[3],imoments1[1435:1448]),
-                   fourth=c(imoments1[4],momentsx[4],imoments1[1459:1468])
-                 )
-    medianmoments<-c(imoments1[1352],imoments1[1403],imoments1[1440],imoments1[1464])
-    standardizedm<-c(imoments1[1352]/momentssd[1],imoments1[1403]/momentssd[2],imoments1[1440]/momentssd[3],imoments1[1464]/momentssd[4])
+      firstbias=abs(c(Huberx,SMWM9,imoments1[1],momentsx[1],imoments1[1391:1418])-targetm)/momentssd[1],
+      secondbias=abs(c(imoments1[2],momentsx[2],imoments1[1442:1463])-targetvar)/momentssd[2],
+      thirdbias=abs(c(imoments1[3],momentsx[3],imoments1[1481:1494])-targettm)/momentssd[3],
+      fourbias=abs(c(imoments1[4],momentsx[4],imoments1[1505:1514])-targetfm)/momentssd[4])
+    allrawmo1<-c(first=c(Huberx,SMWM9,imoments1[1],momentsx[1],imoments1[1391:1418]),
+                 second=c(imoments1[2],momentsx[2],imoments1[1442:1463]),
+                 third=c(imoments1[3],momentsx[3],imoments1[1481:1494]),
+                 fourth=c(imoments1[4],momentsx[4],imoments1[1505:1514])
+    )
+    
+    
+    medianmoments<-c(imoments1[1398],imoments1[1449],imoments1[1486],imoments1[1510])
+    standardizedm<-c(imoments1[1398]/momentssd[1],imoments1[1449]/momentssd[2],imoments1[1486]/momentssd[3],imoments1[1510]/momentssd[4])
     all1<-(c(kurtx,skewx,momentsx,allrawmoBias,momentssd,medianmoments,standardizedm=standardizedm,allrawmo1,Huberx,SMWM9,imoments1,targetall))
     
     SEbataches<-rbind(SEbataches,all1)
@@ -496,26 +501,28 @@ simulatedbatch_asymptoticbias<-foreach(batchnumber = (1:length(allkurtgamma)), .
   momentsx<-unbiasedmoments(x=sortedx)
   
   sortedx<-c()
-  momentssd<-c(sd=sqrt(momentsx[2]),imoments1[1476],imoments1[1477],imoments1[1478])
+  momentssd<-c(sd=sqrt(momentsx[2]),imoments1[1522],imoments1[1523],imoments1[1524])
   
   allrawmoBias<-c(
-    firstbias=abs(c(Huberx,SMWM9,imoments1[1],momentsx[1],imoments1[1345:1372])-targetm)/momentssd[1],
-    secondbias=abs(c(imoments1[2],momentsx[2],imoments1[1396:1417])-targetvar)/momentssd[2],
-    thirdbias=abs(c(imoments1[3],momentsx[3],imoments1[1435:1448])-targettm)/momentssd[3],
-    fourbias=abs(c(imoments1[4],momentsx[4],imoments1[1459:1468])-targetfm)/momentssd[4])
-  allrawmo1<-c(first=c(Huberx,SMWM9,imoments1[1],momentsx[1],imoments1[1345:1372]),
-               second=c(imoments1[2],momentsx[2],imoments1[1396:1417]),
-               third=c(imoments1[3],momentsx[3],imoments1[1435:1448]),
-               fourth=c(imoments1[4],momentsx[4],imoments1[1459:1468])
+    firstbias=abs(c(Huberx,SMWM9,imoments1[1],momentsx[1],imoments1[1391:1418])-targetm)/momentssd[1],
+    secondbias=abs(c(imoments1[2],momentsx[2],imoments1[1442:1463])-targetvar)/momentssd[2],
+    thirdbias=abs(c(imoments1[3],momentsx[3],imoments1[1481:1494])-targettm)/momentssd[3],
+    fourbias=abs(c(imoments1[4],momentsx[4],imoments1[1505:1514])-targetfm)/momentssd[4])
+  allrawmo1<-c(first=c(Huberx,SMWM9,imoments1[1],momentsx[1],imoments1[1391:1418]),
+               second=c(imoments1[2],momentsx[2],imoments1[1442:1463]),
+               third=c(imoments1[3],momentsx[3],imoments1[1481:1494]),
+               fourth=c(imoments1[4],momentsx[4],imoments1[1505:1514])
   )
-  medianmoments<-c(imoments1[1352],imoments1[1403],imoments1[1440],imoments1[1464])
-  standardizedm<-c(imoments1[1352]/momentssd[1],imoments1[1403]/momentssd[2],imoments1[1440]/momentssd[3],imoments1[1464]/momentssd[4])
+  
+  
+  medianmoments<-c(imoments1[1398],imoments1[1449],imoments1[1486],imoments1[1510])
+  standardizedm<-c(imoments1[1398]/momentssd[1],imoments1[1449]/momentssd[2],imoments1[1486]/momentssd[3],imoments1[1510]/momentssd[4])
   all1<-(c(kurtx,skewx,momentsx,allrawmoBias,momentssd,medianmoments,standardizedm=standardizedm,allrawmo1,Huberx,SMWM9,imoments1,targetall))
 }
 
 write.csv(simulatedbatch_asymptoticbias,paste("asymptotic_gamma_raw_Process",largesize,".csv", sep = ","), row.names = FALSE)
 
-write.csv(cbind(simulatedbatch_asymptoticbias[1:length(allkurtgamma),1],simulatedbatch_asymptoticbias[1:length(allkurtgamma),c(1:103)]),paste("asymptotic_gamma",largesize,".csv", sep = ","), row.names = FALSE)
+write.csv(cbind(simulatedbatch_asymptoticbias[1:length(allkurtgamma),1],simulatedbatch_asymptoticbias[1:length(allkurtgamma),c(1:425)]),paste("asymptotic_gamma",largesize,".csv", sep = ","), row.names = FALSE)
 
 simulatedbatch_ABSE<-foreach(batchnumber =c((1:length(allkurtgamma))), .combine = 'rbind') %dopar% {
   library(Rfast)
@@ -548,20 +555,22 @@ simulatedbatch_ABSE<-foreach(batchnumber =c((1:length(allkurtgamma))), .combine 
     
     sortedx<-c()
     
-    momentssd<-c(sd=sqrt(momentsx[2]),imoments1[1476],imoments1[1477],imoments1[1478])
+    momentssd<-c(sd=sqrt(momentsx[2]),imoments1[1522],imoments1[1523],imoments1[1524])
     
     allrawmoBias<-c(
-      firstbias=abs(c(Huberx,SMWM9,imoments1[1],momentsx[1],imoments1[1345:1372])-targetm)/momentssd[1],
-      secondbias=abs(c(imoments1[2],momentsx[2],imoments1[1396:1417])-targetvar)/momentssd[2],
-      thirdbias=abs(c(imoments1[3],momentsx[3],imoments1[1435:1448])-targettm)/momentssd[3],
-      fourbias=abs(c(imoments1[4],momentsx[4],imoments1[1459:1468])-targetfm)/momentssd[4])
-    allrawmo1<-c(first=c(Huberx,SMWM9,imoments1[1],momentsx[1],imoments1[1345:1372]),
-                 second=c(imoments1[2],momentsx[2],imoments1[1396:1417]),
-                 third=c(imoments1[3],momentsx[3],imoments1[1435:1448]),
-                 fourth=c(imoments1[4],momentsx[4],imoments1[1459:1468])
+      firstbias=abs(c(Huberx,SMWM9,imoments1[1],momentsx[1],imoments1[1391:1418])-targetm)/momentssd[1],
+      secondbias=abs(c(imoments1[2],momentsx[2],imoments1[1442:1463])-targetvar)/momentssd[2],
+      thirdbias=abs(c(imoments1[3],momentsx[3],imoments1[1481:1494])-targettm)/momentssd[3],
+      fourbias=abs(c(imoments1[4],momentsx[4],imoments1[1505:1514])-targetfm)/momentssd[4])
+    allrawmo1<-c(first=c(Huberx,SMWM9,imoments1[1],momentsx[1],imoments1[1391:1418]),
+                 second=c(imoments1[2],momentsx[2],imoments1[1442:1463]),
+                 third=c(imoments1[3],momentsx[3],imoments1[1481:1494]),
+                 fourth=c(imoments1[4],momentsx[4],imoments1[1505:1514])
     )
-    medianmoments<-c(imoments1[1352],imoments1[1403],imoments1[1440],imoments1[1464])
-    standardizedm<-c(imoments1[1352]/momentssd[1],imoments1[1403]/momentssd[2],imoments1[1440]/momentssd[3],imoments1[1464]/momentssd[4])
+    
+    
+    medianmoments<-c(imoments1[1398],imoments1[1449],imoments1[1486],imoments1[1510])
+    standardizedm<-c(imoments1[1398]/momentssd[1],imoments1[1449]/momentssd[2],imoments1[1486]/momentssd[3],imoments1[1510]/momentssd[4])
     all1<-(c(kurtx,skewx,momentsx,allrawmoBias,momentssd,medianmoments,standardizedm=standardizedm,allrawmo1,Huberx,SMWM9,imoments1,targetall))
     
     SEbataches<-rbind(SEbataches,all1)
@@ -854,26 +863,28 @@ simulatedbatch_asymptoticbias<-foreach(batchnumber = (1:length(allkurtPareto)), 
   momentsx<-unbiasedmoments(x=sortedx)
   
   sortedx<-c()
-  momentssd<-c(sd=sqrt(momentsx[2]),imoments1[1476],imoments1[1477],imoments1[1478])
+  momentssd<-c(sd=sqrt(momentsx[2]),imoments1[1522],imoments1[1523],imoments1[1524])
   
   allrawmoBias<-c(
-    firstbias=abs(c(Huberx,SMWM9,imoments1[1],momentsx[1],imoments1[1345:1372])-targetm)/momentssd[1],
-    secondbias=abs(c(imoments1[2],momentsx[2],imoments1[1396:1417])-targetvar)/momentssd[2],
-    thirdbias=abs(c(imoments1[3],momentsx[3],imoments1[1435:1448])-targettm)/momentssd[3],
-    fourbias=abs(c(imoments1[4],momentsx[4],imoments1[1459:1468])-targetfm)/momentssd[4])
-  allrawmo1<-c(first=c(Huberx,SMWM9,imoments1[1],momentsx[1],imoments1[1345:1372]),
-               second=c(imoments1[2],momentsx[2],imoments1[1396:1417]),
-               third=c(imoments1[3],momentsx[3],imoments1[1435:1448]),
-               fourth=c(imoments1[4],momentsx[4],imoments1[1459:1468])
+    firstbias=abs(c(Huberx,SMWM9,imoments1[1],momentsx[1],imoments1[1391:1418])-targetm)/momentssd[1],
+    secondbias=abs(c(imoments1[2],momentsx[2],imoments1[1442:1463])-targetvar)/momentssd[2],
+    thirdbias=abs(c(imoments1[3],momentsx[3],imoments1[1481:1494])-targettm)/momentssd[3],
+    fourbias=abs(c(imoments1[4],momentsx[4],imoments1[1505:1514])-targetfm)/momentssd[4])
+  allrawmo1<-c(first=c(Huberx,SMWM9,imoments1[1],momentsx[1],imoments1[1391:1418]),
+               second=c(imoments1[2],momentsx[2],imoments1[1442:1463]),
+               third=c(imoments1[3],momentsx[3],imoments1[1481:1494]),
+               fourth=c(imoments1[4],momentsx[4],imoments1[1505:1514])
   )
-  medianmoments<-c(imoments1[1352],imoments1[1403],imoments1[1440],imoments1[1464])
-  standardizedm<-c(imoments1[1352]/momentssd[1],imoments1[1403]/momentssd[2],imoments1[1440]/momentssd[3],imoments1[1464]/momentssd[4])
+  
+  
+  medianmoments<-c(imoments1[1398],imoments1[1449],imoments1[1486],imoments1[1510])
+  standardizedm<-c(imoments1[1398]/momentssd[1],imoments1[1449]/momentssd[2],imoments1[1486]/momentssd[3],imoments1[1510]/momentssd[4])
   all1<-(c(kurtx,skewx,momentsx,allrawmoBias,momentssd,medianmoments,standardizedm=standardizedm,allrawmo1,Huberx,SMWM9,imoments1,targetall))
 }
 
 write.csv(simulatedbatch_asymptoticbias,paste("asymptotic_Pareto_raw_Process",largesize,".csv", sep = ","), row.names = FALSE)
 
-write.csv(cbind(simulatedbatch_asymptoticbias[1:length(allkurtPareto),1],simulatedbatch_asymptoticbias[1:length(allkurtPareto),1:103]),paste("asymptotic_Pareto",largesize,".csv", sep = ","), row.names = FALSE)
+write.csv(cbind(simulatedbatch_asymptoticbias[1:length(allkurtPareto),1],simulatedbatch_asymptoticbias[1:length(allkurtPareto),1:425]),paste("asymptotic_Pareto",largesize,".csv", sep = ","), row.names = FALSE)
 
 simulatedbatch_ABSE<-foreach(batchnumber =c((1:length(allkurtPareto))), .combine = 'rbind') %dopar% {
   library(Rfast)
@@ -906,20 +917,22 @@ simulatedbatch_ABSE<-foreach(batchnumber =c((1:length(allkurtPareto))), .combine
     
     sortedx<-c()
     
-    momentssd<-c(sd=sqrt(momentsx[2]),imoments1[1476],imoments1[1477],imoments1[1478])
+    momentssd<-c(sd=sqrt(momentsx[2]),imoments1[1522],imoments1[1523],imoments1[1524])
     
     allrawmoBias<-c(
-      firstbias=abs(c(Huberx,SMWM9,imoments1[1],momentsx[1],imoments1[1345:1372])-targetm)/momentssd[1],
-      secondbias=abs(c(imoments1[2],momentsx[2],imoments1[1396:1417])-targetvar)/momentssd[2],
-      thirdbias=abs(c(imoments1[3],momentsx[3],imoments1[1435:1448])-targettm)/momentssd[3],
-      fourbias=abs(c(imoments1[4],momentsx[4],imoments1[1459:1468])-targetfm)/momentssd[4])
-    allrawmo1<-c(first=c(Huberx,SMWM9,imoments1[1],momentsx[1],imoments1[1345:1372]),
-                 second=c(imoments1[2],momentsx[2],imoments1[1396:1417]),
-                 third=c(imoments1[3],momentsx[3],imoments1[1435:1448]),
-                 fourth=c(imoments1[4],momentsx[4],imoments1[1459:1468])
+      firstbias=abs(c(Huberx,SMWM9,imoments1[1],momentsx[1],imoments1[1391:1418])-targetm)/momentssd[1],
+      secondbias=abs(c(imoments1[2],momentsx[2],imoments1[1442:1463])-targetvar)/momentssd[2],
+      thirdbias=abs(c(imoments1[3],momentsx[3],imoments1[1481:1494])-targettm)/momentssd[3],
+      fourbias=abs(c(imoments1[4],momentsx[4],imoments1[1505:1514])-targetfm)/momentssd[4])
+    allrawmo1<-c(first=c(Huberx,SMWM9,imoments1[1],momentsx[1],imoments1[1391:1418]),
+                 second=c(imoments1[2],momentsx[2],imoments1[1442:1463]),
+                 third=c(imoments1[3],momentsx[3],imoments1[1481:1494]),
+                 fourth=c(imoments1[4],momentsx[4],imoments1[1505:1514])
     )
-    medianmoments<-c(imoments1[1352],imoments1[1403],imoments1[1440],imoments1[1464])
-    standardizedm<-c(imoments1[1352]/momentssd[1],imoments1[1403]/momentssd[2],imoments1[1440]/momentssd[3],imoments1[1464]/momentssd[4])
+    
+    
+    medianmoments<-c(imoments1[1398],imoments1[1449],imoments1[1486],imoments1[1510])
+    standardizedm<-c(imoments1[1398]/momentssd[1],imoments1[1449]/momentssd[2],imoments1[1486]/momentssd[3],imoments1[1510]/momentssd[4])
     all1<-(c(kurtx,skewx,momentsx,allrawmoBias,momentssd,medianmoments,standardizedm=standardizedm,allrawmo1,Huberx,SMWM9,imoments1,targetall))
     
     SEbataches<-rbind(SEbataches,all1)
@@ -1212,26 +1225,28 @@ simulatedbatch_asymptoticbias<-foreach(batchnumber = (1:length(allkurtlognorm)),
   momentsx<-unbiasedmoments(x=sortedx)
   
   sortedx<-c()
-  momentssd<-c(sd=sqrt(momentsx[2]),imoments1[1476],imoments1[1477],imoments1[1478])
+  momentssd<-c(sd=sqrt(momentsx[2]),imoments1[1522],imoments1[1523],imoments1[1524])
   
   allrawmoBias<-c(
-    firstbias=abs(c(Huberx,SMWM9,imoments1[1],momentsx[1],imoments1[1345:1372])-targetm)/momentssd[1],
-    secondbias=abs(c(imoments1[2],momentsx[2],imoments1[1396:1417])-targetvar)/momentssd[2],
-    thirdbias=abs(c(imoments1[3],momentsx[3],imoments1[1435:1448])-targettm)/momentssd[3],
-    fourbias=abs(c(imoments1[4],momentsx[4],imoments1[1459:1468])-targetfm)/momentssd[4])
-  allrawmo1<-c(first=c(Huberx,SMWM9,imoments1[1],momentsx[1],imoments1[1345:1372]),
-               second=c(imoments1[2],momentsx[2],imoments1[1396:1417]),
-               third=c(imoments1[3],momentsx[3],imoments1[1435:1448]),
-               fourth=c(imoments1[4],momentsx[4],imoments1[1459:1468])
+    firstbias=abs(c(Huberx,SMWM9,imoments1[1],momentsx[1],imoments1[1391:1418])-targetm)/momentssd[1],
+    secondbias=abs(c(imoments1[2],momentsx[2],imoments1[1442:1463])-targetvar)/momentssd[2],
+    thirdbias=abs(c(imoments1[3],momentsx[3],imoments1[1481:1494])-targettm)/momentssd[3],
+    fourbias=abs(c(imoments1[4],momentsx[4],imoments1[1505:1514])-targetfm)/momentssd[4])
+  allrawmo1<-c(first=c(Huberx,SMWM9,imoments1[1],momentsx[1],imoments1[1391:1418]),
+               second=c(imoments1[2],momentsx[2],imoments1[1442:1463]),
+               third=c(imoments1[3],momentsx[3],imoments1[1481:1494]),
+               fourth=c(imoments1[4],momentsx[4],imoments1[1505:1514])
   )
-  medianmoments<-c(imoments1[1352],imoments1[1403],imoments1[1440],imoments1[1464])
-  standardizedm<-c(imoments1[1352]/momentssd[1],imoments1[1403]/momentssd[2],imoments1[1440]/momentssd[3],imoments1[1464]/momentssd[4])
+  
+  
+  medianmoments<-c(imoments1[1398],imoments1[1449],imoments1[1486],imoments1[1510])
+  standardizedm<-c(imoments1[1398]/momentssd[1],imoments1[1449]/momentssd[2],imoments1[1486]/momentssd[3],imoments1[1510]/momentssd[4])
   all1<-(c(kurtx,skewx,momentsx,allrawmoBias,momentssd,medianmoments,standardizedm=standardizedm,allrawmo1,Huberx,SMWM9,imoments1,targetall))
 }
 
 write.csv(simulatedbatch_asymptoticbias,paste("asymptotic_lognorm_raw_Process",largesize,".csv", sep = ","), row.names = FALSE)
 
-write.csv(cbind(simulatedbatch_asymptoticbias[1:length(allkurtlognorm),1],simulatedbatch_asymptoticbias[1:length(allkurtlognorm),1:103]),paste("asymptotic_lognorm",largesize,".csv", sep = ","), row.names = FALSE)
+write.csv(cbind(simulatedbatch_asymptoticbias[1:length(allkurtlognorm),1],simulatedbatch_asymptoticbias[1:length(allkurtlognorm),1:425]),paste("asymptotic_lognorm",largesize,".csv", sep = ","), row.names = FALSE)
 
 simulatedbatch_ABSE<-foreach(batchnumber =c((1:length(allkurtlognorm))), .combine = 'rbind') %dopar% {
   library(Rfast)
@@ -1263,20 +1278,22 @@ simulatedbatch_ABSE<-foreach(batchnumber =c((1:length(allkurtlognorm))), .combin
     
     sortedx<-c()
     
-    momentssd<-c(sd=sqrt(momentsx[2]),imoments1[1476],imoments1[1477],imoments1[1478])
+    momentssd<-c(sd=sqrt(momentsx[2]),imoments1[1522],imoments1[1523],imoments1[1524])
     
     allrawmoBias<-c(
-      firstbias=abs(c(Huberx,SMWM9,imoments1[1],momentsx[1],imoments1[1345:1372])-targetm)/momentssd[1],
-      secondbias=abs(c(imoments1[2],momentsx[2],imoments1[1396:1417])-targetvar)/momentssd[2],
-      thirdbias=abs(c(imoments1[3],momentsx[3],imoments1[1435:1448])-targettm)/momentssd[3],
-      fourbias=abs(c(imoments1[4],momentsx[4],imoments1[1459:1468])-targetfm)/momentssd[4])
-    allrawmo1<-c(first=c(Huberx,SMWM9,imoments1[1],momentsx[1],imoments1[1345:1372]),
-                 second=c(imoments1[2],momentsx[2],imoments1[1396:1417]),
-                 third=c(imoments1[3],momentsx[3],imoments1[1435:1448]),
-                 fourth=c(imoments1[4],momentsx[4],imoments1[1459:1468])
+      firstbias=abs(c(Huberx,SMWM9,imoments1[1],momentsx[1],imoments1[1391:1418])-targetm)/momentssd[1],
+      secondbias=abs(c(imoments1[2],momentsx[2],imoments1[1442:1463])-targetvar)/momentssd[2],
+      thirdbias=abs(c(imoments1[3],momentsx[3],imoments1[1481:1494])-targettm)/momentssd[3],
+      fourbias=abs(c(imoments1[4],momentsx[4],imoments1[1505:1514])-targetfm)/momentssd[4])
+    allrawmo1<-c(first=c(Huberx,SMWM9,imoments1[1],momentsx[1],imoments1[1391:1418]),
+                 second=c(imoments1[2],momentsx[2],imoments1[1442:1463]),
+                 third=c(imoments1[3],momentsx[3],imoments1[1481:1494]),
+                 fourth=c(imoments1[4],momentsx[4],imoments1[1505:1514])
     )
-    medianmoments<-c(imoments1[1352],imoments1[1403],imoments1[1440],imoments1[1464])
-    standardizedm<-c(imoments1[1352]/momentssd[1],imoments1[1403]/momentssd[2],imoments1[1440]/momentssd[3],imoments1[1464]/momentssd[4])
+    
+    
+    medianmoments<-c(imoments1[1398],imoments1[1449],imoments1[1486],imoments1[1510])
+    standardizedm<-c(imoments1[1398]/momentssd[1],imoments1[1449]/momentssd[2],imoments1[1486]/momentssd[3],imoments1[1510]/momentssd[4])
     all1<-(c(kurtx,skewx,momentsx,allrawmoBias,momentssd,medianmoments,standardizedm=standardizedm,allrawmo1,Huberx,SMWM9,imoments1,targetall))
     
     SEbataches<-rbind(SEbataches,all1)
@@ -1572,25 +1589,27 @@ simulatedbatch_asymptoticbias<-foreach(batchnumber = (1:length(allkurtgnorm)), .
   momentsx<-unbiasedmoments(x=sortedx)
   
   sortedx<-c()
-  momentssd<-c(sd=sqrt(momentsx[2]),imoments1[1476],imoments1[1477],imoments1[1478])
+  momentssd<-c(sd=sqrt(momentsx[2]),imoments1[1522],imoments1[1523],imoments1[1524])
   
   allrawmoBias<-c(
-    firstbias=abs(c(Huberx,SMWM9,imoments1[1],momentsx[1],imoments1[1345:1372])-targetm)/momentssd[1],
-    secondbias=abs(c(imoments1[2],momentsx[2],imoments1[1396:1417])-targetvar)/momentssd[2],
-    thirdbias=abs(c(imoments1[3],momentsx[3],imoments1[1435:1448])-targettm)/momentssd[3],
-    fourbias=abs(c(imoments1[4],momentsx[4],imoments1[1459:1468])-targetfm)/momentssd[4])
-  allrawmo1<-c(first=c(Huberx,SMWM9,imoments1[1],momentsx[1],imoments1[1345:1372]),
-               second=c(imoments1[2],momentsx[2],imoments1[1396:1417]),
-               third=c(imoments1[3],momentsx[3],imoments1[1435:1448]),
-               fourth=c(imoments1[4],momentsx[4],imoments1[1459:1468])
+    firstbias=abs(c(Huberx,SMWM9,imoments1[1],momentsx[1],imoments1[1391:1418])-targetm)/momentssd[1],
+    secondbias=abs(c(imoments1[2],momentsx[2],imoments1[1442:1463])-targetvar)/momentssd[2],
+    thirdbias=abs(c(imoments1[3],momentsx[3],imoments1[1481:1494])-targettm)/momentssd[3],
+    fourbias=abs(c(imoments1[4],momentsx[4],imoments1[1505:1514])-targetfm)/momentssd[4])
+  allrawmo1<-c(first=c(Huberx,SMWM9,imoments1[1],momentsx[1],imoments1[1391:1418]),
+               second=c(imoments1[2],momentsx[2],imoments1[1442:1463]),
+               third=c(imoments1[3],momentsx[3],imoments1[1481:1494]),
+               fourth=c(imoments1[4],momentsx[4],imoments1[1505:1514])
   )
-  medianmoments<-c(imoments1[1352],imoments1[1403],imoments1[1440],imoments1[1464])
-  standardizedm<-c(imoments1[1352]/momentssd[1],imoments1[1403]/momentssd[2],imoments1[1440]/momentssd[3],imoments1[1464]/momentssd[4])
+  
+  
+  medianmoments<-c(imoments1[1398],imoments1[1449],imoments1[1486],imoments1[1510])
+  standardizedm<-c(imoments1[1398]/momentssd[1],imoments1[1449]/momentssd[2],imoments1[1486]/momentssd[3],imoments1[1510]/momentssd[4])
   all1<-(c(kurtx,skewx,momentsx,allrawmoBias,momentssd,medianmoments,standardizedm=standardizedm,allrawmo1,Huberx,SMWM9,imoments1,targetall))
 }
 write.csv(simulatedbatch_asymptoticbias,paste("asymptotic_gnorm_raw_Process",largesize,".csv", sep = ","), row.names = FALSE)
 
-write.csv(cbind(simulatedbatch_asymptoticbias[1:length(allkurtgnorm),1],simulatedbatch_asymptoticbias[1:length(allkurtgnorm),1:103]),paste("asymptotic_gnorm",largesize,".csv", sep = ","), row.names = FALSE)
+write.csv(cbind(simulatedbatch_asymptoticbias[1:length(allkurtgnorm),1],simulatedbatch_asymptoticbias[1:length(allkurtgnorm),1:425]),paste("asymptotic_gnorm",largesize,".csv", sep = ","), row.names = FALSE)
 
 simulatedbatch_ABSE<-foreach(batchnumber =c((1:length(allkurtgnorm))), .combine = 'rbind') %dopar% {
   library(Rfast)
@@ -1623,20 +1642,22 @@ simulatedbatch_ABSE<-foreach(batchnumber =c((1:length(allkurtgnorm))), .combine 
     
     sortedx<-c()
     
-    momentssd<-c(sd=sqrt(momentsx[2]),imoments1[1476],imoments1[1477],imoments1[1478])
+    momentssd<-c(sd=sqrt(momentsx[2]),imoments1[1522],imoments1[1523],imoments1[1524])
     
     allrawmoBias<-c(
-      firstbias=abs(c(Huberx,SMWM9,imoments1[1],momentsx[1],imoments1[1345:1372])-targetm)/momentssd[1],
-      secondbias=abs(c(imoments1[2],momentsx[2],imoments1[1396:1417])-targetvar)/momentssd[2],
-      thirdbias=abs(c(imoments1[3],momentsx[3],imoments1[1435:1448])-targettm)/momentssd[3],
-      fourbias=abs(c(imoments1[4],momentsx[4],imoments1[1459:1468])-targetfm)/momentssd[4])
-    allrawmo1<-c(first=c(Huberx,SMWM9,imoments1[1],momentsx[1],imoments1[1345:1372]),
-                 second=c(imoments1[2],momentsx[2],imoments1[1396:1417]),
-                 third=c(imoments1[3],momentsx[3],imoments1[1435:1448]),
-                 fourth=c(imoments1[4],momentsx[4],imoments1[1459:1468])
+      firstbias=abs(c(Huberx,SMWM9,imoments1[1],momentsx[1],imoments1[1391:1418])-targetm)/momentssd[1],
+      secondbias=abs(c(imoments1[2],momentsx[2],imoments1[1442:1463])-targetvar)/momentssd[2],
+      thirdbias=abs(c(imoments1[3],momentsx[3],imoments1[1481:1494])-targettm)/momentssd[3],
+      fourbias=abs(c(imoments1[4],momentsx[4],imoments1[1505:1514])-targetfm)/momentssd[4])
+    allrawmo1<-c(first=c(Huberx,SMWM9,imoments1[1],momentsx[1],imoments1[1391:1418]),
+                 second=c(imoments1[2],momentsx[2],imoments1[1442:1463]),
+                 third=c(imoments1[3],momentsx[3],imoments1[1481:1494]),
+                 fourth=c(imoments1[4],momentsx[4],imoments1[1505:1514])
     )
-    medianmoments<-c(imoments1[1352],imoments1[1403],imoments1[1440],imoments1[1464])
-    standardizedm<-c(imoments1[1352]/momentssd[1],imoments1[1403]/momentssd[2],imoments1[1440]/momentssd[3],imoments1[1464]/momentssd[4])
+    
+    
+    medianmoments<-c(imoments1[1398],imoments1[1449],imoments1[1486],imoments1[1510])
+    standardizedm<-c(imoments1[1398]/momentssd[1],imoments1[1449]/momentssd[2],imoments1[1486]/momentssd[3],imoments1[1510]/momentssd[4])
     all1<-(c(kurtx,skewx,momentsx,allrawmoBias,momentssd,medianmoments,standardizedm=standardizedm,allrawmo1,Huberx,SMWM9,imoments1,targetall))
     
     SEbataches<-rbind(SEbataches,all1)

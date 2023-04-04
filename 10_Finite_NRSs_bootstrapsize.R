@@ -115,20 +115,22 @@ simulatedbatch_bias_Monte<-foreach(batchnumber =c((1:100)), .combine = 'rbind') 
     momentsx<-unbiasedmoments(x=sortedx)
     
     sortedx<-c()
-    momentssd<-c(sd=sqrt(momentsx[2]),imoments1[1476],imoments1[1477],imoments1[1478])
+    momentssd<-c(sd=sqrt(momentsx[2]),imoments1[1522],imoments1[1523],imoments1[1524])
     
     allrawmoBias<-c(
-      firstbias=abs(c(Huberx,SMWM9,imoments1[1],momentsx[1],imoments1[1345:1372])-targetm)/momentssd[1],
-      secondbias=abs(c(imoments1[2],momentsx[2],imoments1[1396:1417])-targetvar)/momentssd[2],
-      thirdbias=abs(c(imoments1[3],momentsx[3],imoments1[1435:1448])-targettm)/momentssd[3],
-      fourbias=abs(c(imoments1[4],momentsx[4],imoments1[1459:1468])-targetfm)/momentssd[4])
-    allrawmo1<-c(first=c(Huberx,SMWM9,imoments1[1],momentsx[1],imoments1[1345:1372]),
-                 second=c(imoments1[2],momentsx[2],imoments1[1396:1417]),
-                 third=c(imoments1[3],momentsx[3],imoments1[1435:1448]),
-                 fourth=c(imoments1[4],momentsx[4],imoments1[1459:1468])
+      firstbias=abs(c(Huberx,SMWM9,imoments1[1],momentsx[1],imoments1[1391:1418])-targetm)/momentssd[1],
+      secondbias=abs(c(imoments1[2],momentsx[2],imoments1[1442:1463])-targetvar)/momentssd[2],
+      thirdbias=abs(c(imoments1[3],momentsx[3],imoments1[1481:1494])-targettm)/momentssd[3],
+      fourbias=abs(c(imoments1[4],momentsx[4],imoments1[1505:1514])-targetfm)/momentssd[4])
+    allrawmo1<-c(first=c(Huberx,SMWM9,imoments1[1],momentsx[1],imoments1[1391:1418]),
+                 second=c(imoments1[2],momentsx[2],imoments1[1442:1463]),
+                 third=c(imoments1[3],momentsx[3],imoments1[1481:1494]),
+                 fourth=c(imoments1[4],momentsx[4],imoments1[1505:1514])
     )
-    medianmoments<-c(imoments1[1352],imoments1[1403],imoments1[1440],imoments1[1464])
-    standardizedm<-c(imoments1[1352]/momentssd[1],imoments1[1403]/momentssd[2],imoments1[1440]/momentssd[3],imoments1[1464]/momentssd[4])
+    
+    
+    medianmoments<-c(imoments1[1398],imoments1[1449],imoments1[1486],imoments1[1510])
+    standardizedm<-c(imoments1[1398]/momentssd[1],imoments1[1449]/momentssd[2],imoments1[1486]/momentssd[3],imoments1[1510]/momentssd[4])
     all1<-(c(kurtx,skewx,momentsx,allrawmoBias,momentssd,medianmoments,standardizedm=standardizedm,allrawmo1,Huberx,SMWM9,imoments1,targetall))
     
     SEbataches<-rbind(SEbataches,all1)
