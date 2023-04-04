@@ -1,1 +1,1 @@
-size,dtype,kurtx,skewx,mean_AB_exp,mean_AB_Weibull,var_AB_exp,var_AB_Weibull,tm_AB_exp,tm_AB_Weibull,fm_AB_exp,fm_AB_Weibull,mean_SE_exp,mean_SE_Weibull,var_SE_exp,var_SE_Weibull,tm_SE_exp,tm_SE_Weibull,fm_SE_exp,fm_SE_Weibull
+size,dtype,kurtx,skewx,ikurt,iskew
