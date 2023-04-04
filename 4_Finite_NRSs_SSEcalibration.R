@@ -22,7 +22,7 @@ if (!require("matrixStats")) install.packages("matrixStats")
 library(matrixStats)
 
 
-numCores <- detectCores()
+numCores <- 124
 #registering clusters, can set a smaller number using numCores-1
 
 registerDoParallel(numCores)
@@ -124,19 +124,17 @@ simulatedbatch_bias_Monte<-foreach(batchnumber =c((1:length(allkurtWeibull))), .
   
   rqskew<-apply((SEbataches[1:batchsize,c(239:578)]), 2, calculate_column_sd)
   
-  ikurt1<-which(rqkurt[c(1:238)]==(min(rqkurt[c(1:238)])))[1]
-  iskew1<-which(rqskew[c(1:340)]==(min(rqskew[c(1:340)])))[1]
+  rankkurtall1<-rank(rqkurt[c(1:238)])
+  rankskewall1<-rank(rqskew[c(1:340)])
   
   allresultsSE<-c(samplesize=samplesize,type=1,kurtx,skewx,ikurt1,iskew1,SEbatachesmean,rqkurt,rqskew)
 }
 
 write.csv(simulatedbatch_bias_Monte,paste("finite_Weibull_Icalibration_raw_SWA",samplesize,".csv", sep = ","), row.names = FALSE)
 
-Label_SE_Weibull1<- read.csv(("I_Label.csv"))
+simulatedbatch_bias_Monte<- read.csv(paste("finite_Weibull_Icalibration_raw_SWA",samplesize,".csv", sep = ","))
 
-Optimum_SE<-simulatedbatch_bias_Monte[,1:6]
-
-colnames(Optimum_SE)<-colnames(Label_SE_Weibull1)
+Optimum_SE<-simulatedbatch_bias_Monte[,1:582]
 
 write.csv(Optimum_SE,paste("finite_I_Weibull_SWA.csv", sep = ","), row.names = FALSE)
 
@@ -176,11 +174,8 @@ finite_I_Weibull<- read.csv(("finite_I_Weibull_SWA.csv"))
 
 finite_I_Weibull<-data.frame(finite_I_Weibull)
 
-Label_Weibull1<- read.csv(("I_label.csv"))
-colnames(finite_I_Weibull)<-colnames(Label_Weibull1)
-
 asymptotic_I_Weibull<- read.csv(paste("asymptotic_I_SWA.csv", sep = ","))
-
+colnames(finite_I_Weibull)<-colnames(asymptotic_I_Weibull)
 all1<-rbind(asymptotic_I_Weibull,finite_I_Weibull)
 
 write.csv(all1,paste("I_SWA.csv", sep = ","), row.names = FALSE)

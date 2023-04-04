@@ -78,6 +78,24 @@ unibatch<-colSort(unibatchran, descend = FALSE, stable = FALSE, parallel = TRUE)
 d_values<- read.csv(("d_SWA.csv"))
 I_values<-read.csv(("I_SWA.csv"))
 #Then, start the Monte Simulation
+batch1=1
+batchnumber=10
+x=sortedx
+iall1=iall11
+dtype1=1
+releaseall=TRUE
+standist_d=d_values
+I_values=I_values
+orderlist1_sorted20=orderlist1_AB2
+orderlist1_sorted30=orderlist1_AB3
+orderlist1_sorted40=orderlist1_AB4
+orderlist1_sorted2=orderlist1_AB2
+orderlist1_sorted3=orderlist1_AB3
+orderlist1_sorted4=orderlist1_AB4
+percentage=1/16
+batch="auto"
+stepsize=1000
+criterion=criterionset
 
 
 simulatedbatch_bias_Monte<-foreach(batchnumber =c((1:length(allkurtWeibull))), .combine = 'rbind') %dopar% {
@@ -125,21 +143,17 @@ simulatedbatch_bias_Monte<-foreach(batchnumber =c((1:length(allkurtWeibull))), .
   
   rqfm<-apply((SEbataches2[1:batchsize,c(101:114)]), 2, calculate_column_sd)
   
-  imean1<-which(rqmean==(min(rqmean)))[1]
-  ivar1<-which(rqvar==(min(rqvar)))[1]
-  itm1<-which(rqtm==(min(rqtm)))[1]
-  ifm1<-which(rqfm==(min(rqfm)))[1]
+  rankmean1<-rank(rqmean)
+  rankvar1<-rank(rqvar)
+  ranktm1<-rank(rqtm)
+  rankfm1<-rank(rqfm)
   
-  allresultsSE<-c(samplesize=samplesize,type=1,kurtx,skewx,imean1,ivar1,itm1,ifm1,SEbatachesmean,rqmean,rqvar,rqtm,rqfm)
+  allresultsSE<-c(samplesize=samplesize,type=1,kurtx,skewx,rankmean1,rankvar1,ranktm1,rankfm1,SEbatachesmean,rqmean,rqvar,rqtm,rqfm)
 }
 
 write.csv(simulatedbatch_bias_Monte,paste("asymptotic_Weibull_Imomentscalibration_raw_SWA",largesize,".csv", sep = ","), row.names = FALSE)
 
-Label_SE_Weibull1<- read.csv(("Imoments_Label.csv"))
-
-Optimum_SE<-simulatedbatch_bias_Monte[,1:8]
-
-colnames(Optimum_SE)<-colnames(Label_SE_Weibull1)
+Optimum_SE<-simulatedbatch_bias_Monte[,1:118]
 
 write.csv(Optimum_SE,paste("asymptotic_Imoments_Weibull_SWA.csv", sep = ","), row.names = FALSE)
 
@@ -179,8 +193,6 @@ write.csv(simulatedbatch_bias_Monte_SE,paste("asymptotic_Weibull_Imomentscalibra
 
 asymptotic_I_Weibull<- read.csv(("asymptotic_Imoments_Weibull_SWA.csv"))
 
-Label_Weibull1<- read.csv(("Imoments_Label.csv"))
-colnames(asymptotic_I_Weibull)<-colnames(Label_Weibull1)
 
 write.csv(asymptotic_I_Weibull,paste("asymptotic_Imoments_SWA.csv", sep = ","), row.names = FALSE)
 
