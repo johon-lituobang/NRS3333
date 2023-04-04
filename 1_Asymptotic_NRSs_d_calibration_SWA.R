@@ -16,23 +16,23 @@ if (!require("Rcpp")) install.packages("Rcpp")
 library(Rcpp)
 if (!require("Rfast")) install.packages("Rfast")
 library(Rfast)
-if (!require("NRSReview")) install.packages("NRSReview_1.0.tar.gz", repos = NULL)
+if (!require("NRSReview")) install.packages("NRSReview_1.0.zip", repos = NULL)
 library(NRSReview)
 if (!require("matrixStats")) install.packages("matrixStats")
 library(matrixStats)
 
-numCores <- detectCores()
+numCores <- 124
 #registering clusters, can set a smaller number using numCores-1
 
 registerDoParallel(numCores)
 
 #bootsize for bootstrap approximation of the distributions of the kernal of U-statistics.
-n <- 1.8*10^6
+n <- 2048*900*3
 (n%%10)==0
 # maximum order of moments
 morder <- 4
 #large sample size (approximating asymptotic)
-largesize<-1.8*10^6
+largesize<-2048*900
 
 #generate quasirandom numbers based on the Sobol sequence
 quasiunisobol<-sobol(n=n, dim = morder, init = TRUE, scrambling = 0, seed = NULL, normal = FALSE,
@@ -45,15 +45,18 @@ quasiuni_sorted3 <- na.omit(rowSort(quasiuni[,1:3], descend = FALSE, stable = FA
 quasiuni_sorted4 <- na.omit(rowSort(quasiuni, descend = FALSE, stable = FALSE, parallel = TRUE))
 # Forever...
 
-quasiuni<-Sort(quasiuni[,1])
+quasiuni<-Sort(sobol(n=largesize, dim = 1, init = TRUE, scrambling = 0, seed = NULL, normal = FALSE,
+                     mixed = FALSE, method = "C", start = 1))
 
 #the function, createorderlist, can transform the Sobol sequence into non-repeated integer sequences.
 
 #the largesize is the maximum value of this integer sequence
-orderlist1_AB2<-createorderlist(quni1=quasiuni_sorted2,size=largesize,interval=8,dimension=2)
-orderlist1_AB3<-createorderlist(quni1=quasiuni_sorted3,size=largesize,interval=8,dimension=3)
-orderlist1_AB4<-createorderlist(quni1=quasiuni_sorted4,size=largesize,interval=8,dimension=4)
-
+orderlist1_AB2<-createorderlist(quni1=quasiuni_sorted2,size=largesize,interval=16,dimension=2)
+orderlist1_AB2<-orderlist1_AB2[1:largesize,]
+orderlist1_AB3<-createorderlist(quni1=quasiuni_sorted3,size=largesize,interval=16,dimension=3)
+orderlist1_AB3<-orderlist1_AB3[1:largesize,]
+orderlist1_AB4<-createorderlist(quni1=quasiuni_sorted4,size=largesize,interval=16,dimension=4)
+orderlist1_AB4<-orderlist1_AB4[1:largesize,]
 quasiuni_sorted2<-c()
 quasiuni_sorted3<-c()
 quasiuni_sorted4<-c()
@@ -78,18 +81,18 @@ simulatedbatchWeibull_bias<-foreach(batchnumber = (1:length(allkurtWeibull)), .c
 
   sortedx<-Sort(x,descending=FALSE,partial=NULL,stable=FALSE,na.last=NULL)
   x<-c()
-  dall<-compalldmoments(x=sortedx,targetm=targetm,targetvar=targetvar,targettm=targettm,targetfm=targetfm,orderlist1_sorted2=orderlist1_AB2,orderlist1_sorted3=orderlist1_AB3,orderlist1_sorted4=orderlist1_AB4,interval=8,batch="auto",boot=TRUE)
+  dall<-compalldmoments(x=sortedx,targetm=targetm,targetvar=targetvar,targettm=targettm,targetfm=targetfm,orderlist1_sorted20=orderlist1_AB2,orderlist1_sorted30=orderlist1_AB3,orderlist1_sorted40=orderlist1_AB4,orderlist1_sorted2=orderlist1_AB2,orderlist1_sorted3=orderlist1_AB3,orderlist1_sorted4=orderlist1_AB4,percentage=1/16,batch="auto",boot=TRUE)
   sortedx<-c()
   all1<-t(c(kurtx,skewx,dall))
 }
 
 write.csv(simulatedbatchWeibull_bias,paste("asymptotic_Weibull_dcalibration_raw_SWA",largesize,".csv", sep = ","), row.names = FALSE)
 
-asymptotic_d_Weibull<-simulatedbatchWeibull_bias[,c(1,2,seq(from=5, to=146, by=3))]
+asymptotic_d_Weibull<-simulatedbatchWeibull_bias[,c(1,2,seq(from=5, to=346, by=3))]
 
 Label_Weibull1<- read.csv(("d_label.csv"))
 
-colnames(asymptotic_d_Weibull)<-colnames(Label_Weibull1[3:52])
+colnames(asymptotic_d_Weibull)<-colnames(Label_Weibull1[3:118])
 
 write.csv(asymptotic_d_Weibull,paste("asymptotic_d_Weibull_SWA.csv", sep = ","), row.names = FALSE)
 
