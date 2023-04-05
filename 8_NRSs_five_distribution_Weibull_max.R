@@ -47,12 +47,12 @@ quasiuni_sorted3 <- na.omit(rowSort(quasiuni[,1:3], descend = FALSE, stable = FA
 quasiuni_sorted4 <- na.omit(rowSort(quasiuni, descend = FALSE, stable = FALSE, parallel = TRUE))
 # Forever...
 
-asymptotic_n <- 2048*900*3
+asymptotic_n <- 2048*900*3*5
 (asymptotic_n%%10)==0
 # maximum order of moments
 morder <- 4
 #large sample size (asymptotic bias)
-largesize<-2048*900
+largesize<-2048*900*5
 
 #generate quasirandom numbers based on the Sobol sequence
 quasiunisobol_asymptotic<-sobol(n=asymptotic_n, dim = morder, init = TRUE, scrambling = 0, seed = NULL, normal = FALSE,
@@ -116,7 +116,7 @@ simulatedbatch_asymptoticbias<-foreach(batchnumber = (1:100), .combine = 'rbind'
     
   }, error = function(e) {
     cat("Error: ", conditionMessage(e), "\n")
-    rep(NA,1478)
+    rep(NA,1524)
   })
   
   
@@ -126,10 +126,10 @@ simulatedbatch_asymptoticbias<-foreach(batchnumber = (1:100), .combine = 'rbind'
   momentssd<-c(sd=sqrt(momentsx[2]),imoments1[1522],imoments1[1523],imoments1[1524])
   
   allrawmoBias<-c(
-    firstbias=abs(c(Huberx,SMWM9,imoments1[1],momentsx[1],imoments1[1391:1418])-targetm)/momentssd[1],
-    secondbias=abs(c(imoments1[2],momentsx[2],imoments1[1442:1463])-targetvar)/momentssd[2],
-    thirdbias=abs(c(imoments1[3],momentsx[3],imoments1[1481:1494])-targettm)/momentssd[3],
-    fourbias=abs(c(imoments1[4],momentsx[4],imoments1[1505:1514])-targetfm)/momentssd[4])
+    firstbias=abs(c(Huberx,SMWM9,imoments1[1],momentsx[1],imoments1[1391:1418])-momentsx[1])/momentssd[1],
+    secondbias=abs(c(imoments1[2],momentsx[2],imoments1[1442:1463])-momentsx[2])/momentssd[2],
+    thirdbias=abs(c(imoments1[3],momentsx[3],imoments1[1481:1494])-momentsx[3])/momentssd[3],
+    fourbias=abs(c(imoments1[4],momentsx[4],imoments1[1505:1514])-momentsx[4])/momentssd[4])
   allrawmo1<-c(first=c(Huberx,SMWM9,imoments1[1],momentsx[1],imoments1[1391:1418]),
                second=c(imoments1[2],momentsx[2],imoments1[1442:1463]),
                third=c(imoments1[3],momentsx[3],imoments1[1481:1494]),
@@ -176,7 +176,7 @@ simulatedbatch_asymptoticbias<-foreach(batchnumber = (1:100), .combine = 'rbind'
     
   }, error = function(e) {
     cat("Error: ", conditionMessage(e), "\n")
-    rep(NA,1478)
+    rep(NA,1524)
   })
   
   momentsx<-unbiasedmoments(x=sortedx)
@@ -185,10 +185,10 @@ simulatedbatch_asymptoticbias<-foreach(batchnumber = (1:100), .combine = 'rbind'
   momentssd<-c(sd=sqrt(momentsx[2]),imoments1[1522],imoments1[1523],imoments1[1524])
   
   allrawmoBias<-c(
-    firstbias=abs(c(Huberx,SMWM9,imoments1[1],momentsx[1],imoments1[1391:1418])-targetm)/momentssd[1],
-    secondbias=abs(c(imoments1[2],momentsx[2],imoments1[1442:1463])-targetvar)/momentssd[2],
-    thirdbias=abs(c(imoments1[3],momentsx[3],imoments1[1481:1494])-targettm)/momentssd[3],
-    fourbias=abs(c(imoments1[4],momentsx[4],imoments1[1505:1514])-targetfm)/momentssd[4])
+    firstbias=abs(c(Huberx,SMWM9,imoments1[1],momentsx[1],imoments1[1391:1418])-momentsx[1])/momentssd[1],
+    secondbias=abs(c(imoments1[2],momentsx[2],imoments1[1442:1463])-momentsx[2])/momentssd[2],
+    thirdbias=abs(c(imoments1[3],momentsx[3],imoments1[1481:1494])-momentsx[3])/momentssd[3],
+    fourbias=abs(c(imoments1[4],momentsx[4],imoments1[1505:1514])-momentsx[4])/momentssd[4])
   allrawmo1<-c(first=c(Huberx,SMWM9,imoments1[1],momentsx[1],imoments1[1391:1418]),
                second=c(imoments1[2],momentsx[2],imoments1[1442:1463]),
                third=c(imoments1[3],momentsx[3],imoments1[1481:1494]),
@@ -235,7 +235,7 @@ simulatedbatch_asymptoticbias<-foreach(batchnumber = (1:100), .combine = 'rbind'
     
   }, error = function(e) {
     cat("Error: ", conditionMessage(e), "\n")
-    rep(NA,1478)
+    rep(NA,1524)
   })
   
   momentsx<-unbiasedmoments(x=sortedx)
@@ -244,10 +244,10 @@ simulatedbatch_asymptoticbias<-foreach(batchnumber = (1:100), .combine = 'rbind'
   momentssd<-c(sd=sqrt(momentsx[2]),imoments1[1522],imoments1[1523],imoments1[1524])
   
   allrawmoBias<-c(
-    firstbias=abs(c(Huberx,SMWM9,imoments1[1],momentsx[1],imoments1[1391:1418])-targetm)/momentssd[1],
-    secondbias=abs(c(imoments1[2],momentsx[2],imoments1[1442:1463])-targetvar)/momentssd[2],
-    thirdbias=abs(c(imoments1[3],momentsx[3],imoments1[1481:1494])-targettm)/momentssd[3],
-    fourbias=abs(c(imoments1[4],momentsx[4],imoments1[1505:1514])-targetfm)/momentssd[4])
+    firstbias=abs(c(Huberx,SMWM9,imoments1[1],momentsx[1],imoments1[1391:1418])-momentsx[1])/momentssd[1],
+    secondbias=abs(c(imoments1[2],momentsx[2],imoments1[1442:1463])-momentsx[2])/momentssd[2],
+    thirdbias=abs(c(imoments1[3],momentsx[3],imoments1[1481:1494])-momentsx[3])/momentssd[3],
+    fourbias=abs(c(imoments1[4],momentsx[4],imoments1[1505:1514])-momentsx[4])/momentssd[4])
   allrawmo1<-c(first=c(Huberx,SMWM9,imoments1[1],momentsx[1],imoments1[1391:1418]),
                second=c(imoments1[2],momentsx[2],imoments1[1442:1463]),
                third=c(imoments1[3],momentsx[3],imoments1[1481:1494]),
@@ -294,7 +294,7 @@ simulatedbatch_asymptoticbias<-foreach(batchnumber = (1:100), .combine = 'rbind'
     
   }, error = function(e) {
     cat("Error: ", conditionMessage(e), "\n")
-    rep(NA,1478)
+    rep(NA,1524)
   })
   
   momentsx<-unbiasedmoments(x=sortedx)
@@ -303,10 +303,10 @@ simulatedbatch_asymptoticbias<-foreach(batchnumber = (1:100), .combine = 'rbind'
   momentssd<-c(sd=sqrt(momentsx[2]),imoments1[1522],imoments1[1523],imoments1[1524])
   
   allrawmoBias<-c(
-    firstbias=abs(c(Huberx,SMWM9,imoments1[1],momentsx[1],imoments1[1391:1418])-targetm)/momentssd[1],
-    secondbias=abs(c(imoments1[2],momentsx[2],imoments1[1442:1463])-targetvar)/momentssd[2],
-    thirdbias=abs(c(imoments1[3],momentsx[3],imoments1[1481:1494])-targettm)/momentssd[3],
-    fourbias=abs(c(imoments1[4],momentsx[4],imoments1[1505:1514])-targetfm)/momentssd[4])
+    firstbias=abs(c(Huberx,SMWM9,imoments1[1],momentsx[1],imoments1[1391:1418])-momentsx[1])/momentssd[1],
+    secondbias=abs(c(imoments1[2],momentsx[2],imoments1[1442:1463])-momentsx[2])/momentssd[2],
+    thirdbias=abs(c(imoments1[3],momentsx[3],imoments1[1481:1494])-momentsx[3])/momentssd[3],
+    fourbias=abs(c(imoments1[4],momentsx[4],imoments1[1505:1514])-momentsx[4])/momentssd[4])
   allrawmo1<-c(first=c(Huberx,SMWM9,imoments1[1],momentsx[1],imoments1[1391:1418]),
                second=c(imoments1[2],momentsx[2],imoments1[1442:1463]),
                third=c(imoments1[3],momentsx[3],imoments1[1481:1494]),
@@ -353,7 +353,7 @@ simulatedbatch_asymptoticbias<-foreach(batchnumber = (1:100), .combine = 'rbind'
     
   }, error = function(e) {
     cat("Error: ", conditionMessage(e), "\n")
-    rep(NA,1478)
+    rep(NA,1524)
   })
   
   momentsx<-unbiasedmoments(x=sortedx)
@@ -362,10 +362,10 @@ simulatedbatch_asymptoticbias<-foreach(batchnumber = (1:100), .combine = 'rbind'
   momentssd<-c(sd=sqrt(momentsx[2]),imoments1[1522],imoments1[1523],imoments1[1524])
   
   allrawmoBias<-c(
-    firstbias=abs(c(Huberx,SMWM9,imoments1[1],momentsx[1],imoments1[1391:1418])-targetm)/momentssd[1],
-    secondbias=abs(c(imoments1[2],momentsx[2],imoments1[1442:1463])-targetvar)/momentssd[2],
-    thirdbias=abs(c(imoments1[3],momentsx[3],imoments1[1481:1494])-targettm)/momentssd[3],
-    fourbias=abs(c(imoments1[4],momentsx[4],imoments1[1505:1514])-targetfm)/momentssd[4])
+    firstbias=abs(c(Huberx,SMWM9,imoments1[1],momentsx[1],imoments1[1391:1418])-momentsx[1])/momentssd[1],
+    secondbias=abs(c(imoments1[2],momentsx[2],imoments1[1442:1463])-momentsx[2])/momentssd[2],
+    thirdbias=abs(c(imoments1[3],momentsx[3],imoments1[1481:1494])-momentsx[3])/momentssd[3],
+    fourbias=abs(c(imoments1[4],momentsx[4],imoments1[1505:1514])-momentsx[4])/momentssd[4])
   allrawmo1<-c(first=c(Huberx,SMWM9,imoments1[1],momentsx[1],imoments1[1391:1418]),
                second=c(imoments1[2],momentsx[2],imoments1[1442:1463]),
                third=c(imoments1[3],momentsx[3],imoments1[1481:1494]),
