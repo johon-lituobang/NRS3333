@@ -32,7 +32,7 @@ registerDoParallel(numCores)
 #load asymptotic d for two parameter distributions
 
 #set the stop criterion
-criterionset=1e-10
+criterionset=1e-6
 
 kurtWeibull<- read.csv(("kurtWeibull_28260.csv"))
 
