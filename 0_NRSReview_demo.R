@@ -54,16 +54,9 @@ medianstandardizedmoments(x)
 
 #for example
 x<-rPareto(21307,shape=1, scale=1)
-
+imoments(x)
 medianstandardizedmoments(x)
 #sample moments are invalid.
-standardizedmoments(x)
-
-#median standardized moments are very good at estimating the parameter changes.
-x<-rPareto(21307,shape=3, scale=1)
-
-medianstandardizedmoments(x)
-
 standardizedmoments(x)
 
 #if the distribution is not Weibull, small biases might exist, but much smaller than others.
