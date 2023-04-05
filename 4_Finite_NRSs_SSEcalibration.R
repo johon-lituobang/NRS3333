@@ -22,10 +22,6 @@ if (!require("matrixStats")) install.packages("matrixStats")
 library(matrixStats)
 
 
-numCores <- detectCores()-4
-#registering clusters, can set a smaller number using numCores-1
-
-registerDoParallel(numCores)
 
 #bootsize for bootstrap approximation of the distributions of the kernal of U-statistics.
 n <- 2048*9*3
@@ -50,7 +46,7 @@ quasiuni_sorted4 <- na.omit(rowSort(quasiuni, descend = FALSE, stable = FALSE, p
 #load asymptotic d for two parameter distributions
 
 #set the stop criterion
-criterionset=1e-6
+criterionset=1e-10
 
 kurtWeibull<- read.csv(("kurtWeibull_28260.csv"))
 
@@ -83,6 +79,7 @@ unibatch<-colSort(unibatchran, descend = FALSE, stable = FALSE, parallel = TRUE)
 #input the d value table previously generated
 d_values<- read.csv(("d_SWA.csv"))
 #Then, start the Monte Simulation
+
 
 simulatedbatch_bias_Monte<-foreach(batchnumber =c((1:length(allkurtWeibull))), .combine = 'rbind') %dopar% {
   library(Rfast)

@@ -22,10 +22,6 @@ if (!require("matrixStats")) install.packages("matrixStats")
 library(matrixStats)
 
 
-numCores <- detectCores()-4
-#registering clusters, can set a smaller number using numCores-1
-
-registerDoParallel(numCores)
 
 #bootsize for bootstrap approximation of the distributions of the kernal of U-statistics.
 n <- 2048*2*3
@@ -50,7 +46,7 @@ quasiuni_sorted4 <- na.omit(rowSort(quasiuni, descend = FALSE, stable = FALSE, p
 #load asymptotic d for two parameter distributions
 
 #set the stop criterion
-criterionset=1e-6
+criterionset=1e-10
 
 kurtWeibull<- read.csv(("kurtWeibull_28260.csv"))
 

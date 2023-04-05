@@ -22,17 +22,13 @@ if (!require("matrixStats")) install.packages("matrixStats")
 library(matrixStats)
 
 
-numCores <- detectCores()-4
-#registering clusters, can set a smaller number using numCores-1
-
-registerDoParallel(numCores)
 
 # Forever...
 
 #load asymptotic d for two parameter distributions
 
 #set the stop criterion
-criterionset=1e-6
+criterionset=1e-10
 
 kurtWeibull<- read.csv(("kurtWeibull_28260.csv"))
 

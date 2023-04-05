@@ -22,19 +22,15 @@ if (!require("matrixStats")) install.packages("matrixStats")
 library(matrixStats)
 
 
-numCores <- detectCores()-4
-#registering clusters, can set a smaller number using numCores-1
-
-registerDoParallel(numCores)
 
 
 #bootsize for bootstrap approximation of the distributions of the kernel of U-statistics.
-n <- 2048*9*3
+n <- 2048*900*3
 (n%%10)==0
 # maximum order of moments
 morder <- 4
 #large sample size (approximating asymptotic)
-largesize1<-2048*9
+largesize1<-2048*900
 
 #generate quasirandom numbers based on the Sobol sequence
 quasiunisobol<-sobol(n=n, dim = morder, init = TRUE, scrambling = 0, seed = NULL, normal = FALSE,
