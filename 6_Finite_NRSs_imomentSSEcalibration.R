@@ -57,7 +57,7 @@ kurtWeibull<- read.csv(("kurtWeibull_28260.csv"))
 allkurtWeibull<-unlist(kurtWeibull)
 
 samplesize=2048*2
-batchsizebase=100
+batchsizebase=500
 
 
 orderlist1_AB20<-createorderlist(quni1=quasiuni_sorted2,size=samplesize,interval=16,dimension=2)
@@ -73,7 +73,7 @@ orderlist1_AB3<-createorderlist(quni1=quasiuni_sorted3,size=largesize,interval=1
 orderlist1_AB3<-orderlist1_AB3[1:largesize,]
 orderlist1_AB4<-createorderlist(quni1=quasiuni_sorted4,size=largesize,interval=16,dimension=4)
 orderlist1_AB4<-orderlist1_AB4[1:largesize,]
-batchsize=100
+batchsize=500
 
 n <- samplesize
 setSeed(1)
