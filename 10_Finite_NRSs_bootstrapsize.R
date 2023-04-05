@@ -21,6 +21,10 @@ library(NRSReview)
 if (!require("matrixStats")) install.packages("matrixStats")
 library(matrixStats)
 
+numCores <- detectCores()-4
+#registering clusters, can set a smaller number using numCores-1
+
+registerDoParallel(numCores)
 
 
 # Forever...
