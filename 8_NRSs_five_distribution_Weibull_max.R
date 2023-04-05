@@ -22,10 +22,9 @@ if (!require("matrixStats")) install.packages("matrixStats")
 library(matrixStats)
 
 
-numCores <- detectCores()-4
-#registering clusters, can set a smaller number using numCores-1
-
-registerDoParallel(numCores)
+numCores <- detectCores()-4 # Detect the number of available cores
+cl <- makeCluster(numCores) # Create a cluster with the number of cores
+registerDoParallel(cl) # Register the parallel backend
 
 
 #bootsize for bootstrap approximation of the distributions of the kernel of U-statistics.
@@ -381,6 +380,7 @@ write.csv(simulatedbatch_asymptoticbias,paste("asymptotic_gnorm_raw_Process_max"
 write.csv(cbind(simulatedbatch_asymptoticbias[1:100,1],simulatedbatch_asymptoticbias[1:100,1:331]),paste("asymptotic_gnorm_max",largesize,".csv", sep = ","), row.names = FALSE)
 
 
+stopCluster(cl)
 registerDoSEQ()
 
 

@@ -21,10 +21,10 @@ library(NRSReview)
 if (!require("matrixStats")) install.packages("matrixStats")
 library(matrixStats)
 
-numCores <- detectCores()-4
-#registering clusters, can set a smaller number using numCores-1
 
-registerDoParallel(numCores)
+numCores <- detectCores()-4 # Detect the number of available cores
+cl <- makeCluster(numCores) # Create a cluster with the number of cores
+registerDoParallel(cl) # Register the parallel backend
 
 
 #bootsize for bootstrap approximation of the distributions of the kernal of U-statistics.
@@ -227,5 +227,6 @@ colnames(d_Merged)<-colnames(Label_Weibull1)
 
 write.csv(d_Merged,paste("d_SWA.csv", sep = ","), row.names = FALSE)
 
+stopCluster(cl)
 registerDoSEQ()
 

@@ -21,10 +21,9 @@ library(NRSReview)
 if (!require("matrixStats")) install.packages("matrixStats")
 library(matrixStats)
 
-numCores <- detectCores()-4
-#registering clusters, can set a smaller number using numCores-1
-
-registerDoParallel(numCores)
+numCores <- detectCores()-4 # Detect the number of available cores
+cl <- makeCluster(numCores) # Create a cluster with the number of cores
+registerDoParallel(cl) # Register the parallel backend
 
 
 
@@ -1926,5 +1925,6 @@ write.csv(simulatedbatch_ABSE_SE,paste("gnorm_ABSSE_error.csv", sep = ","), row.
 
 
 
+stopCluster(cl)
 registerDoSEQ()
 

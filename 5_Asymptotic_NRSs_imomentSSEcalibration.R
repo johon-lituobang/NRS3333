@@ -21,10 +21,9 @@ library(NRSReview)
 if (!require("matrixStats")) install.packages("matrixStats")
 library(matrixStats)
 
-numCores <- detectCores()-4
-#registering clusters, can set a smaller number using numCores-1
-
-registerDoParallel(numCores)
+numCores <- detectCores()-4 # Detect the number of available cores
+cl <- makeCluster(numCores) # Create a cluster with the number of cores
+registerDoParallel(cl) # Register the parallel backend
 
 
 #bootsize for bootstrap approximation of the distributions of the kernal of U-statistics.
@@ -129,7 +128,7 @@ simulatedbatch_bias_Monte<-foreach(batchnumber =c((1:length(allkurtWeibull))), .
   ranktm1<-rank(rqtm)
   rankfm1<-rank(rqfm)
   
-  allresultsSE<-c(samplesize=samplesize,type=1,kurtx,skewx,rankmean1,rankvar1,ranktm1,rankfm1,SEbatachesmean,rqmean,rqvar,rqtm,rqfm)
+  allresultsSE<-c(samplesize=samplesize,type=1,kurtx,skewx,rankmean1,rankvar1,ranktm1,rankfm1,SEbatachesmean,SErqmean=rqmean,SErqvar=rqvar,SErqtm=rqtm,SErqfm=rqfm)
 }
 
 write.csv(simulatedbatch_bias_Monte,paste("asymptotic_Weibull_Imomentscalibration_raw_SWA",largesize,".csv", sep = ","), row.names = FALSE)
@@ -177,5 +176,6 @@ asymptotic_I_Weibull<- read.csv(("asymptotic_Imoments_Weibull_SWA.csv"))
 
 write.csv(asymptotic_I_Weibull,paste("asymptotic_Imoments_SWA.csv", sep = ","), row.names = FALSE)
 
-
+stopCluster(cl)
+registerDoSEQ()
 

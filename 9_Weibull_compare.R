@@ -21,11 +21,10 @@ library(NRSReview)
 if (!require("matrixStats")) install.packages("matrixStats")
 library(matrixStats)
 
-numCores <- detectCores()-4
-#registering clusters, can set a smaller number using numCores-1
 
-registerDoParallel(numCores)
-
+numCores <- detectCores()-4 # Detect the number of available cores
+cl <- makeCluster(numCores) # Create a cluster with the number of cores
+registerDoParallel(cl) # Register the parallel backend
 
 
 #bootsize for bootstrap approximation of the distributions of the kernel of U-statistics.
@@ -308,4 +307,5 @@ moments_medianMAD1<-Weibull_moments(alpha=medianMAD1[1],lambda=medianMAD1[2])
 moments_QE1<-Weibull_moments(alpha=QE1[1],lambda=QE1[2])
 
 moments_RMLE1<-Weibull_moments(alpha=RMLE1[1],lambda=RMLE1[2])
-
+stopCluster(cl)
+registerDoSEQ()

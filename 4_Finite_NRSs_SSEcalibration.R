@@ -21,10 +21,9 @@ library(NRSReview)
 if (!require("matrixStats")) install.packages("matrixStats")
 library(matrixStats)
 
-numCores <- detectCores()-4
-#registering clusters, can set a smaller number using numCores-1
-
-registerDoParallel(numCores)
+numCores <- detectCores()-4 # Detect the number of available cores
+cl <- makeCluster(numCores) # Create a cluster with the number of cores
+registerDoParallel(cl) # Register the parallel backend
 
 
 #bootsize for bootstrap approximation of the distributions of the kernal of U-statistics.
@@ -84,7 +83,6 @@ unibatch<-colSort(unibatchran, descend = FALSE, stable = FALSE, parallel = TRUE)
 d_values<- read.csv(("d_SWA.csv"))
 #Then, start the Monte Simulation
 
-
 simulatedbatch_bias_Monte<-foreach(batchnumber =c((1:length(allkurtWeibull))), .combine = 'rbind') %dopar% {
   library(Rfast)
   library(matrixStats)
@@ -128,7 +126,7 @@ simulatedbatch_bias_Monte<-foreach(batchnumber =c((1:length(allkurtWeibull))), .
   rankkurtall1<-rank(rqkurt[c(1:238)])
   rankskewall1<-rank(rqskew[c(1:340)])
   
-  allresultsSE<-c(samplesize=samplesize,type=1,kurtx,skewx,rankkurtall1,rankskewall1,SEbatachesmean,rqkurt,rqskew)
+  allresultsSE<-c(samplesize=samplesize,type=1,kurtx,skewx,rankkurtall1,rankskewall1,SEbatachesmean,SErqkurt=rqkurt,SErqskew=rqskew)
 }
 
 write.csv(simulatedbatch_bias_Monte,paste("finite_Weibull_Icalibration_raw_SWA",samplesize,".csv", sep = ","), row.names = FALSE)
@@ -182,4 +180,7 @@ all1<-rbind(asymptotic_I_Weibull,finite_I_Weibull)
 write.csv(all1,paste("I_SWA.csv", sep = ","), row.names = FALSE)
 
 
+
+stopCluster(cl)
+registerDoSEQ()
 

@@ -21,10 +21,9 @@ library(NRSReview)
 if (!require("matrixStats")) install.packages("matrixStats")
 library(matrixStats)
 
-numCores <- detectCores()-4
-#registering clusters, can set a smaller number using numCores-1
-
-registerDoParallel(numCores)
+numCores <- detectCores()-4 # Detect the number of available cores
+cl <- makeCluster(numCores) # Create a cluster with the number of cores
+registerDoParallel(cl) # Register the parallel backend
 
 
 #bootsize for bootstrap approximation of the distributions of the kernal of U-statistics.
@@ -57,7 +56,7 @@ kurtWeibull<- read.csv(("kurtWeibull_28260.csv"))
 allkurtWeibull<-unlist(kurtWeibull)
 
 samplesize=2048*2
-batchsizebase=1000
+batchsizebase=100
 
 
 orderlist1_AB20<-createorderlist(quni1=quasiuni_sorted2,size=samplesize,interval=16,dimension=2)
@@ -73,7 +72,7 @@ orderlist1_AB3<-createorderlist(quni1=quasiuni_sorted3,size=largesize,interval=1
 orderlist1_AB3<-orderlist1_AB3[1:largesize,]
 orderlist1_AB4<-createorderlist(quni1=quasiuni_sorted4,size=largesize,interval=16,dimension=4)
 orderlist1_AB4<-orderlist1_AB4[1:largesize,]
-batchsize=1000
+batchsize=100
 
 n <- samplesize
 setSeed(1)
@@ -136,7 +135,7 @@ simulatedbatch_bias_Monte<-foreach(batchnumber =c((1:length(allkurtWeibull))), .
   ranktm1<-rank(rqtm)
   rankfm1<-rank(rqfm)
   
-  allresultsSE<-c(samplesize=samplesize,type=1,kurtx,skewx,rankmean1,rankvar1,ranktm1,rankfm1,SEbatachesmean,rqmean,rqvar,rqtm,rqfm)
+  allresultsSE<-c(samplesize=samplesize,type=1,kurtx,skewx,rankmean1,rankvar1,ranktm1,rankfm1,SEbatachesmean,SErqmean=rqmean,SErqvar=rqvar,SErqtm=rqtm,SErqfm=rqfm)
 }
 
 write.csv(simulatedbatch_bias_Monte,paste("finite_Weibull_Imomentscalibration_raw_SWA",samplesize,".csv", sep = ","), row.names = FALSE)
@@ -191,5 +190,6 @@ all1<-rbind(asymptotic_I_Weibull,finite_I_Weibull)
 
 write.csv(all1,paste("Imoments_SWA.csv", sep = ","), row.names = FALSE)
 
-
+stopCluster(cl)
+registerDoSEQ()
 
