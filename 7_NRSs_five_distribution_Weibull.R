@@ -47,12 +47,12 @@ quasiuni_sorted3 <- na.omit(rowSort(quasiuni[,1:3], descend = FALSE, stable = FA
 quasiuni_sorted4 <- na.omit(rowSort(quasiuni, descend = FALSE, stable = FALSE, parallel = TRUE))
 # Forever...
 
-asymptotic_n <- 2048*900*3
+asymptotic_n <- 2048*900*3*5
 (asymptotic_n%%10)==0
 # maximum order of moments
 morder <- 4
 #large sample size (asymptotic bias)
-largesize<-2048*900
+largesize<-2048*900*5
 
 #generate quasirandom numbers based on the Sobol sequence
 quasiunisobol_asymptotic<-sobol(n=asymptotic_n, dim = morder, init = TRUE, scrambling = 0, seed = NULL, normal = FALSE,
@@ -140,6 +140,7 @@ simulatedbatch_asymptoticbias<-foreach(batchnumber = (1:length(allkurtWeibull)),
 write.csv(simulatedbatch_asymptoticbias,paste("asymptotic_Weibull_raw_Process",largesize,".csv", sep = ","), row.names = FALSE)
 
 write.csv(cbind(simulatedbatch_asymptoticbias[1:length(allkurtWeibull),1],simulatedbatch_asymptoticbias[1:length(allkurtWeibull),c(1:425)]),paste("asymptotic_Weibull",largesize,".csv", sep = ","), row.names = FALSE)
+
 largesize1<-2048*9
 samplesize=2048*2
 batchsizebase=1000
