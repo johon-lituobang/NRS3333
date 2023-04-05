@@ -88,7 +88,7 @@ Imoments_values<- read.csv(("Imoments_SWA.csv"))
 
 
 #set the stop criterion
-criterionset=1e-10
+criterionset=1e-6
 
 kurtWeibull<- read.csv(("kurtWeibull_31150.csv"))
 allkurtWeibull<-unlist(kurtWeibull)
