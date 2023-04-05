@@ -142,7 +142,7 @@ write.csv(simulatedbatch_asymptoticbias,paste("asymptotic_Weibull_raw_Process",l
 write.csv(cbind(simulatedbatch_asymptoticbias[1:length(allkurtWeibull),1],simulatedbatch_asymptoticbias[1:length(allkurtWeibull),c(1:425)]),paste("asymptotic_Weibull",largesize,".csv", sep = ","), row.names = FALSE)
 largesize1<-2048*9
 samplesize=2048*2
-batchsizebase=100
+batchsizebase=500
 orderlist1_AB20<-createorderlist(quni1=quasiuni_sorted2,size=samplesize,interval=16,dimension=2)
 orderlist1_AB20<-orderlist1_AB20[1:largesize1,]
 orderlist1_AB30<-createorderlist(quni1=quasiuni_sorted3,size=samplesize,interval=16,dimension=3)
