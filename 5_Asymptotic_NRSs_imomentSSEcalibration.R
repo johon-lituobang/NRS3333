@@ -78,25 +78,6 @@ unibatch<-colSort(unibatchran, descend = FALSE, stable = FALSE, parallel = TRUE)
 d_values<- read.csv(("d_SWA.csv"))
 I_values<-read.csv(("I_SWA.csv"))
 #Then, start the Monte Simulation
-batch1=1
-batchnumber=10
-x=sortedx
-iall1=iall11
-dtype1=1
-releaseall=TRUE
-standist_d=d_values
-I_values=I_values
-orderlist1_sorted20=orderlist1_AB2
-orderlist1_sorted30=orderlist1_AB3
-orderlist1_sorted40=orderlist1_AB4
-orderlist1_sorted2=orderlist1_AB2
-orderlist1_sorted3=orderlist1_AB3
-orderlist1_sorted4=orderlist1_AB4
-percentage=1/16
-batch="auto"
-stepsize=1000
-criterion=criterionset
-
 
 simulatedbatch_bias_Monte<-foreach(batchnumber =c((1:length(allkurtWeibull))), .combine = 'rbind') %dopar% {
   library(Rfast)
