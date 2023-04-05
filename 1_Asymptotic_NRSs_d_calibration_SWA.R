@@ -27,12 +27,12 @@ numCores <- detectCores()-4
 registerDoParallel(numCores)
 
 #bootsize for bootstrap approximation of the distributions of the kernal of U-statistics.
-n <- 2048*900*3
+n <- 2048*900*3*5
 (n%%10)==0
 # maximum order of moments
 morder <- 4
 #large sample size (approximating asymptotic)
-largesize<-2048*900
+largesize<-2048*900*5
 
 #generate quasirandom numbers based on the Sobol sequence
 quasiunisobol<-sobol(n=n, dim = morder, init = TRUE, scrambling = 0, seed = NULL, normal = FALSE,
