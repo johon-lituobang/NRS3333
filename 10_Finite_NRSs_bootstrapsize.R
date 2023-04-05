@@ -38,7 +38,7 @@ kurtWeibull<- read.csv(("kurtWeibull_28260.csv"))
 
 allkurtWeibull<-unlist(kurtWeibull)
 
-batchsize=100
+batchsize=1000
 
 samplesize=2048*2
 setSeed(1)
