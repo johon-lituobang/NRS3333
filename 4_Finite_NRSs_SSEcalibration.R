@@ -127,7 +127,7 @@ simulatedbatch_bias_Monte<-foreach(batchnumber =c((1:length(allkurtWeibull))), .
   rankkurtall1<-rank(rqkurt[c(1:238)])
   rankskewall1<-rank(rqskew[c(1:340)])
   
-  allresultsSE<-c(samplesize=samplesize,type=1,kurtx,skewx,ikurt1,iskew1,SEbatachesmean,rqkurt,rqskew)
+  allresultsSE<-c(samplesize=samplesize,type=1,kurtx,skewx,rankkurtall1,rankskewall1,SEbatachesmean,rqkurt,rqskew)
 }
 
 write.csv(simulatedbatch_bias_Monte,paste("finite_Weibull_Icalibration_raw_SWA",samplesize,".csv", sep = ","), row.names = FALSE)
