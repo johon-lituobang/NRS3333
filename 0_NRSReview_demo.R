@@ -64,8 +64,8 @@ imoments(x)
 medianstandardizedmoments(x)
 #sample moments are invalid.
 standardizedmoments(x)
-#if the sample size is smaller than 4097, warning message will also return
-#the finite sample bias hasn't not been integrated into this package yet. Will update later.
+#if the sample size is smaller than 4096, warning message will also return
+#since the finite sample bias hasn't not been integrated into this package yet. Will update later.
 x<-rexp(3097)
 imoments(x)
 
