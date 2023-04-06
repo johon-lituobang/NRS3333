@@ -26,14 +26,14 @@ library(matrixStats)
 
 #This file is totally not relevant to the reviewing of NRS. I will gradually update once I have time..
 
-#you can simulate a distribution with any sample size (better larger than 1000, since the finite sample bias hasn't not been integrated into this package yet. Will update later.)
-x<-rexp(4307)
+#you can simulate a distribution with any sample size larger than 4096.
+x<-rexp(5107)
 
 #all robust location estimators are highly bias, e.g.
 
 #SWA function will return all six SWAs with breakdown point 1/8 plus mean and median.
 
-SWA (x,percentage=1/8,blocknumber=8)
+SWA(x,percentage=1/8,blocknumber=8)
 
 #compared to recombined mean and quantile mean
 rqm(x)
@@ -54,10 +54,20 @@ medianstandardizedmoments(x)
 
 #for example
 x<-rPareto(21307,shape=1, scale=1)
+
 imoments(x)
+#warning message will return, since the kurtosis is larger than 26.
+#this is in fact based on the d values of Weibull distribution with kurtosis 26 and skewness 3.68, so the values will be 
+#close to this combination.
+
+#so median standardized moments are better choices.
 medianstandardizedmoments(x)
 #sample moments are invalid.
 standardizedmoments(x)
+#if the sample size is smaller than 4097, warning message will also return
+#the finite sample bias hasn't not been integrated into this package yet. Will update later.
+x<-rexp(3097)
+imoments(x)
 
 #if the distribution is not Weibull, small biases might exist, but much smaller than others.
 x<-rnorm(1*10^6)
@@ -67,8 +77,9 @@ SWAmoments(x)
 medianstandardizedmoments(x)
 
 imoments(x)
+#warning message also return, since the minimum skewness used to calibrate is 0.293.
 
-
+#any way, if the warning message return, it means the sample is out of supported, the kurtosis, skewness, or size.
 standardizedmoments(x)
 
 #even for the kurtosis, the bias is relatively small, in fact, this can be further improved, but due to length limit, this is all at this stage.
