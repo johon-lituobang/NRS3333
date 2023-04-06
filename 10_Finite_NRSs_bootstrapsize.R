@@ -379,7 +379,7 @@ simulatedbatch_bias_Monte_SE<-foreach(batchnumber =c((1:100)), .combine = 'rbind
                     sampletmsd1=sampletmsd1,tmsd1=tmsd1,SEbatachesmean[1],samplefmsd1=samplefmsd1,fmsd1=fmsd1
   )
   se_mean_all1<-apply((SEbataches[1:batchsize,]), 2, se_mean)
-  allErrors<-c(bootstrapsize=largesize,kurt=SEbatachesmean[1],skew=SEbatachesmean[2],se_mean_all1,allSE=allSE,allSSE=allSSE,allSE_unstan=allSE_unstan,allSSE_unstand=allSSE_unstand,SEbatachesmean=SEbatachesmean)
+  allErrors<-c(bootstrapsize=round(batchnumber*2048*9/100),kurt=SEbatachesmean[1],skew=SEbatachesmean[2],se_mean_all1,allSE=allSE,allSSE=allSSE,allSE_unstan=allSE_unstan,allSSE_unstand=allSSE_unstand,SEbatachesmean=SEbatachesmean)
   
   allErrors
 }
