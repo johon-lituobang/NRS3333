@@ -36,10 +36,10 @@ x<-rexp(5207)
 SWA(x,percentage=1/8,blocknumber=8,batch="auto",sorted=FALSE)
 
 #median Hodges-Lehmann mean using the quasi-bootstrap
-mHLM(x,dimension=4,boot=TRUE,quasi=FALSE,largesize=1.8*10^4)
+mHLM(x,dimension=4,boot=TRUE,quasi=TRUE,largesize=1.8*10^4)
 
 #using bootstrap is equavalent to median of randomized means
-mHLM(x,dimension=4,boot=TRUE,quasi=TRUE,largesize=1.8*10^4)
+mHLM(x,dimension=4,boot=TRUE,quasi=FALSE,largesize=1.8*10^4)
 
 #compared to median of means 
 median_of_means(x,korder=4)
