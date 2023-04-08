@@ -267,7 +267,7 @@ simulatedbatch_asymptoticbias<-foreach(batchnumber = (1:1000), .combine = 'rbind
   library(NRSReview)
   setSeed(1)
   set.seed(1)
-  a=4+0.1*batchnumber
+  a=1+0.1*batchnumber
   x<-c(dsPareto(uni=quasiuni_asymptotic, shape=a/1, scale = 1))
 
   targetm<-a/(a-1)
