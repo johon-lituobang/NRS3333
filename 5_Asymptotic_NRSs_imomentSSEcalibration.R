@@ -81,6 +81,7 @@ I_values<-read.csv(("I_SWA.csv"))
 simulatedbatch_bias_Monte<-foreach(batchnumber =c((1:length(allkurtWeibull))), .combine = 'rbind') %dopar% {
   library(Rfast)
   library(matrixStats)
+  library(randtoolbox)
   library(NRSReview)
   setSeed(1)
   set.seed(1)
