@@ -68,6 +68,7 @@ simulatedbatchWeibull_bias<-foreach(batchnumber = (1:length(allkurtWeibull)), .c
   library(Rfast)
   library(matrixStats)
   library(NRSReview)
+  library(randtoolbox)
   setSeed(1)
   set.seed(1)
   a=allkurtWeibull[batchnumber]
