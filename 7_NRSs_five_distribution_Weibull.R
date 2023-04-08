@@ -97,8 +97,8 @@ simulatedbatch_asymptoticbias<-foreach(batchnumber = (1:length(allkurtWeibull)),
   library(matrixStats)
   library(randtoolbox)
   library(NRSReview)
-  setSeed(batchnumber)
-  set.seed(batchnumber)
+  setSeed(1)
+  set.seed(1)
   a=allkurtWeibull[batchnumber]
   x<-c(dsWeibull(uni=quasiuni_asymptotic, shape=a/1, scale = 1))
   targetm<-gamma(1+1/(a/1))
@@ -197,8 +197,8 @@ simulatedbatch_ABSE<-foreach(batchnumber =c((1:length(allkurtWeibull))), .combin
   library(matrixStats)
   library(randtoolbox)
   library(NRSReview)
-  setSeed(batchnumber)
-  set.seed(batchnumber)
+  setSeed(1)
+  set.seed(1)
 
   a=allkurtWeibull[batchnumber]
 
@@ -407,8 +407,8 @@ simulatedbatch_ABSE_SE<-foreach(batchnumber =c((1:length(allkurtWeibull))), .com
   library(matrixStats)
   library(randtoolbox)
   library(NRSReview)
-  setSeed(batchnumber)
-  set.seed(batchnumber)
+  setSeed(1)
+  set.seed(1)
 
 
   a=allkurtWeibull[batchnumber]
@@ -545,8 +545,8 @@ simulatedbatch_asymptoticbias<-foreach(batchnumber = (1:length(allkurtgamma)), .
   library(matrixStats)
   library(randtoolbox)
   library(NRSReview)
-  setSeed(batchnumber)
-  set.seed(batchnumber)
+  setSeed(1)
+  set.seed(1)
   a=allkurtgamma[batchnumber]
   x<-c(dsgamma(uni=quasiuni_asymptotic, shape=a/1, rate  = 1))
   targetm<-a
@@ -620,8 +620,8 @@ simulatedbatch_ABSE<-foreach(batchnumber =c((1:length(allkurtgamma))), .combine 
   library(matrixStats)
   library(randtoolbox)
   library(NRSReview)
-  setSeed(batchnumber)
-  set.seed(batchnumber)
+  setSeed(1)
+  set.seed(1)
 
 
   a=allkurtgamma[batchnumber]
@@ -830,8 +830,8 @@ simulatedbatch_ABSE_SE<-foreach(batchnumber =c((1:length(allkurtgamma))), .combi
   library(matrixStats)
   library(randtoolbox)
   library(NRSReview)
-  setSeed(batchnumber)
-  set.seed(batchnumber)
+  setSeed(1)
+  set.seed(1)
 
 
   a=allkurtgamma[batchnumber]
@@ -968,8 +968,8 @@ simulatedbatch_asymptoticbias<-foreach(batchnumber = (1:length(allkurtPareto)), 
   library(matrixStats)
   library(randtoolbox)
   library(NRSReview)
-  setSeed(batchnumber)
-  set.seed(batchnumber)
+  setSeed(1)
+  set.seed(1)
   a=allkurtPareto[batchnumber]
   x<-c(dsPareto(uni=quasiuni_asymptotic, shape=a/1, scale = 1))
 
@@ -1044,8 +1044,8 @@ simulatedbatch_ABSE<-foreach(batchnumber =c((1:length(allkurtPareto))), .combine
   library(matrixStats)
   library(randtoolbox)
   library(NRSReview)
-  setSeed(batchnumber)
-  set.seed(batchnumber)
+  setSeed(1)
+  set.seed(1)
 
 
   a=allkurtPareto[batchnumber]
@@ -1254,8 +1254,8 @@ simulatedbatch_ABSE_SE<-foreach(batchnumber =c((1:length(allkurtPareto))), .comb
   library(matrixStats)
   library(randtoolbox)
   library(NRSReview)
-  setSeed(batchnumber)
-  set.seed(batchnumber)
+  setSeed(1)
+  set.seed(1)
 
 
   a=allkurtPareto[batchnumber]
@@ -1393,8 +1393,8 @@ simulatedbatch_asymptoticbias<-foreach(batchnumber = (1:length(allkurtlognorm)),
   library(matrixStats)
   library(randtoolbox)
   library(NRSReview)
-  setSeed(batchnumber)
-  set.seed(batchnumber)
+  setSeed(1)
+  set.seed(1)
   a=allkurtlognorm[batchnumber]
   x<-c(dslnorm(uni=quasiuni_asymptotic, meanlog =0, sdlog  = a/1))
   targetm<-exp((a^2)/2)
@@ -1468,8 +1468,8 @@ simulatedbatch_ABSE<-foreach(batchnumber =c((1:length(allkurtlognorm))), .combin
   library(matrixStats)
   library(randtoolbox)
   library(NRSReview)
-  setSeed(batchnumber)
-  set.seed(batchnumber)
+  setSeed(1)
+  set.seed(1)
 
   a=allkurtlognorm[batchnumber]
 
@@ -1677,8 +1677,8 @@ simulatedbatch_ABSE_SE<-foreach(batchnumber =c((1:length(allkurtlognorm))), .com
   library(matrixStats)
   library(randtoolbox)
   library(NRSReview)
-  setSeed(batchnumber)
-  set.seed(batchnumber)
+  setSeed(1)
+  set.seed(1)
 
 
   a=allkurtlognorm[batchnumber]
@@ -1818,8 +1818,8 @@ simulatedbatch_asymptoticbias<-foreach(batchnumber = (1:length(allkurtgnorm)), .
   library(matrixStats)
   library(randtoolbox)
   library(NRSReview)
-  setSeed(batchnumber)
-  set.seed(batchnumber)
+  setSeed(1)
+  set.seed(1)
   a=allkurtgnorm[batchnumber]
   x<-c(dsgnorm(uni=quasiuni_asymptotic, shape=a/1, scale = 1))
 
@@ -1893,8 +1893,8 @@ simulatedbatch_ABSE<-foreach(batchnumber =c((1:length(allkurtgnorm))), .combine 
   library(matrixStats)
   library(randtoolbox)
   library(NRSReview)
-  setSeed(batchnumber)
-  set.seed(batchnumber)
+  setSeed(1)
+  set.seed(1)
 
 
   a=allkurtgnorm[batchnumber]
@@ -2104,8 +2104,8 @@ simulatedbatch_ABSE_SE<-foreach(batchnumber =c((1:length(allkurtgnorm))), .combi
   library(matrixStats)
   library(randtoolbox)
   library(NRSReview)
-  setSeed(batchnumber)
-  set.seed(batchnumber)
+  setSeed(1)
+  set.seed(1)
 
 
   a=allkurtgnorm[batchnumber]
