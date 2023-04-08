@@ -28,12 +28,12 @@ registerDoParallel(cl) # Register the parallel backend
 
 
 #bootsize for bootstrap approximation of the distributions of the kernel of U-statistics.
-n <- 2048*900*3*2
+n <- 2048*9*3*2
 (n%%10)==0
 # maximum order of moments
 morder <- 4
 #large sample size (approximating asymptotic)
-largesize1<-2048*900*2
+largesize1<-2048*9*2
 
 #generate quasirandom numbers based on the Sobol sequence
 quasiunisobol<-sobol(n=n, dim = morder, init = TRUE, scrambling = 0, seed = NULL, normal = FALSE,
@@ -93,7 +93,10 @@ allkurtWeibull<-unlist(kurtWeibull)
 simulatedbatch_asymptoticbias<-foreach(batchnumber = (1:1000), .combine = 'rbind') %dopar% {
   library(Rfast)
   library(matrixStats)
+  library(randtoolbox)
   library(NRSReview)
+  setSeed(batchnumber)
+  set.seed(batchnumber)
   a=0.01*batchnumber
   x<-c(dsWeibull(uni=quasiuni_asymptotic, shape=a/1, scale = 1))
   targetm<-gamma(1+1/(a/1))
@@ -109,7 +112,6 @@ simulatedbatch_asymptoticbias<-foreach(batchnumber = (1:1000), .combine = 'rbind
   
   Huberx<-Huber_estimator(x=sortedx, tol = 1e-10)
   SMWM9<-SWA9(x=sortedx,interval=9,batch=1,sorted=TRUE)
-  
   imoments1<-tryCatch({
     unlist(imoments(x=sortedx,dtype1=1,releaseall=TRUE,standist_d=d_values,standist_I=I_values,standist_Imoments=Imoments_values,orderlist1_sorted20=orderlist1_AB2_asymptotic,orderlist1_sorted30=orderlist1_AB3_asymptotic,orderlist1_sorted40=orderlist1_AB4_asymptotic,orderlist1_sorted2=orderlist1_AB2_asymptotic,orderlist1_sorted3=orderlist1_AB3_asymptotic,orderlist1_sorted4=orderlist1_AB4_asymptotic,percentage=1/16,batch="auto",stepsize=1000,criterion=criterionset,boot=TRUE))
     
@@ -117,22 +119,45 @@ simulatedbatch_asymptoticbias<-foreach(batchnumber = (1:1000), .combine = 'rbind
     cat("Error: ", conditionMessage(e), "\n")
     rep(NA,1524)
   })
-  
-  
   momentsx<-unbiasedmoments(x=sortedx)
-
+  
+  #D Olive, Robust estimators for transformed location scale families. Unpubl. manuscript 1025 available from (www. math. siu. edu/olive/preprints. htm) (2006).
+  medianMAD1<-Weibull_median_MAD_estimator(sortedx)
+  
+  #NB Marks, Estimation of weibull parameters from common percentiles. J. applied Stat. 32, 17–24 (2005). 
+  QE1<-Weibull_quantile_estimator(x=sortedx,sorted=TRUE)
+  
+  alpha1<-QE1[1]-0.3
+  alpha2<-QE1[1]+0.3
+  
+  #X He, WK Fung, Method of medians for lifetime data with weibull models. Stat. medicine 18, 1993–2009 (1999)
+  RMLE1<-Weibull_RMLE(sortedx,alpha1=alpha1,alpha2=alpha2)
+  
+  #all parameter setting are from
+  #K Boudt, D Caliskan, C Croux, Robust explicit estimators of weibull parameters. Metrika 73, 187–209 (2011).
+  
+  moments_medianMAD1<-Weibull_moments(alpha=medianMAD1[1],lambda=medianMAD1[2])
+  
+  moments_QE1<-Weibull_moments(alpha=QE1[1],lambda=QE1[2])
+  
+  moments_RMLE1<-Weibull_moments(alpha=RMLE1[1],lambda=RMLE1[2])
+  
+  MoM4<-median_of_means(sortedx,korder=4)
+  
+  MoRM4<-mHLM(x=sortedx,dimension=4,boot = TRUE,quasi= FALSE, largesize =largesize)
+  
   sortedx<-c()
   momentssd<-c(sd=sqrt(momentsx[2]),imoments1[1522],imoments1[1523],imoments1[1524])
   
   allrawmoBias<-c(
-    firstbias=abs(c(Huberx,SMWM9,imoments1[1],momentsx[1],imoments1[7:52],imoments1[121:166],imoments1[1391:1418])-momentsx[1])/momentssd[1],
-    secondbias=abs(c(imoments1[2],momentsx[2],imoments1[53:86],imoments1[167:200],imoments1[1442:1463])-imoments1[1442])/momentssd[2],
-    thirdbias=abs(c(imoments1[3],momentsx[3],imoments1[87:106],imoments1[201:220],imoments1[1481:1494])-imoments1[1481])/momentssd[3],
-    fourbias=abs(c(imoments1[4],momentsx[4],imoments1[107:120],imoments1[221:234],imoments1[1505:1514])-imoments1[1505])/momentssd[4])
-  allrawmo1<-c(first=c(Huberx,SMWM9,imoments1[1],momentsx[1],imoments1[7:52],imoments1[121:166],imoments1[1391:1418]),
-               second=c(imoments1[2],momentsx[2],imoments1[53:86],imoments1[167:200],imoments1[1442:1463]),
-               third=c(imoments1[3],momentsx[3],imoments1[87:106],imoments1[201:220],imoments1[1481:1494]),
-               fourth=c(imoments1[4],momentsx[4],imoments1[107:120],imoments1[221:234],imoments1[1505:1514])
+    firstbias=abs(c(Huberx,SMWM9,imoments1[1],momentsx[1],imoments1[7:52],imoments1[121:166],imoments1[1391:1418],mean_medianMAD1=moments_medianMAD1[1],mean_QE1=moments_QE1[1],mean_RMLE1=moments_RMLE1[1],MoM4=MoM4,MoRM4=MoRM4)-momentsx[1])/momentssd[1],
+    secondbias=abs(c(imoments1[2],momentsx[2],imoments1[53:86],imoments1[167:200],imoments1[1442:1463],var_medianMAD1=moments_medianMAD1[2],var_QE1=moments_QE1[2],var_RMLE1=moments_RMLE1[2])-imoments1[1442])/momentssd[2],
+    thirdbias=abs(c(imoments1[3],momentsx[3],imoments1[87:106],imoments1[201:220],imoments1[1481:1494],tm_medianMAD1=moments_medianMAD1[3],tm_QE1=moments_QE1[3],tm_RMLE1=moments_RMLE1[3])-imoments1[1481])/momentssd[3],
+    fourbias=abs(c(imoments1[4],momentsx[4],imoments1[107:120],imoments1[221:234],imoments1[1505:1514],fm_medianMAD1=moments_medianMAD1[4],fm_QE1=moments_QE1[4],fm_RMLE1=moments_RMLE1[4])-imoments1[1505])/momentssd[4])
+  allrawmo1<-c(first=c(Huberx,SMWM9,imoments1[1],momentsx[1],imoments1[7:52],imoments1[121:166],imoments1[1391:1418],mean_medianMAD1=moments_medianMAD1[1],mean_QE1=moments_QE1[1],mean_RMLE1=moments_RMLE1[1],MoM4=MoM4,MoRM4=MoRM4),
+               second=c(imoments1[2],momentsx[2],imoments1[53:86],imoments1[167:200],imoments1[1442:1463],var_medianMAD1=moments_medianMAD1[2],var_QE1=moments_QE1[2],var_RMLE1=moments_RMLE1[2]),
+               third=c(imoments1[3],momentsx[3],imoments1[87:106],imoments1[201:220],imoments1[1481:1494],tm_medianMAD1=moments_medianMAD1[3],tm_QE1=moments_QE1[3],tm_RMLE1=moments_RMLE1[3]),
+               fourth=c(imoments1[4],momentsx[4],imoments1[107:120],imoments1[221:234],imoments1[1505:1514],fm_medianMAD1=moments_medianMAD1[4],fm_QE1=moments_QE1[4],fm_RMLE1=moments_RMLE1[4])
   )
   
   
@@ -143,7 +168,7 @@ simulatedbatch_asymptoticbias<-foreach(batchnumber = (1:1000), .combine = 'rbind
 
 write.csv(simulatedbatch_asymptoticbias,paste("asymptotic_Weibull_raw_Process_max",largesize,".csv", sep = ","), row.names = FALSE)
 
-write.csv(cbind(simulatedbatch_asymptoticbias[1:1000,c(1:331)]),paste("asymptotic_Weibull_max",largesize,".csv", sep = ","), row.names = FALSE)
+write.csv(cbind(simulatedbatch_asymptoticbias[1:1000,c(1:345)]),paste("asymptotic_Weibull_max",largesize,".csv", sep = ","), row.names = FALSE)
 
 
 
@@ -153,7 +178,10 @@ allkurtgamma<-unlist(kurtgamma)
 simulatedbatch_asymptoticbias<-foreach(batchnumber = (1:1000), .combine = 'rbind') %dopar% {
   library(Rfast)
   library(matrixStats)
+  library(randtoolbox)
   library(NRSReview)
+  setSeed(batchnumber)
+  set.seed(batchnumber)
   a=0.01*batchnumber
   x<-c(dsgamma(uni=quasiuni_asymptotic, shape=a/1, rate  = 1))
   targetm<-a
@@ -167,9 +195,9 @@ simulatedbatch_asymptoticbias<-foreach(batchnumber = (1:1000), .combine = 'rbind
   targetall<-c(targetm=targetm,targetvar=targetvar,targettm=targettm,targetfm=targetfm)
   x<-c()
   
+  
   Huberx<-Huber_estimator(x=sortedx, tol = 1e-10)
   SMWM9<-SWA9(x=sortedx,interval=9,batch=1,sorted=TRUE)
-  
   imoments1<-tryCatch({
     unlist(imoments(x=sortedx,dtype1=1,releaseall=TRUE,standist_d=d_values,standist_I=I_values,standist_Imoments=Imoments_values,orderlist1_sorted20=orderlist1_AB2_asymptotic,orderlist1_sorted30=orderlist1_AB3_asymptotic,orderlist1_sorted40=orderlist1_AB4_asymptotic,orderlist1_sorted2=orderlist1_AB2_asymptotic,orderlist1_sorted3=orderlist1_AB3_asymptotic,orderlist1_sorted4=orderlist1_AB4_asymptotic,percentage=1/16,batch="auto",stepsize=1000,criterion=criterionset,boot=TRUE))
     
@@ -177,21 +205,45 @@ simulatedbatch_asymptoticbias<-foreach(batchnumber = (1:1000), .combine = 'rbind
     cat("Error: ", conditionMessage(e), "\n")
     rep(NA,1524)
   })
-  
   momentsx<-unbiasedmoments(x=sortedx)
+  
+  #D Olive, Robust estimators for transformed location scale families. Unpubl. manuscript 1025 available from (www. math. siu. edu/olive/preprints. htm) (2006).
+  medianMAD1<-Weibull_median_MAD_estimator(sortedx)
+  
+  #NB Marks, Estimation of weibull parameters from common percentiles. J. applied Stat. 32, 17–24 (2005). 
+  QE1<-Weibull_quantile_estimator(x=sortedx,sorted=TRUE)
+  
+  alpha1<-QE1[1]-0.3
+  alpha2<-QE1[1]+0.3
+  
+  #X He, WK Fung, Method of medians for lifetime data with weibull models. Stat. medicine 18, 1993–2009 (1999)
+  RMLE1<-Weibull_RMLE(sortedx,alpha1=alpha1,alpha2=alpha2)
+  
+  #all parameter setting are from
+  #K Boudt, D Caliskan, C Croux, Robust explicit estimators of weibull parameters. Metrika 73, 187–209 (2011).
+  
+  moments_medianMAD1<-Weibull_moments(alpha=medianMAD1[1],lambda=medianMAD1[2])
+  
+  moments_QE1<-Weibull_moments(alpha=QE1[1],lambda=QE1[2])
+  
+  moments_RMLE1<-Weibull_moments(alpha=RMLE1[1],lambda=RMLE1[2])
+  
+  MoM4<-median_of_means(sortedx,korder=4)
+  
+  MoRM4<-mHLM(x=sortedx,dimension=4,boot = TRUE,quasi= FALSE, largesize =largesize)
   
   sortedx<-c()
   momentssd<-c(sd=sqrt(momentsx[2]),imoments1[1522],imoments1[1523],imoments1[1524])
   
   allrawmoBias<-c(
-    firstbias=abs(c(Huberx,SMWM9,imoments1[1],momentsx[1],imoments1[7:52],imoments1[121:166],imoments1[1391:1418])-momentsx[1])/momentssd[1],
-    secondbias=abs(c(imoments1[2],momentsx[2],imoments1[53:86],imoments1[167:200],imoments1[1442:1463])-imoments1[1442])/momentssd[2],
-    thirdbias=abs(c(imoments1[3],momentsx[3],imoments1[87:106],imoments1[201:220],imoments1[1481:1494])-imoments1[1481])/momentssd[3],
-    fourbias=abs(c(imoments1[4],momentsx[4],imoments1[107:120],imoments1[221:234],imoments1[1505:1514])-imoments1[1505])/momentssd[4])
-  allrawmo1<-c(first=c(Huberx,SMWM9,imoments1[1],momentsx[1],imoments1[7:52],imoments1[121:166],imoments1[1391:1418]),
-               second=c(imoments1[2],momentsx[2],imoments1[53:86],imoments1[167:200],imoments1[1442:1463]),
-               third=c(imoments1[3],momentsx[3],imoments1[87:106],imoments1[201:220],imoments1[1481:1494]),
-               fourth=c(imoments1[4],momentsx[4],imoments1[107:120],imoments1[221:234],imoments1[1505:1514])
+    firstbias=abs(c(Huberx,SMWM9,imoments1[1],momentsx[1],imoments1[7:52],imoments1[121:166],imoments1[1391:1418],mean_medianMAD1=moments_medianMAD1[1],mean_QE1=moments_QE1[1],mean_RMLE1=moments_RMLE1[1],MoM4=MoM4,MoRM4=MoRM4)-momentsx[1])/momentssd[1],
+    secondbias=abs(c(imoments1[2],momentsx[2],imoments1[53:86],imoments1[167:200],imoments1[1442:1463],var_medianMAD1=moments_medianMAD1[2],var_QE1=moments_QE1[2],var_RMLE1=moments_RMLE1[2])-imoments1[1442])/momentssd[2],
+    thirdbias=abs(c(imoments1[3],momentsx[3],imoments1[87:106],imoments1[201:220],imoments1[1481:1494],tm_medianMAD1=moments_medianMAD1[3],tm_QE1=moments_QE1[3],tm_RMLE1=moments_RMLE1[3])-imoments1[1481])/momentssd[3],
+    fourbias=abs(c(imoments1[4],momentsx[4],imoments1[107:120],imoments1[221:234],imoments1[1505:1514],fm_medianMAD1=moments_medianMAD1[4],fm_QE1=moments_QE1[4],fm_RMLE1=moments_RMLE1[4])-imoments1[1505])/momentssd[4])
+  allrawmo1<-c(first=c(Huberx,SMWM9,imoments1[1],momentsx[1],imoments1[7:52],imoments1[121:166],imoments1[1391:1418],mean_medianMAD1=moments_medianMAD1[1],mean_QE1=moments_QE1[1],mean_RMLE1=moments_RMLE1[1],MoM4=MoM4,MoRM4=MoRM4),
+               second=c(imoments1[2],momentsx[2],imoments1[53:86],imoments1[167:200],imoments1[1442:1463],var_medianMAD1=moments_medianMAD1[2],var_QE1=moments_QE1[2],var_RMLE1=moments_RMLE1[2]),
+               third=c(imoments1[3],momentsx[3],imoments1[87:106],imoments1[201:220],imoments1[1481:1494],tm_medianMAD1=moments_medianMAD1[3],tm_QE1=moments_QE1[3],tm_RMLE1=moments_RMLE1[3]),
+               fourth=c(imoments1[4],momentsx[4],imoments1[107:120],imoments1[221:234],imoments1[1505:1514],fm_medianMAD1=moments_medianMAD1[4],fm_QE1=moments_QE1[4],fm_RMLE1=moments_RMLE1[4])
   )
   
   
@@ -202,7 +254,7 @@ simulatedbatch_asymptoticbias<-foreach(batchnumber = (1:1000), .combine = 'rbind
 
 write.csv(simulatedbatch_asymptoticbias,paste("asymptotic_gamma_raw_Process_max",largesize,".csv", sep = ","), row.names = FALSE)
 
-write.csv(cbind(simulatedbatch_asymptoticbias[1:1000,c(1:331)]),paste("asymptotic_gamma_max",largesize,".csv", sep = ","), row.names = FALSE)
+write.csv(cbind(simulatedbatch_asymptoticbias[1:1000,c(1:345)]),paste("asymptotic_gamma_max",largesize,".csv", sep = ","), row.names = FALSE)
 
 
 kurtPareto<- read.csv(("kurtPareto_91210.csv"))
@@ -211,7 +263,10 @@ allkurtPareto<-unlist(kurtPareto)
 simulatedbatch_asymptoticbias<-foreach(batchnumber = (1:1000), .combine = 'rbind') %dopar% {
   library(Rfast)
   library(matrixStats)
+  library(randtoolbox)
   library(NRSReview)
+  setSeed(batchnumber)
+  set.seed(batchnumber)
   a=4+0.1*batchnumber
   x<-c(dsPareto(uni=quasiuni_asymptotic, shape=a/1, scale = 1))
 
@@ -226,9 +281,9 @@ simulatedbatch_asymptoticbias<-foreach(batchnumber = (1:1000), .combine = 'rbind
   targetall<-c(targetm=targetm,targetvar=targetvar,targettm=targettm,targetfm=targetfm)
   x<-c()
   
+  
   Huberx<-Huber_estimator(x=sortedx, tol = 1e-10)
   SMWM9<-SWA9(x=sortedx,interval=9,batch=1,sorted=TRUE)
-  
   imoments1<-tryCatch({
     unlist(imoments(x=sortedx,dtype1=1,releaseall=TRUE,standist_d=d_values,standist_I=I_values,standist_Imoments=Imoments_values,orderlist1_sorted20=orderlist1_AB2_asymptotic,orderlist1_sorted30=orderlist1_AB3_asymptotic,orderlist1_sorted40=orderlist1_AB4_asymptotic,orderlist1_sorted2=orderlist1_AB2_asymptotic,orderlist1_sorted3=orderlist1_AB3_asymptotic,orderlist1_sorted4=orderlist1_AB4_asymptotic,percentage=1/16,batch="auto",stepsize=1000,criterion=criterionset,boot=TRUE))
     
@@ -236,22 +291,45 @@ simulatedbatch_asymptoticbias<-foreach(batchnumber = (1:1000), .combine = 'rbind
     cat("Error: ", conditionMessage(e), "\n")
     rep(NA,1524)
   })
-  
   momentsx<-unbiasedmoments(x=sortedx)
+  
+  #D Olive, Robust estimators for transformed location scale families. Unpubl. manuscript 1025 available from (www. math. siu. edu/olive/preprints. htm) (2006).
+  medianMAD1<-Weibull_median_MAD_estimator(sortedx)
+  
+  #NB Marks, Estimation of weibull parameters from common percentiles. J. applied Stat. 32, 17–24 (2005). 
+  QE1<-Weibull_quantile_estimator(x=sortedx,sorted=TRUE)
+  
+  alpha1<-QE1[1]-0.3
+  alpha2<-QE1[1]+0.3
+  
+  #X He, WK Fung, Method of medians for lifetime data with weibull models. Stat. medicine 18, 1993–2009 (1999)
+  RMLE1<-Weibull_RMLE(sortedx,alpha1=alpha1,alpha2=alpha2)
+  
+  #all parameter setting are from
+  #K Boudt, D Caliskan, C Croux, Robust explicit estimators of weibull parameters. Metrika 73, 187–209 (2011).
+  
+  moments_medianMAD1<-Weibull_moments(alpha=medianMAD1[1],lambda=medianMAD1[2])
+  
+  moments_QE1<-Weibull_moments(alpha=QE1[1],lambda=QE1[2])
+  
+  moments_RMLE1<-Weibull_moments(alpha=RMLE1[1],lambda=RMLE1[2])
+  
+  MoM4<-median_of_means(sortedx,korder=4)
+  
+  MoRM4<-mHLM(x=sortedx,dimension=4,boot = TRUE,quasi= FALSE, largesize =largesize)
   
   sortedx<-c()
   momentssd<-c(sd=sqrt(momentsx[2]),imoments1[1522],imoments1[1523],imoments1[1524])
   
-  
   allrawmoBias<-c(
-    firstbias=abs(c(Huberx,SMWM9,imoments1[1],momentsx[1],imoments1[7:52],imoments1[121:166],imoments1[1391:1418])-momentsx[1])/momentssd[1],
-    secondbias=abs(c(imoments1[2],momentsx[2],imoments1[53:86],imoments1[167:200],imoments1[1442:1463])-imoments1[1442])/momentssd[2],
-    thirdbias=abs(c(imoments1[3],momentsx[3],imoments1[87:106],imoments1[201:220],imoments1[1481:1494])-imoments1[1481])/momentssd[3],
-    fourbias=abs(c(imoments1[4],momentsx[4],imoments1[107:120],imoments1[221:234],imoments1[1505:1514])-imoments1[1505])/momentssd[4])
-  allrawmo1<-c(first=c(Huberx,SMWM9,imoments1[1],momentsx[1],imoments1[7:52],imoments1[121:166],imoments1[1391:1418]),
-               second=c(imoments1[2],momentsx[2],imoments1[53:86],imoments1[167:200],imoments1[1442:1463]),
-               third=c(imoments1[3],momentsx[3],imoments1[87:106],imoments1[201:220],imoments1[1481:1494]),
-               fourth=c(imoments1[4],momentsx[4],imoments1[107:120],imoments1[221:234],imoments1[1505:1514])
+    firstbias=abs(c(Huberx,SMWM9,imoments1[1],momentsx[1],imoments1[7:52],imoments1[121:166],imoments1[1391:1418],mean_medianMAD1=moments_medianMAD1[1],mean_QE1=moments_QE1[1],mean_RMLE1=moments_RMLE1[1],MoM4=MoM4,MoRM4=MoRM4)-momentsx[1])/momentssd[1],
+    secondbias=abs(c(imoments1[2],momentsx[2],imoments1[53:86],imoments1[167:200],imoments1[1442:1463],var_medianMAD1=moments_medianMAD1[2],var_QE1=moments_QE1[2],var_RMLE1=moments_RMLE1[2])-imoments1[1442])/momentssd[2],
+    thirdbias=abs(c(imoments1[3],momentsx[3],imoments1[87:106],imoments1[201:220],imoments1[1481:1494],tm_medianMAD1=moments_medianMAD1[3],tm_QE1=moments_QE1[3],tm_RMLE1=moments_RMLE1[3])-imoments1[1481])/momentssd[3],
+    fourbias=abs(c(imoments1[4],momentsx[4],imoments1[107:120],imoments1[221:234],imoments1[1505:1514],fm_medianMAD1=moments_medianMAD1[4],fm_QE1=moments_QE1[4],fm_RMLE1=moments_RMLE1[4])-imoments1[1505])/momentssd[4])
+  allrawmo1<-c(first=c(Huberx,SMWM9,imoments1[1],momentsx[1],imoments1[7:52],imoments1[121:166],imoments1[1391:1418],mean_medianMAD1=moments_medianMAD1[1],mean_QE1=moments_QE1[1],mean_RMLE1=moments_RMLE1[1],MoM4=MoM4,MoRM4=MoRM4),
+               second=c(imoments1[2],momentsx[2],imoments1[53:86],imoments1[167:200],imoments1[1442:1463],var_medianMAD1=moments_medianMAD1[2],var_QE1=moments_QE1[2],var_RMLE1=moments_RMLE1[2]),
+               third=c(imoments1[3],momentsx[3],imoments1[87:106],imoments1[201:220],imoments1[1481:1494],tm_medianMAD1=moments_medianMAD1[3],tm_QE1=moments_QE1[3],tm_RMLE1=moments_RMLE1[3]),
+               fourth=c(imoments1[4],momentsx[4],imoments1[107:120],imoments1[221:234],imoments1[1505:1514],fm_medianMAD1=moments_medianMAD1[4],fm_QE1=moments_QE1[4],fm_RMLE1=moments_RMLE1[4])
   )
   
   
@@ -262,7 +340,7 @@ simulatedbatch_asymptoticbias<-foreach(batchnumber = (1:1000), .combine = 'rbind
 
 write.csv(simulatedbatch_asymptoticbias,paste("asymptotic_Pareto_raw_Process_max",largesize,".csv", sep = ","), row.names = FALSE)
 
-write.csv(cbind(simulatedbatch_asymptoticbias[1:1000,1:331]),paste("asymptotic_Pareto_max",largesize,".csv", sep = ","), row.names = FALSE)
+write.csv(cbind(simulatedbatch_asymptoticbias[1:1000,1:345]),paste("asymptotic_Pareto_max",largesize,".csv", sep = ","), row.names = FALSE)
 
 
 kurtlognorm<- read.csv(("kurtlognorm_31150.csv"))
@@ -272,7 +350,10 @@ allkurtlognorm<-unlist(kurtlognorm)
 simulatedbatch_asymptoticbias<-foreach(batchnumber = (1:1000), .combine = 'rbind') %dopar% {
   library(Rfast)
   library(matrixStats)
+  library(randtoolbox)
   library(NRSReview)
+  setSeed(batchnumber)
+  set.seed(batchnumber)
   a=batchnumber*0.05
   x<-c(dslnorm(uni=quasiuni_asymptotic, meanlog =0, sdlog  = a/1))
   targetm<-exp((a^2)/2)
@@ -286,9 +367,9 @@ simulatedbatch_asymptoticbias<-foreach(batchnumber = (1:1000), .combine = 'rbind
   targetall<-c(targetm=targetm,targetvar=targetvar,targettm=targettm,targetfm=targetfm)
   x<-c()
   
+  
   Huberx<-Huber_estimator(x=sortedx, tol = 1e-10)
   SMWM9<-SWA9(x=sortedx,interval=9,batch=1,sorted=TRUE)
-  
   imoments1<-tryCatch({
     unlist(imoments(x=sortedx,dtype1=1,releaseall=TRUE,standist_d=d_values,standist_I=I_values,standist_Imoments=Imoments_values,orderlist1_sorted20=orderlist1_AB2_asymptotic,orderlist1_sorted30=orderlist1_AB3_asymptotic,orderlist1_sorted40=orderlist1_AB4_asymptotic,orderlist1_sorted2=orderlist1_AB2_asymptotic,orderlist1_sorted3=orderlist1_AB3_asymptotic,orderlist1_sorted4=orderlist1_AB4_asymptotic,percentage=1/16,batch="auto",stepsize=1000,criterion=criterionset,boot=TRUE))
     
@@ -296,24 +377,46 @@ simulatedbatch_asymptoticbias<-foreach(batchnumber = (1:1000), .combine = 'rbind
     cat("Error: ", conditionMessage(e), "\n")
     rep(NA,1524)
   })
-  
   momentsx<-unbiasedmoments(x=sortedx)
+  
+  #D Olive, Robust estimators for transformed location scale families. Unpubl. manuscript 1025 available from (www. math. siu. edu/olive/preprints. htm) (2006).
+  medianMAD1<-Weibull_median_MAD_estimator(sortedx)
+  
+  #NB Marks, Estimation of weibull parameters from common percentiles. J. applied Stat. 32, 17–24 (2005). 
+  QE1<-Weibull_quantile_estimator(x=sortedx,sorted=TRUE)
+  
+  alpha1<-QE1[1]-0.3
+  alpha2<-QE1[1]+0.3
+  
+  #X He, WK Fung, Method of medians for lifetime data with weibull models. Stat. medicine 18, 1993–2009 (1999)
+  RMLE1<-Weibull_RMLE(sortedx,alpha1=alpha1,alpha2=alpha2)
+  
+  #all parameter setting are from
+  #K Boudt, D Caliskan, C Croux, Robust explicit estimators of weibull parameters. Metrika 73, 187–209 (2011).
+  
+  moments_medianMAD1<-Weibull_moments(alpha=medianMAD1[1],lambda=medianMAD1[2])
+  
+  moments_QE1<-Weibull_moments(alpha=QE1[1],lambda=QE1[2])
+  
+  moments_RMLE1<-Weibull_moments(alpha=RMLE1[1],lambda=RMLE1[2])
+  
+  MoM4<-median_of_means(sortedx,korder=4)
+  
+  MoRM4<-mHLM(x=sortedx,dimension=4,boot = TRUE,quasi= FALSE, largesize =largesize)
   
   sortedx<-c()
   momentssd<-c(sd=sqrt(momentsx[2]),imoments1[1522],imoments1[1523],imoments1[1524])
   
-  
   allrawmoBias<-c(
-    firstbias=abs(c(Huberx,SMWM9,imoments1[1],momentsx[1],imoments1[7:52],imoments1[121:166],imoments1[1391:1418])-momentsx[1])/momentssd[1],
-    secondbias=abs(c(imoments1[2],momentsx[2],imoments1[53:86],imoments1[167:200],imoments1[1442:1463])-imoments1[1442])/momentssd[2],
-    thirdbias=abs(c(imoments1[3],momentsx[3],imoments1[87:106],imoments1[201:220],imoments1[1481:1494])-imoments1[1481])/momentssd[3],
-    fourbias=abs(c(imoments1[4],momentsx[4],imoments1[107:120],imoments1[221:234],imoments1[1505:1514])-imoments1[1505])/momentssd[4])
-  allrawmo1<-c(first=c(Huberx,SMWM9,imoments1[1],momentsx[1],imoments1[7:52],imoments1[121:166],imoments1[1391:1418]),
-               second=c(imoments1[2],momentsx[2],imoments1[53:86],imoments1[167:200],imoments1[1442:1463]),
-               third=c(imoments1[3],momentsx[3],imoments1[87:106],imoments1[201:220],imoments1[1481:1494]),
-               fourth=c(imoments1[4],momentsx[4],imoments1[107:120],imoments1[221:234],imoments1[1505:1514])
+    firstbias=abs(c(Huberx,SMWM9,imoments1[1],momentsx[1],imoments1[7:52],imoments1[121:166],imoments1[1391:1418],mean_medianMAD1=moments_medianMAD1[1],mean_QE1=moments_QE1[1],mean_RMLE1=moments_RMLE1[1],MoM4=MoM4,MoRM4=MoRM4)-momentsx[1])/momentssd[1],
+    secondbias=abs(c(imoments1[2],momentsx[2],imoments1[53:86],imoments1[167:200],imoments1[1442:1463],var_medianMAD1=moments_medianMAD1[2],var_QE1=moments_QE1[2],var_RMLE1=moments_RMLE1[2])-imoments1[1442])/momentssd[2],
+    thirdbias=abs(c(imoments1[3],momentsx[3],imoments1[87:106],imoments1[201:220],imoments1[1481:1494],tm_medianMAD1=moments_medianMAD1[3],tm_QE1=moments_QE1[3],tm_RMLE1=moments_RMLE1[3])-imoments1[1481])/momentssd[3],
+    fourbias=abs(c(imoments1[4],momentsx[4],imoments1[107:120],imoments1[221:234],imoments1[1505:1514],fm_medianMAD1=moments_medianMAD1[4],fm_QE1=moments_QE1[4],fm_RMLE1=moments_RMLE1[4])-imoments1[1505])/momentssd[4])
+  allrawmo1<-c(first=c(Huberx,SMWM9,imoments1[1],momentsx[1],imoments1[7:52],imoments1[121:166],imoments1[1391:1418],mean_medianMAD1=moments_medianMAD1[1],mean_QE1=moments_QE1[1],mean_RMLE1=moments_RMLE1[1],MoM4=MoM4,MoRM4=MoRM4),
+               second=c(imoments1[2],momentsx[2],imoments1[53:86],imoments1[167:200],imoments1[1442:1463],var_medianMAD1=moments_medianMAD1[2],var_QE1=moments_QE1[2],var_RMLE1=moments_RMLE1[2]),
+               third=c(imoments1[3],momentsx[3],imoments1[87:106],imoments1[201:220],imoments1[1481:1494],tm_medianMAD1=moments_medianMAD1[3],tm_QE1=moments_QE1[3],tm_RMLE1=moments_RMLE1[3]),
+               fourth=c(imoments1[4],momentsx[4],imoments1[107:120],imoments1[221:234],imoments1[1505:1514],fm_medianMAD1=moments_medianMAD1[4],fm_QE1=moments_QE1[4],fm_RMLE1=moments_RMLE1[4])
   )
-  
   
   
   medianmoments<-c(imoments1[1398],imoments1[1449],imoments1[1486],imoments1[1510])
@@ -323,7 +426,7 @@ simulatedbatch_asymptoticbias<-foreach(batchnumber = (1:1000), .combine = 'rbind
 
 write.csv(simulatedbatch_asymptoticbias,paste("asymptotic_lognorm_raw_Process_max",largesize,".csv", sep = ","), row.names = FALSE)
 
-write.csv(cbind(simulatedbatch_asymptoticbias[1:1000,1:331]),paste("asymptotic_lognorm_max",largesize,".csv", sep = ","), row.names = FALSE)
+write.csv(cbind(simulatedbatch_asymptoticbias[1:1000,1:345]),paste("asymptotic_lognorm_max",largesize,".csv", sep = ","), row.names = FALSE)
 
 kurtgnorm<- read.csv(("kurtgnorm_31150.csv"))
 allkurtgnorm<-unlist(kurtgnorm)
@@ -332,7 +435,10 @@ allkurtgnorm<-unlist(kurtgnorm)
 simulatedbatch_asymptoticbias<-foreach(batchnumber = (1:1000), .combine = 'rbind') %dopar% {
   library(Rfast)
   library(matrixStats)
+  library(randtoolbox)
   library(NRSReview)
+  setSeed(batchnumber)
+  set.seed(batchnumber)
   a=0.01*batchnumber
   x<-c(dsgnorm(uni=quasiuni_asymptotic, shape=a/1, scale = 1))
 
@@ -347,9 +453,9 @@ simulatedbatch_asymptoticbias<-foreach(batchnumber = (1:1000), .combine = 'rbind
   targetall<-c(targetm=targetm,targetvar=targetvar,targettm=targettm,targetfm=targetfm)
   x<-c()
   
+  
   Huberx<-Huber_estimator(x=sortedx, tol = 1e-10)
   SMWM9<-SWA9(x=sortedx,interval=9,batch=1,sorted=TRUE)
-  
   imoments1<-tryCatch({
     unlist(imoments(x=sortedx,dtype1=1,releaseall=TRUE,standist_d=d_values,standist_I=I_values,standist_Imoments=Imoments_values,orderlist1_sorted20=orderlist1_AB2_asymptotic,orderlist1_sorted30=orderlist1_AB3_asymptotic,orderlist1_sorted40=orderlist1_AB4_asymptotic,orderlist1_sorted2=orderlist1_AB2_asymptotic,orderlist1_sorted3=orderlist1_AB3_asymptotic,orderlist1_sorted4=orderlist1_AB4_asymptotic,percentage=1/16,batch="auto",stepsize=1000,criterion=criterionset,boot=TRUE))
     
@@ -357,24 +463,46 @@ simulatedbatch_asymptoticbias<-foreach(batchnumber = (1:1000), .combine = 'rbind
     cat("Error: ", conditionMessage(e), "\n")
     rep(NA,1524)
   })
-  
   momentsx<-unbiasedmoments(x=sortedx)
+  
+  #D Olive, Robust estimators for transformed location scale families. Unpubl. manuscript 1025 available from (www. math. siu. edu/olive/preprints. htm) (2006).
+  medianMAD1<-Weibull_median_MAD_estimator(sortedx)
+  
+  #NB Marks, Estimation of weibull parameters from common percentiles. J. applied Stat. 32, 17–24 (2005). 
+  QE1<-Weibull_quantile_estimator(x=sortedx,sorted=TRUE)
+  
+  alpha1<-QE1[1]-0.3
+  alpha2<-QE1[1]+0.3
+  
+  #X He, WK Fung, Method of medians for lifetime data with weibull models. Stat. medicine 18, 1993–2009 (1999)
+  RMLE1<-Weibull_RMLE(sortedx,alpha1=alpha1,alpha2=alpha2)
+  
+  #all parameter setting are from
+  #K Boudt, D Caliskan, C Croux, Robust explicit estimators of weibull parameters. Metrika 73, 187–209 (2011).
+  
+  moments_medianMAD1<-Weibull_moments(alpha=medianMAD1[1],lambda=medianMAD1[2])
+  
+  moments_QE1<-Weibull_moments(alpha=QE1[1],lambda=QE1[2])
+  
+  moments_RMLE1<-Weibull_moments(alpha=RMLE1[1],lambda=RMLE1[2])
+  
+  MoM4<-median_of_means(sortedx,korder=4)
+  
+  MoRM4<-mHLM(x=sortedx,dimension=4,boot = TRUE,quasi= FALSE, largesize =largesize)
   
   sortedx<-c()
   momentssd<-c(sd=sqrt(momentsx[2]),imoments1[1522],imoments1[1523],imoments1[1524])
   
-  
   allrawmoBias<-c(
-    firstbias=abs(c(Huberx,SMWM9,imoments1[1],momentsx[1],imoments1[7:52],imoments1[121:166],imoments1[1391:1418])-momentsx[1])/momentssd[1],
-    secondbias=abs(c(imoments1[2],momentsx[2],imoments1[53:86],imoments1[167:200],imoments1[1442:1463])-imoments1[1442])/momentssd[2],
-    thirdbias=abs(c(imoments1[3],momentsx[3],imoments1[87:106],imoments1[201:220],imoments1[1481:1494])-imoments1[1481])/momentssd[3],
-    fourbias=abs(c(imoments1[4],momentsx[4],imoments1[107:120],imoments1[221:234],imoments1[1505:1514])-imoments1[1505])/momentssd[4])
-  allrawmo1<-c(first=c(Huberx,SMWM9,imoments1[1],momentsx[1],imoments1[7:52],imoments1[121:166],imoments1[1391:1418]),
-               second=c(imoments1[2],momentsx[2],imoments1[53:86],imoments1[167:200],imoments1[1442:1463]),
-               third=c(imoments1[3],momentsx[3],imoments1[87:106],imoments1[201:220],imoments1[1481:1494]),
-               fourth=c(imoments1[4],momentsx[4],imoments1[107:120],imoments1[221:234],imoments1[1505:1514])
+    firstbias=abs(c(Huberx,SMWM9,imoments1[1],momentsx[1],imoments1[7:52],imoments1[121:166],imoments1[1391:1418],mean_medianMAD1=moments_medianMAD1[1],mean_QE1=moments_QE1[1],mean_RMLE1=moments_RMLE1[1],MoM4=MoM4,MoRM4=MoRM4)-momentsx[1])/momentssd[1],
+    secondbias=abs(c(imoments1[2],momentsx[2],imoments1[53:86],imoments1[167:200],imoments1[1442:1463],var_medianMAD1=moments_medianMAD1[2],var_QE1=moments_QE1[2],var_RMLE1=moments_RMLE1[2])-imoments1[1442])/momentssd[2],
+    thirdbias=abs(c(imoments1[3],momentsx[3],imoments1[87:106],imoments1[201:220],imoments1[1481:1494],tm_medianMAD1=moments_medianMAD1[3],tm_QE1=moments_QE1[3],tm_RMLE1=moments_RMLE1[3])-imoments1[1481])/momentssd[3],
+    fourbias=abs(c(imoments1[4],momentsx[4],imoments1[107:120],imoments1[221:234],imoments1[1505:1514],fm_medianMAD1=moments_medianMAD1[4],fm_QE1=moments_QE1[4],fm_RMLE1=moments_RMLE1[4])-imoments1[1505])/momentssd[4])
+  allrawmo1<-c(first=c(Huberx,SMWM9,imoments1[1],momentsx[1],imoments1[7:52],imoments1[121:166],imoments1[1391:1418],mean_medianMAD1=moments_medianMAD1[1],mean_QE1=moments_QE1[1],mean_RMLE1=moments_RMLE1[1],MoM4=MoM4,MoRM4=MoRM4),
+               second=c(imoments1[2],momentsx[2],imoments1[53:86],imoments1[167:200],imoments1[1442:1463],var_medianMAD1=moments_medianMAD1[2],var_QE1=moments_QE1[2],var_RMLE1=moments_RMLE1[2]),
+               third=c(imoments1[3],momentsx[3],imoments1[87:106],imoments1[201:220],imoments1[1481:1494],tm_medianMAD1=moments_medianMAD1[3],tm_QE1=moments_QE1[3],tm_RMLE1=moments_RMLE1[3]),
+               fourth=c(imoments1[4],momentsx[4],imoments1[107:120],imoments1[221:234],imoments1[1505:1514],fm_medianMAD1=moments_medianMAD1[4],fm_QE1=moments_QE1[4],fm_RMLE1=moments_RMLE1[4])
   )
-  
   
   medianmoments<-c(imoments1[1398],imoments1[1449],imoments1[1486],imoments1[1510])
   standardizedm<-c(imoments1[1398]/momentssd[1],imoments1[1449]/momentssd[2],imoments1[1486]/momentssd[3],imoments1[1510]/momentssd[4])
@@ -382,7 +510,7 @@ simulatedbatch_asymptoticbias<-foreach(batchnumber = (1:1000), .combine = 'rbind
 }
 write.csv(simulatedbatch_asymptoticbias,paste("asymptotic_gnorm_raw_Process_max",largesize,".csv", sep = ","), row.names = FALSE)
 
-write.csv(cbind(simulatedbatch_asymptoticbias[1:1000,1:331]),paste("asymptotic_gnorm_max",largesize,".csv", sep = ","), row.names = FALSE)
+write.csv(cbind(simulatedbatch_asymptoticbias[1:1000,1:345]),paste("asymptotic_gnorm_max",largesize,".csv", sep = ","), row.names = FALSE)
 
 
 stopCluster(cl)
