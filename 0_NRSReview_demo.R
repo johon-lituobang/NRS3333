@@ -26,7 +26,7 @@ library(matrixStats)
 
 #This file is totally not relevant to the reviewing of NRS. I will gradually update once I have time..
 
-#you can simulate a distribution with any sample size larger than 4096.
+#you can simulate a distribution with any sample size。
 x<-rexp(5207)
 
 #all robust location estimators are highly bias, e.g.
@@ -35,9 +35,15 @@ x<-rexp(5207)
 
 SWA(x,percentage=1/8,blocknumber=8,batch="auto",sorted=FALSE)
 
+#median Hodges-Lehmann mean using the quasi-bootstrap
 mHLM(x,dimension=4,boot=TRUE,rand=FALSE,largesize=1.8*10^4)
+
+#using bootstrap is equavalent to median of randomized means
 mHLM(x,dimension=4,boot=TRUE,rand=TRUE,largesize=1.8*10^4)
+
+#compared to median of means 
 median_of_means(x,korder=4,seed=1)
+
 #compared to recombined mean and quantile mean
 rqm(x)
 
@@ -64,6 +70,7 @@ imoments(x)
 #this is in fact based on the d values of Weibull distribution with kurtosis 26 and skewness 3.68, so the values will be 
 #always close to this combination.
 
+#the number in front of the warning message is the number of that message repeated.
 
 #so median standardized moments are better choices.
 medianstandardizedmoments(x)
