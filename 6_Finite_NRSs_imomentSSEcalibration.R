@@ -89,8 +89,8 @@ simulatedbatch_bias_Monte<-foreach(batchnumber =c((1:length(allkurtWeibull))), .
   library(Rfast)
   library(matrixStats)
   library(NRSReview)
-  setSeed(batchnumber)
-  set.seed(batchnumber)
+  setSeed(1)
+  set.seed(1)
   a=allkurtWeibull[batchnumber]
   
   targetm<-gamma(1+1/(a/1))
