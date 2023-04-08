@@ -55,8 +55,8 @@ simulatedbatch_bias_Monte<-foreach(batchnumber =c((1:100)), .combine = 'rbind') 
   library(matrixStats)
   library(NRSReview)
   library(randtoolbox)
-  setSeed(batchnumber)
-  set.seed(batchnumber)
+  setSeed(1)
+  set.seed(1)
   a=1
 
   targetm<-gamma(1+1/(a/1))
