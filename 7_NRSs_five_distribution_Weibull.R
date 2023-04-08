@@ -777,7 +777,7 @@ simulatedbatch_bias_Monte_SE<-foreach(batchnumber =c((1:100)), .combine = 'rbind
   library(Rfast)
   library(matrixStats)
   library(NRSReview)
-  
+  largesize<-round(batchnumber*2048*9/100)
   a=1
   
   targetm<-gamma(1+1/(a/1))
