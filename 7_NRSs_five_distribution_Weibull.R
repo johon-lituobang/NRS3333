@@ -46,12 +46,12 @@ quasiuni_sorted3 <- na.omit(rowSort(quasiuni[,1:3], descend = FALSE, stable = FA
 quasiuni_sorted4 <- na.omit(rowSort(quasiuni, descend = FALSE, stable = FALSE, parallel = TRUE))
 # Forever...
 
-asymptotic_n <- 2048*900*3*2
+asymptotic_n <- 2048*9*3*200
 (asymptotic_n%%10)==0
 # maximum order of moments
 morder <- 4
 #large sample size (asymptotic bias)
-largesize<-2048*900*2
+largesize<-2048*9*200
 
 #generate quasirandom numbers based on the Sobol sequence
 quasiunisobol_asymptotic<-sobol(n=asymptotic_n, dim = morder, init = TRUE, scrambling = 0, seed = NULL, normal = FALSE,
@@ -533,7 +533,7 @@ simulatedbatch_ABSE_SE<-foreach(batchnumber =c((1:length(allkurtWeibull))), .com
 
 write.csv(simulatedbatch_ABSE_SE,paste("Weibull_ABSSE_error.csv", sep = ","), row.names = FALSE)
 
-
+for (parameters1 in 1:5){
 simulatedbatch_bias_Monte<-foreach(batchnumber =c((1:100)), .combine = 'rbind') %dopar% {
   library(Rfast)
   library(matrixStats)
@@ -541,7 +541,7 @@ simulatedbatch_bias_Monte<-foreach(batchnumber =c((1:100)), .combine = 'rbind') 
   library(randtoolbox)
   setSeed(1)
   set.seed(1)
-  a=allkurtWeibull[length(allkurtWeibull)]
+  a=allkurtWeibull[round(length(allkurtWeibull)*(parameters1/5))]
   
   targetm<-gamma(1+1/(a/1))
   targetvar<-(gamma(1+2/(a/1))-(gamma(((1+1/(a/1)))))^2)
@@ -646,7 +646,7 @@ simulatedbatch_bias_Monte<-foreach(batchnumber =c((1:100)), .combine = 'rbind') 
     SEbataches<-rbind(SEbataches,all1)
   }
   
-  write.csv(SEbataches,paste("finite_Weibull_bootstrapsize_raw_SWA",batchnumber,round(kurtx,digits = 1),".csv", sep = ","), row.names = FALSE)
+  write.csv(SEbataches,paste("finite_Weibull_bootstrapsize_raw_SWA",batchnumber,largesize,parameters1,round(kurtx,digits = 1),".csv", sep = ","), row.names = FALSE)
   
   RMSE1_mean<-sqrt(colMeans((SEbataches[,7:136])^2))/simulatedbatch_asymptoticbias[length(allkurtWeibull),334]
   
@@ -771,14 +771,14 @@ simulatedbatch_bias_Monte<-foreach(batchnumber =c((1:100)), .combine = 'rbind') 
   allErrors
 }
 
-write.csv(simulatedbatch_bias_Monte,paste("finite_Weibull_bootstrapsize_raw_SWA",samplesize,".csv", sep = ","), row.names = FALSE)
+write.csv(simulatedbatch_bias_Monte,paste("finite_Weibull_bootstrapsize_raw_SWA",samplesize,parameters1,".csv", sep = ","), row.names = FALSE)
 
 simulatedbatch_bias_Monte_SE<-foreach(batchnumber =c((1:100)), .combine = 'rbind') %dopar% {
   library(Rfast)
   library(matrixStats)
   library(NRSReview)
   largesize<-round(batchnumber*2048*9/100)
-  a=allkurtWeibull[length(allkurtWeibull)]
+  a=allkurtWeibull[round(length(allkurtWeibull)*(parameters1/5))]
   
   targetm<-gamma(1+1/(a/1))
   targetvar<-(gamma(1+2/(a/1))-(gamma(((1+1/(a/1)))))^2)
@@ -787,7 +787,7 @@ simulatedbatch_bias_Monte_SE<-foreach(batchnumber =c((1:100)), .combine = 'rbind
   kurtx<-targetfm/(targetvar^(4/2))
   skewx<-targettm/(targetvar^(3/2))
   
-  SEbataches<- read.csv(paste("finite_Weibull_bootstrapsize_raw_SWA",batchnumber,round(kurtx,digits = 1),".csv", sep = ","))
+  SEbataches<- read.csv(paste("finite_Weibull_bootstrapsize_raw_SWA",batchnumber,largesize,parameters1,round(kurtx,digits = 1),".csv", sep = ","))
   
   SEbatachesmean <- colMeans(SEbataches)
   
@@ -898,9 +898,9 @@ simulatedbatch_bias_Monte_SE<-foreach(batchnumber =c((1:100)), .combine = 'rbind
 }
 
 
-write.csv(simulatedbatch_bias_Monte_SE,paste("finite_Weibull_bootstrapsize_raw_SWA_error",samplesize,".csv", sep = ","), row.names = FALSE)
+write.csv(simulatedbatch_bias_Monte_SE,paste("finite_Weibull_bootstrapsize_raw_SWA_error",samplesize,parameters1,".csv", sep = ","), row.names = FALSE)
 
-
+}
 
 kurtgamma<- read.csv(("kurtgamma_31150.csv"))
 allkurtgamma<-unlist(kurtgamma)
