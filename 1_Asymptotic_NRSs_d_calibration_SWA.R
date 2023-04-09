@@ -26,7 +26,7 @@ cl <- makeCluster(numCores) # Create a cluster with the number of cores
 registerDoParallel(cl) # Register the parallel backend
 
 #bootsize for bootstrap approximation of the distributions of the kernal of U-statistics.
-n <- 2048*900*2
+n <- 2048*900*2*3
 (n%%10)==0
 # maximum order of moments
 morder <- 4
