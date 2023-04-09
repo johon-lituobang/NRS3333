@@ -27,12 +27,12 @@ registerDoParallel(cl) # Register the parallel backend
 
 
 #bootsize for bootstrap approximation of the distributions of the kernal of U-statistics.
-n <- 2048*900*3*2
+n <- 65536*30*3
 (n%%10)==0
 # maximum order of moments
 morder <- 4
 #large sample size (approximating asymptotic)
-largesize<-2048*900*2
+largesize<-65536*30
 
 #generate quasirandom numbers based on the Sobol sequence
 quasiunisobol<-sobol(n=n, dim = morder, init = TRUE, scrambling = 0, seed = NULL, normal = FALSE,
@@ -55,7 +55,7 @@ kurtWeibull<- read.csv(("kurtWeibull_28260.csv"))
 
 allkurtWeibull<-unlist(kurtWeibull)
 
-samplesize=2048*900*2
+samplesize=65536*30
 batchsizebase=100
 
 
