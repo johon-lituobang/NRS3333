@@ -35,9 +35,10 @@ x<-rexp(5207)
 5207%%8
 
 #one is randomly sampling a smaller sample that is a multiple of 8
+#set the rand=TRUE, the blocknumber=1/percentage.
 SWA(x,percentage=1/8,blocknumber=8,batch="auto",sorted=FALSE,rand=TRUE)
 
-#another solution is forming an additional blocks, the middle block, that take the reminder into account.
+#another solution is forming an additional block, the middle block, that take the reminder into account.
 SWA(x,percentage=1/8,blocknumber=9,batch="auto",sorted=FALSE,rand=FALSE)
 
 #the second approach is used as default, since it is cheaper.
