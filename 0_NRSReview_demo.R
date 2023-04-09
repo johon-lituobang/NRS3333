@@ -41,7 +41,7 @@ SWA(x,percentage=1/8,blocknumber=8,batch="auto",sorted=FALSE,rand=TRUE)
 #another solution is forming an additional block, the middle block, that take the reminder into account.
 SWA(x,percentage=1/8,blocknumber=9,batch="auto",sorted=FALSE,rand=FALSE)
 
-#the second approach is used as default, since it is cheaper.
+#the first approach is used as default.
 
 #median Hodges-Lehmann mean using the quasi-bootstrap
 mHLM(x,dimension=4,boot=TRUE,quasi=TRUE,largesize=1.8*10^4)
