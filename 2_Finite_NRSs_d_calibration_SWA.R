@@ -217,7 +217,7 @@ asymptotic_d_Weibull<- read.csv(paste("asymptotic_d_Weibull_SWA.csv", sep = ",")
 
 asymptotic_d_Weibull<- cbind(dtype=rep(1,nrow(asymptotic_d_Weibull)),asymptotic_d_Weibull)
 colnames(asymptotic_d_Weibull)<-NULL
-asymptotic_d_Weibull<- cbind(Size=rep(65536*50,nrow(asymptotic_d_Weibull)),asymptotic_d_Weibull)
+asymptotic_d_Weibull<- cbind(Size=rep(2048*900*2,nrow(asymptotic_d_Weibull)),asymptotic_d_Weibull)
 
 Label_Weibull1<- read.csv(("d_label.csv"))
 colnames(asymptotic_d_Weibull)<-colnames(Label_Weibull1)
