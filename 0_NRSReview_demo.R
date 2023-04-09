@@ -29,11 +29,18 @@ library(matrixStats)
 #you can simulate a distribution with any sample size。
 x<-rexp(5207)
 
-#all robust location estimators are highly bias, e.g.
-
 #SWA function will return all six SWAs with breakdown point 1/8 plus mean and median.
 
-SWA(x,percentage=1/8,blocknumber=8,batch="auto",sorted=FALSE)
+#since 5207 is not a multiple of 8, there are two solutions
+5207%%8
+
+#one is randomly sampling a smaller sample that is a multiple of 8
+SWA(x,percentage=1/8,blocknumber=8,batch="auto",sorted=FALSE,rand=TRUE)
+
+#another solution is forming an additional blocks, the middle block, that take the reminder into account.
+SWA(x,percentage=1/8,blocknumber=9,batch="auto",sorted=FALSE,rand=FALSE)
+
+#the second approach is used as default, since it is cheaper.
 
 #median Hodges-Lehmann mean using the quasi-bootstrap
 mHLM(x,dimension=4,boot=TRUE,quasi=TRUE,largesize=1.8*10^4)
