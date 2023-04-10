@@ -111,11 +111,11 @@ simulatedbatch_bias_Monte<-foreach(batchnumber =c((1:length(allkurtWeibull))), .
     SEbataches<-rbind(SEbataches,all1)
   }
 
-  write.csv(SEbataches,paste("finite_Weibull_dcalibration_raw_SWA",samplesize,round(kurtx,digits = 1),".csv", sep = ","), row.names = FALSE)
+  write.csv(SEbataches,paste("finite_Weibull_dcalibration_raw",samplesize,round(kurtx,digits = 1),".csv", sep = ","), row.names = FALSE)
 
   SEbataches
 }
-resultcolnames1<- read.csv(paste("finite_Weibull_dcalibration_raw_SWA",samplesize,9,".csv", sep = ","))
+resultcolnames1<- read.csv(paste("finite_Weibull_dcalibration_raw",samplesize,9,".csv", sep = ","))
 
 colnames(simulatedbatch_bias_Monte)<-colnames(resultcolnames1)
 
@@ -123,7 +123,7 @@ Monte_Two<-simulatedbatch_bias_Monte[,c(1,2,3,4,347:ncol(simulatedbatch_bias_Mon
 
 simulatedbatch_bias_Monte<-c()
 
-write.csv(Monte_Two,paste("finite_Weibull_dcalibration_raw_SWA",samplesize,".csv", sep = ","), row.names = FALSE)
+write.csv(Monte_Two,paste("finite_Weibull_dcalibration_raw",samplesize,".csv", sep = ","), row.names = FALSE)
 
 meanall<-foreach(estimators = c(1:ncol(Monte_Two)), .combine = 'cbind') %dopar% {
   Monte_sample_Estimator1 <- data.frame(Size = ( Monte_Two[,1]),
@@ -137,7 +137,7 @@ meanall<-foreach(estimators = c(1:ncol(Monte_Two)), .combine = 'cbind') %dopar% 
   Finite_1
 }
 colnames(meanall)<-colnames(Monte_Two)
-write.csv(meanall,paste("finite_Weibull_dcalibration_raw_SWA_mean",samplesize,".csv", sep = ","), row.names = FALSE)
+write.csv(meanall,paste("finite_Weibull_dcalibration_raw_mean",samplesize,".csv", sep = ","), row.names = FALSE)
 
 meanall<-as.data.frame(meanall)
 musall1<-meanall[,5:ncol(meanall)]
@@ -158,7 +158,7 @@ Label_Weibull1<- read.csv(("d_label.csv"))
 
 colnames(Monte_d_Two)<-colnames(Label_Weibull1)
 
-write.csv(Monte_d_Two,paste("finite_d_Weibull_SWA",samplesize,".csv", sep = ","), row.names = FALSE)
+write.csv(Monte_d_Two,paste("finite_d_Weibull",samplesize,".csv", sep = ","), row.names = FALSE)
 
 simulatedbatch_bias_Monte_SE<-foreach(batchnumber =c((1:length(allkurtWeibull))), .combine = 'rbind') %dopar% {
   library(Rfast)
@@ -178,7 +178,7 @@ simulatedbatch_bias_Monte_SE<-foreach(batchnumber =c((1:length(allkurtWeibull)))
 
   batchsize=batchsizebase
 
-  SEbataches<- read.csv(paste("finite_Weibull_dcalibration_raw_SWA",samplesize,round(kurtx,digits = 1),".csv", sep = ","))
+  SEbataches<- read.csv(paste("finite_Weibull_dcalibration_raw",samplesize,round(kurtx,digits = 1),".csv", sep = ","))
   standarderrors1<-apply(SEbataches,2,se_mean)
   standarderrors1
 }
@@ -208,12 +208,12 @@ Monte_d_Two_error<-cbind(Allstandarderror_each[,1:4],compdall_error[,c(seq(from=
 
 colnames(Monte_d_Two_error)<-colnames(Label_Weibull1)
 
-write.csv(Monte_d_Two_error,paste("finite_d_Weibull_SWA_error.csv", sep = ","), row.names = FALSE)
+write.csv(Monte_d_Two_error,paste("finite_d_Weibull_error.csv", sep = ","), row.names = FALSE)
 
 
-write.csv(Monte_d_Two,paste("finite_d_SWA.csv", sep = ","), row.names = FALSE)
+write.csv(Monte_d_Two,paste("finite_d.csv", sep = ","), row.names = FALSE)
 
-asymptotic_d_Weibull<- read.csv(paste("asymptotic_d_Weibull_SWA.csv", sep = ","))
+asymptotic_d_Weibull<- read.csv(paste("asymptotic_d_Weibull.csv", sep = ","))
 
 asymptotic_d_Weibull<- cbind(dtype=rep(1,nrow(asymptotic_d_Weibull)),asymptotic_d_Weibull)
 colnames(asymptotic_d_Weibull)<-NULL
@@ -225,7 +225,7 @@ d_Merged<- rbind(asymptotic_d_Weibull,Monte_d_Two)
 Label_Weibull1<- read.csv(("d_label.csv"))
 colnames(d_Merged)<-colnames(Label_Weibull1)
 
-write.csv(d_Merged,paste("d_SWA.csv", sep = ","), row.names = FALSE)
+write.csv(d_Merged,paste("d_values.csv", sep = ","), row.names = FALSE)
 
 stopCluster(cl)
 registerDoSEQ()
