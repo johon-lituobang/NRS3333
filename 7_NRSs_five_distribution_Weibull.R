@@ -46,7 +46,7 @@ quasiuni_sorted3 <- na.omit(rowSort(quasiuni[,1:3], descend = FALSE, stable = FA
 quasiuni_sorted4 <- na.omit(rowSort(quasiuni, descend = FALSE, stable = FALSE, parallel = TRUE))
 # Forever...
 
-asymptotic_n <- 2048*900*2*3
+asymptotic_n <- 2048*900*3*2
 (asymptotic_n%%10)==0
 # maximum order of moments
 morder <- 4
@@ -147,7 +147,7 @@ simulatedbatch_asymptoticbias<-foreach(batchnumber = (1:length(allkurtWeibull)),
   momentssd<-c(sd=sqrt(momentsx[2]),imoments1[1522],imoments1[1523],imoments1[1524])
   
   allrawmoBias<-c(
-    firstbias=abs(c(Huberx,SMWM9,imoments1[1],momentsx[1],imoments1[7:52],imoments1[121:166],imoments1[1391:1418],mean_medianMAD1=moments_medianMAD1[1],mean_QE1=moments_QE1[1],mean_RMLE1=moments_RMLE1[1],MoM4=MoM4,MoRM4=MoRM4)-targetm)/momentssd[1],
+    firstbias=abs(c(Huberx,SMWM9,imoments1[1],momentsx[1],imoments1[7:52],imoments1[121:166],imoments1[1391:1418],mean_medianMAD1=moments_medianMAD1[1],mean_QE1=moments_QE1[1],mean_RMLE1=moments_RMLE1[1],MoM4=MoM4,MoRM4=MoRM4)-targetm)/sqrt(targetvar),
     secondbias=abs(c(imoments1[2],momentsx[2],imoments1[53:86],imoments1[167:200],imoments1[1442:1463],var_medianMAD1=moments_medianMAD1[2],var_QE1=moments_QE1[2],var_RMLE1=moments_RMLE1[2])-targetvar)/momentssd[2],
     thirdbias=abs(c(imoments1[3],momentsx[3],imoments1[87:106],imoments1[201:220],imoments1[1481:1494],tm_medianMAD1=moments_medianMAD1[3],tm_QE1=moments_QE1[3],tm_RMLE1=moments_RMLE1[3])-targettm)/momentssd[3],
     fourbias=abs(c(imoments1[4],momentsx[4],imoments1[107:120],imoments1[221:234],imoments1[1505:1514],fm_medianMAD1=moments_medianMAD1[4],fm_QE1=moments_QE1[4],fm_RMLE1=moments_RMLE1[4])-targetfm)/momentssd[4])
@@ -275,7 +275,7 @@ simulatedbatch_ABSE<-foreach(batchnumber =c((1:length(allkurtWeibull))), .combin
   write.csv(SEbataches,paste("Weibull_raw_ABSSE_finite",samplesize,round(kurtx,digits = 1),".csv", sep = ","), row.names = FALSE)
   
   
-  RMSE1_mean<-sqrt(colMeans((SEbataches[,7:136])^2))/simulatedbatch_asymptoticbias[batchnumber,334]
+  RMSE1_mean<-sqrt(colMeans((SEbataches[,7:136])^2))/sqrt(targetvar)
   
   RMSE1_var<-sqrt(colMeans((SEbataches[,137:231])^2))/simulatedbatch_asymptoticbias[batchnumber,335]
 
@@ -283,7 +283,7 @@ simulatedbatch_ABSE<-foreach(batchnumber =c((1:length(allkurtWeibull))), .combin
 
   RMSE1_fm<-sqrt(colMeans((SEbataches[,291:333])^2))/simulatedbatch_asymptoticbias[batchnumber,337]
 
-  AB1_mean<-abs(colMeans((SEbataches[,7:136])))/simulatedbatch_asymptoticbias[batchnumber,334]
+  AB1_mean<-abs(colMeans((SEbataches[,7:136])))/sqrt(targetvar)
 
   AB1_var<-abs(colMeans((SEbataches[,137:231])))/simulatedbatch_asymptoticbias[batchnumber,335]
 
@@ -295,7 +295,7 @@ simulatedbatch_ABSE<-foreach(batchnumber =c((1:length(allkurtWeibull))), .combin
   
   samplemeansd_unscaled1<-unbiasedsd(x=SEbataches[1:batchsize,350])
 
-  samplemean_SE1<-samplemeansd_unscaled1/simulatedbatch_asymptoticbias[batchnumber,334]
+  samplemean_SE1<-samplemeansd_unscaled1/sqrt(targetvar)
 
   samplevarsd_unscaled1<-unbiasedsd(x=SEbataches[1:batchsize,477])
 
@@ -314,7 +314,7 @@ simulatedbatch_ABSE<-foreach(batchnumber =c((1:length(allkurtWeibull))), .combin
   samplemean_SEbatachesmeanprocess<-t(t(SEbataches[1:batchsize,350])/ratiosamplemean1)
 
   samplemeansd1<-apply((samplemean_SEbatachesmeanprocess), 2, unbiasedsd)
-  samplemean_SSE1<-samplemeansd1/simulatedbatch_asymptoticbias[batchnumber,334]
+  samplemean_SSE1<-samplemeansd1/sqrt(targetvar)
 
   ratiosamplevar1<-c(SEbatachesmean[477])/SEbatachesmean[546]
   
@@ -342,11 +342,11 @@ simulatedbatch_ABSE<-foreach(batchnumber =c((1:length(allkurtWeibull))), .combin
 
   meansd_unscaled1<-apply((SEbataches[1:batchsize,346:475]), 2, unbiasedsd)
 
-  mean_SE1<-meansd_unscaled1/simulatedbatch_asymptoticbias[batchnumber,334]
+  mean_SE1<-meansd_unscaled1/sqrt(targetvar)
   mean_SEbatachesmeanprocess<-t(t(SEbataches[1:batchsize,346:475])/ratiomean1)
 
   meansd1<-apply((mean_SEbatachesmeanprocess), 2, unbiasedsd)
-  mean_SSE1<-meansd1/simulatedbatch_asymptoticbias[batchnumber,334]
+  mean_SSE1<-meansd1/sqrt(targetvar)
 
   ratiovar1<-SEbatachesmean[476:570]/SEbatachesmean[546]
 
@@ -427,7 +427,7 @@ simulatedbatch_ABSE_SE<-foreach(batchnumber =c((1:length(allkurtWeibull))), .com
   
   samplemeansd_unscaled1<-se_sd(x=SEbataches[1:batchsize,350])
   
-  samplemean_SE1<-samplemeansd_unscaled1/simulatedbatch_asymptoticbias[batchnumber,334]
+  samplemean_SE1<-samplemeansd_unscaled1/sqrt(targetvar)
   
   samplevarsd_unscaled1<-se_sd(x=SEbataches[1:batchsize,477])
   
@@ -446,7 +446,7 @@ simulatedbatch_ABSE_SE<-foreach(batchnumber =c((1:length(allkurtWeibull))), .com
   samplemean_SEbatachesmeanprocess<-t(t(SEbataches[1:batchsize,350])/ratiosamplemean1)
   
   samplemeansd1<-apply((samplemean_SEbatachesmeanprocess), 2, se_sd)
-  samplemean_SSE1<-samplemeansd1/simulatedbatch_asymptoticbias[batchnumber,334]
+  samplemean_SSE1<-samplemeansd1/sqrt(targetvar)
   
   ratiosamplevar1<-c(SEbatachesmean[477])/SEbatachesmean[546]
   
@@ -474,11 +474,11 @@ simulatedbatch_ABSE_SE<-foreach(batchnumber =c((1:length(allkurtWeibull))), .com
   
   meansd_unscaled1<-apply((SEbataches[1:batchsize,346:475]), 2, se_sd)
   
-  mean_SE1<-meansd_unscaled1/simulatedbatch_asymptoticbias[batchnumber,334]
+  mean_SE1<-meansd_unscaled1/sqrt(targetvar)
   mean_SEbatachesmeanprocess<-t(t(SEbataches[1:batchsize,346:475])/ratiomean1)
   
   meansd1<-apply((mean_SEbatachesmeanprocess), 2, se_sd)
-  mean_SSE1<-meansd1/simulatedbatch_asymptoticbias[batchnumber,334]
+  mean_SSE1<-meansd1/sqrt(targetvar)
   
   ratiovar1<-SEbatachesmean[476:570]/SEbatachesmean[546]
   
@@ -960,7 +960,7 @@ simulatedbatch_asymptoticbias<-foreach(batchnumber = (1:length(allkurtgamma)), .
   momentssd<-c(sd=sqrt(momentsx[2]),imoments1[1522],imoments1[1523],imoments1[1524])
   
   allrawmoBias<-c(
-    firstbias=abs(c(Huberx,SMWM9,imoments1[1],momentsx[1],imoments1[7:52],imoments1[121:166],imoments1[1391:1418],mean_medianMAD1=moments_medianMAD1[1],mean_QE1=moments_QE1[1],mean_RMLE1=moments_RMLE1[1],MoM4=MoM4,MoRM4=MoRM4)-targetm)/momentssd[1],
+    firstbias=abs(c(Huberx,SMWM9,imoments1[1],momentsx[1],imoments1[7:52],imoments1[121:166],imoments1[1391:1418],mean_medianMAD1=moments_medianMAD1[1],mean_QE1=moments_QE1[1],mean_RMLE1=moments_RMLE1[1],MoM4=MoM4,MoRM4=MoRM4)-targetm)/sqrt(targetvar),
     secondbias=abs(c(imoments1[2],momentsx[2],imoments1[53:86],imoments1[167:200],imoments1[1442:1463],var_medianMAD1=moments_medianMAD1[2],var_QE1=moments_QE1[2],var_RMLE1=moments_RMLE1[2])-targetvar)/momentssd[2],
     thirdbias=abs(c(imoments1[3],momentsx[3],imoments1[87:106],imoments1[201:220],imoments1[1481:1494],tm_medianMAD1=moments_medianMAD1[3],tm_QE1=moments_QE1[3],tm_RMLE1=moments_RMLE1[3])-targettm)/momentssd[3],
     fourbias=abs(c(imoments1[4],momentsx[4],imoments1[107:120],imoments1[221:234],imoments1[1505:1514],fm_medianMAD1=moments_medianMAD1[4],fm_QE1=moments_QE1[4],fm_RMLE1=moments_RMLE1[4])-targetfm)/momentssd[4])
@@ -1063,7 +1063,7 @@ simulatedbatch_ABSE<-foreach(batchnumber =c((1:length(allkurtgamma))), .combine 
 
   write.csv(SEbataches,paste("gamma_raw_ABSSE_finite",samplesize,round(kurtx,digits = 1),".csv", sep = ","), row.names = FALSE)
   
-  RMSE1_mean<-sqrt(colMeans((SEbataches[,7:136])^2))/simulatedbatch_asymptoticbias[batchnumber,334]
+  RMSE1_mean<-sqrt(colMeans((SEbataches[,7:136])^2))/sqrt(targetvar)
   
   RMSE1_var<-sqrt(colMeans((SEbataches[,137:231])^2))/simulatedbatch_asymptoticbias[batchnumber,335]
   
@@ -1071,7 +1071,7 @@ simulatedbatch_ABSE<-foreach(batchnumber =c((1:length(allkurtgamma))), .combine 
   
   RMSE1_fm<-sqrt(colMeans((SEbataches[,291:333])^2))/simulatedbatch_asymptoticbias[batchnumber,337]
   
-  AB1_mean<-abs(colMeans((SEbataches[,7:136])))/simulatedbatch_asymptoticbias[batchnumber,334]
+  AB1_mean<-abs(colMeans((SEbataches[,7:136])))/sqrt(targetvar)
   
   AB1_var<-abs(colMeans((SEbataches[,137:231])))/simulatedbatch_asymptoticbias[batchnumber,335]
   
@@ -1083,7 +1083,7 @@ simulatedbatch_ABSE<-foreach(batchnumber =c((1:length(allkurtgamma))), .combine 
   
   samplemeansd_unscaled1<-unbiasedsd(x=SEbataches[1:batchsize,350])
   
-  samplemean_SE1<-samplemeansd_unscaled1/simulatedbatch_asymptoticbias[batchnumber,334]
+  samplemean_SE1<-samplemeansd_unscaled1/sqrt(targetvar)
   
   samplevarsd_unscaled1<-unbiasedsd(x=SEbataches[1:batchsize,477])
   
@@ -1102,7 +1102,7 @@ simulatedbatch_ABSE<-foreach(batchnumber =c((1:length(allkurtgamma))), .combine 
   samplemean_SEbatachesmeanprocess<-t(t(SEbataches[1:batchsize,350])/ratiosamplemean1)
   
   samplemeansd1<-apply((samplemean_SEbatachesmeanprocess), 2, unbiasedsd)
-  samplemean_SSE1<-samplemeansd1/simulatedbatch_asymptoticbias[batchnumber,334]
+  samplemean_SSE1<-samplemeansd1/sqrt(targetvar)
   
   ratiosamplevar1<-c(SEbatachesmean[477])/SEbatachesmean[546]
   
@@ -1130,11 +1130,11 @@ simulatedbatch_ABSE<-foreach(batchnumber =c((1:length(allkurtgamma))), .combine 
   
   meansd_unscaled1<-apply((SEbataches[1:batchsize,346:475]), 2, unbiasedsd)
   
-  mean_SE1<-meansd_unscaled1/simulatedbatch_asymptoticbias[batchnumber,334]
+  mean_SE1<-meansd_unscaled1/sqrt(targetvar)
   mean_SEbatachesmeanprocess<-t(t(SEbataches[1:batchsize,346:475])/ratiomean1)
   
   meansd1<-apply((mean_SEbatachesmeanprocess), 2, unbiasedsd)
-  mean_SSE1<-meansd1/simulatedbatch_asymptoticbias[batchnumber,334]
+  mean_SSE1<-meansd1/sqrt(targetvar)
   
   ratiovar1<-SEbatachesmean[476:570]/SEbatachesmean[546]
   
@@ -1213,7 +1213,7 @@ simulatedbatch_ABSE_SE<-foreach(batchnumber =c((1:length(allkurtgamma))), .combi
   
   samplemeansd_unscaled1<-se_sd(x=SEbataches[1:batchsize,350])
   
-  samplemean_SE1<-samplemeansd_unscaled1/simulatedbatch_asymptoticbias[batchnumber,334]
+  samplemean_SE1<-samplemeansd_unscaled1/sqrt(targetvar)
   
   samplevarsd_unscaled1<-se_sd(x=SEbataches[1:batchsize,477])
   
@@ -1232,7 +1232,7 @@ simulatedbatch_ABSE_SE<-foreach(batchnumber =c((1:length(allkurtgamma))), .combi
   samplemean_SEbatachesmeanprocess<-t(t(SEbataches[1:batchsize,350])/ratiosamplemean1)
   
   samplemeansd1<-apply((samplemean_SEbatachesmeanprocess), 2, se_sd)
-  samplemean_SSE1<-samplemeansd1/simulatedbatch_asymptoticbias[batchnumber,334]
+  samplemean_SSE1<-samplemeansd1/sqrt(targetvar)
   
   ratiosamplevar1<-c(SEbatachesmean[477])/SEbatachesmean[546]
   
@@ -1260,11 +1260,11 @@ simulatedbatch_ABSE_SE<-foreach(batchnumber =c((1:length(allkurtgamma))), .combi
   
   meansd_unscaled1<-apply((SEbataches[1:batchsize,346:475]), 2, se_sd)
   
-  mean_SE1<-meansd_unscaled1/simulatedbatch_asymptoticbias[batchnumber,334]
+  mean_SE1<-meansd_unscaled1/sqrt(targetvar)
   mean_SEbatachesmeanprocess<-t(t(SEbataches[1:batchsize,346:475])/ratiomean1)
   
   meansd1<-apply((mean_SEbatachesmeanprocess), 2, se_sd)
-  mean_SSE1<-meansd1/simulatedbatch_asymptoticbias[batchnumber,334]
+  mean_SSE1<-meansd1/sqrt(targetvar)
   
   ratiovar1<-SEbatachesmean[476:570]/SEbatachesmean[546]
   
@@ -1750,7 +1750,7 @@ simulatedbatch_asymptoticbias<-foreach(batchnumber = (1:length(allkurtPareto)), 
   momentssd<-c(sd=sqrt(momentsx[2]),imoments1[1522],imoments1[1523],imoments1[1524])
   
   allrawmoBias<-c(
-    firstbias=abs(c(Huberx,SMWM9,imoments1[1],momentsx[1],imoments1[7:52],imoments1[121:166],imoments1[1391:1418],mean_medianMAD1=moments_medianMAD1[1],mean_QE1=moments_QE1[1],mean_RMLE1=moments_RMLE1[1],MoM4=MoM4,MoRM4=MoRM4)-targetm)/momentssd[1],
+    firstbias=abs(c(Huberx,SMWM9,imoments1[1],momentsx[1],imoments1[7:52],imoments1[121:166],imoments1[1391:1418],mean_medianMAD1=moments_medianMAD1[1],mean_QE1=moments_QE1[1],mean_RMLE1=moments_RMLE1[1],MoM4=MoM4,MoRM4=MoRM4)-targetm)/sqrt(targetvar),
     secondbias=abs(c(imoments1[2],momentsx[2],imoments1[53:86],imoments1[167:200],imoments1[1442:1463],var_medianMAD1=moments_medianMAD1[2],var_QE1=moments_QE1[2],var_RMLE1=moments_RMLE1[2])-targetvar)/momentssd[2],
     thirdbias=abs(c(imoments1[3],momentsx[3],imoments1[87:106],imoments1[201:220],imoments1[1481:1494],tm_medianMAD1=moments_medianMAD1[3],tm_QE1=moments_QE1[3],tm_RMLE1=moments_RMLE1[3])-targettm)/momentssd[3],
     fourbias=abs(c(imoments1[4],momentsx[4],imoments1[107:120],imoments1[221:234],imoments1[1505:1514],fm_medianMAD1=moments_medianMAD1[4],fm_QE1=moments_QE1[4],fm_RMLE1=moments_RMLE1[4])-targetfm)/momentssd[4])
@@ -1853,7 +1853,7 @@ simulatedbatch_ABSE<-foreach(batchnumber =c((1:length(allkurtPareto))), .combine
 
   write.csv(SEbataches,paste("Pareto_raw_ABSSE_finite",samplesize,round(kurtx,digits = 1),".csv", sep = ","), row.names = FALSE)
   
-  RMSE1_mean<-sqrt(colMeans((SEbataches[,7:136])^2))/simulatedbatch_asymptoticbias[batchnumber,334]
+  RMSE1_mean<-sqrt(colMeans((SEbataches[,7:136])^2))/sqrt(targetvar)
   
   RMSE1_var<-sqrt(colMeans((SEbataches[,137:231])^2))/simulatedbatch_asymptoticbias[batchnumber,335]
   
@@ -1861,7 +1861,7 @@ simulatedbatch_ABSE<-foreach(batchnumber =c((1:length(allkurtPareto))), .combine
   
   RMSE1_fm<-sqrt(colMeans((SEbataches[,291:333])^2))/simulatedbatch_asymptoticbias[batchnumber,337]
   
-  AB1_mean<-abs(colMeans((SEbataches[,7:136])))/simulatedbatch_asymptoticbias[batchnumber,334]
+  AB1_mean<-abs(colMeans((SEbataches[,7:136])))/sqrt(targetvar)
   
   AB1_var<-abs(colMeans((SEbataches[,137:231])))/simulatedbatch_asymptoticbias[batchnumber,335]
   
@@ -1873,7 +1873,7 @@ simulatedbatch_ABSE<-foreach(batchnumber =c((1:length(allkurtPareto))), .combine
   
   samplemeansd_unscaled1<-unbiasedsd(x=SEbataches[1:batchsize,350])
   
-  samplemean_SE1<-samplemeansd_unscaled1/simulatedbatch_asymptoticbias[batchnumber,334]
+  samplemean_SE1<-samplemeansd_unscaled1/sqrt(targetvar)
   
   samplevarsd_unscaled1<-unbiasedsd(x=SEbataches[1:batchsize,477])
   
@@ -1892,7 +1892,7 @@ simulatedbatch_ABSE<-foreach(batchnumber =c((1:length(allkurtPareto))), .combine
   samplemean_SEbatachesmeanprocess<-t(t(SEbataches[1:batchsize,350])/ratiosamplemean1)
   
   samplemeansd1<-apply((samplemean_SEbatachesmeanprocess), 2, unbiasedsd)
-  samplemean_SSE1<-samplemeansd1/simulatedbatch_asymptoticbias[batchnumber,334]
+  samplemean_SSE1<-samplemeansd1/sqrt(targetvar)
   
   ratiosamplevar1<-c(SEbatachesmean[477])/SEbatachesmean[546]
   
@@ -1920,11 +1920,11 @@ simulatedbatch_ABSE<-foreach(batchnumber =c((1:length(allkurtPareto))), .combine
   
   meansd_unscaled1<-apply((SEbataches[1:batchsize,346:475]), 2, unbiasedsd)
   
-  mean_SE1<-meansd_unscaled1/simulatedbatch_asymptoticbias[batchnumber,334]
+  mean_SE1<-meansd_unscaled1/sqrt(targetvar)
   mean_SEbatachesmeanprocess<-t(t(SEbataches[1:batchsize,346:475])/ratiomean1)
   
   meansd1<-apply((mean_SEbatachesmeanprocess), 2, unbiasedsd)
-  mean_SSE1<-meansd1/simulatedbatch_asymptoticbias[batchnumber,334]
+  mean_SSE1<-meansd1/sqrt(targetvar)
   
   ratiovar1<-SEbatachesmean[476:570]/SEbatachesmean[546]
   
@@ -2005,7 +2005,7 @@ simulatedbatch_ABSE_SE<-foreach(batchnumber =c((1:length(allkurtPareto))), .comb
   
   samplemeansd_unscaled1<-se_sd(x=SEbataches[1:batchsize,350])
   
-  samplemean_SE1<-samplemeansd_unscaled1/simulatedbatch_asymptoticbias[batchnumber,334]
+  samplemean_SE1<-samplemeansd_unscaled1/sqrt(targetvar)
   
   samplevarsd_unscaled1<-se_sd(x=SEbataches[1:batchsize,477])
   
@@ -2024,7 +2024,7 @@ simulatedbatch_ABSE_SE<-foreach(batchnumber =c((1:length(allkurtPareto))), .comb
   samplemean_SEbatachesmeanprocess<-t(t(SEbataches[1:batchsize,350])/ratiosamplemean1)
   
   samplemeansd1<-apply((samplemean_SEbatachesmeanprocess), 2, se_sd)
-  samplemean_SSE1<-samplemeansd1/simulatedbatch_asymptoticbias[batchnumber,334]
+  samplemean_SSE1<-samplemeansd1/sqrt(targetvar)
   
   ratiosamplevar1<-c(SEbatachesmean[477])/SEbatachesmean[546]
   
@@ -2052,11 +2052,11 @@ simulatedbatch_ABSE_SE<-foreach(batchnumber =c((1:length(allkurtPareto))), .comb
   
   meansd_unscaled1<-apply((SEbataches[1:batchsize,346:475]), 2, se_sd)
   
-  mean_SE1<-meansd_unscaled1/simulatedbatch_asymptoticbias[batchnumber,334]
+  mean_SE1<-meansd_unscaled1/sqrt(targetvar)
   mean_SEbatachesmeanprocess<-t(t(SEbataches[1:batchsize,346:475])/ratiomean1)
   
   meansd1<-apply((mean_SEbatachesmeanprocess), 2, se_sd)
-  mean_SSE1<-meansd1/simulatedbatch_asymptoticbias[batchnumber,334]
+  mean_SSE1<-meansd1/sqrt(targetvar)
   
   ratiovar1<-SEbatachesmean[476:570]/SEbatachesmean[546]
   
@@ -2542,7 +2542,7 @@ simulatedbatch_asymptoticbias<-foreach(batchnumber = (1:length(allkurtlognorm)),
   momentssd<-c(sd=sqrt(momentsx[2]),imoments1[1522],imoments1[1523],imoments1[1524])
   
   allrawmoBias<-c(
-    firstbias=abs(c(Huberx,SMWM9,imoments1[1],momentsx[1],imoments1[7:52],imoments1[121:166],imoments1[1391:1418],mean_medianMAD1=moments_medianMAD1[1],mean_QE1=moments_QE1[1],mean_RMLE1=moments_RMLE1[1],MoM4=MoM4,MoRM4=MoRM4)-targetm)/momentssd[1],
+    firstbias=abs(c(Huberx,SMWM9,imoments1[1],momentsx[1],imoments1[7:52],imoments1[121:166],imoments1[1391:1418],mean_medianMAD1=moments_medianMAD1[1],mean_QE1=moments_QE1[1],mean_RMLE1=moments_RMLE1[1],MoM4=MoM4,MoRM4=MoRM4)-targetm)/sqrt(targetvar),
     secondbias=abs(c(imoments1[2],momentsx[2],imoments1[53:86],imoments1[167:200],imoments1[1442:1463],var_medianMAD1=moments_medianMAD1[2],var_QE1=moments_QE1[2],var_RMLE1=moments_RMLE1[2])-targetvar)/momentssd[2],
     thirdbias=abs(c(imoments1[3],momentsx[3],imoments1[87:106],imoments1[201:220],imoments1[1481:1494],tm_medianMAD1=moments_medianMAD1[3],tm_QE1=moments_QE1[3],tm_RMLE1=moments_RMLE1[3])-targettm)/momentssd[3],
     fourbias=abs(c(imoments1[4],momentsx[4],imoments1[107:120],imoments1[221:234],imoments1[1505:1514],fm_medianMAD1=moments_medianMAD1[4],fm_QE1=moments_QE1[4],fm_RMLE1=moments_RMLE1[4])-targetfm)/momentssd[4])
@@ -2644,7 +2644,7 @@ simulatedbatch_ABSE<-foreach(batchnumber =c((1:length(allkurtlognorm))), .combin
 
   write.csv(SEbataches,paste("lognorm_raw_ABSSE_finite",samplesize,round(kurtx,digits = 1),".csv", sep = ","), row.names = FALSE)
   
-  RMSE1_mean<-sqrt(colMeans((SEbataches[,7:136])^2))/simulatedbatch_asymptoticbias[batchnumber,334]
+  RMSE1_mean<-sqrt(colMeans((SEbataches[,7:136])^2))/sqrt(targetvar)
   
   RMSE1_var<-sqrt(colMeans((SEbataches[,137:231])^2))/simulatedbatch_asymptoticbias[batchnumber,335]
   
@@ -2652,7 +2652,7 @@ simulatedbatch_ABSE<-foreach(batchnumber =c((1:length(allkurtlognorm))), .combin
   
   RMSE1_fm<-sqrt(colMeans((SEbataches[,291:333])^2))/simulatedbatch_asymptoticbias[batchnumber,337]
   
-  AB1_mean<-abs(colMeans((SEbataches[,7:136])))/simulatedbatch_asymptoticbias[batchnumber,334]
+  AB1_mean<-abs(colMeans((SEbataches[,7:136])))/sqrt(targetvar)
   
   AB1_var<-abs(colMeans((SEbataches[,137:231])))/simulatedbatch_asymptoticbias[batchnumber,335]
   
@@ -2664,7 +2664,7 @@ simulatedbatch_ABSE<-foreach(batchnumber =c((1:length(allkurtlognorm))), .combin
   
   samplemeansd_unscaled1<-unbiasedsd(x=SEbataches[1:batchsize,350])
   
-  samplemean_SE1<-samplemeansd_unscaled1/simulatedbatch_asymptoticbias[batchnumber,334]
+  samplemean_SE1<-samplemeansd_unscaled1/sqrt(targetvar)
   
   samplevarsd_unscaled1<-unbiasedsd(x=SEbataches[1:batchsize,477])
   
@@ -2683,7 +2683,7 @@ simulatedbatch_ABSE<-foreach(batchnumber =c((1:length(allkurtlognorm))), .combin
   samplemean_SEbatachesmeanprocess<-t(t(SEbataches[1:batchsize,350])/ratiosamplemean1)
   
   samplemeansd1<-apply((samplemean_SEbatachesmeanprocess), 2, unbiasedsd)
-  samplemean_SSE1<-samplemeansd1/simulatedbatch_asymptoticbias[batchnumber,334]
+  samplemean_SSE1<-samplemeansd1/sqrt(targetvar)
   
   ratiosamplevar1<-c(SEbatachesmean[477])/SEbatachesmean[546]
   
@@ -2711,11 +2711,11 @@ simulatedbatch_ABSE<-foreach(batchnumber =c((1:length(allkurtlognorm))), .combin
   
   meansd_unscaled1<-apply((SEbataches[1:batchsize,346:475]), 2, unbiasedsd)
   
-  mean_SE1<-meansd_unscaled1/simulatedbatch_asymptoticbias[batchnumber,334]
+  mean_SE1<-meansd_unscaled1/sqrt(targetvar)
   mean_SEbatachesmeanprocess<-t(t(SEbataches[1:batchsize,346:475])/ratiomean1)
   
   meansd1<-apply((mean_SEbatachesmeanprocess), 2, unbiasedsd)
-  mean_SSE1<-meansd1/simulatedbatch_asymptoticbias[batchnumber,334]
+  mean_SSE1<-meansd1/sqrt(targetvar)
   
   ratiovar1<-SEbatachesmean[476:570]/SEbatachesmean[546]
   
@@ -2796,7 +2796,7 @@ simulatedbatch_ABSE_SE<-foreach(batchnumber =c((1:length(allkurtlognorm))), .com
   
   samplemeansd_unscaled1<-se_sd(x=SEbataches[1:batchsize,350])
   
-  samplemean_SE1<-samplemeansd_unscaled1/simulatedbatch_asymptoticbias[batchnumber,334]
+  samplemean_SE1<-samplemeansd_unscaled1/sqrt(targetvar)
   
   samplevarsd_unscaled1<-se_sd(x=SEbataches[1:batchsize,477])
   
@@ -2815,7 +2815,7 @@ simulatedbatch_ABSE_SE<-foreach(batchnumber =c((1:length(allkurtlognorm))), .com
   samplemean_SEbatachesmeanprocess<-t(t(SEbataches[1:batchsize,350])/ratiosamplemean1)
   
   samplemeansd1<-apply((samplemean_SEbatachesmeanprocess), 2, se_sd)
-  samplemean_SSE1<-samplemeansd1/simulatedbatch_asymptoticbias[batchnumber,334]
+  samplemean_SSE1<-samplemeansd1/sqrt(targetvar)
   
   ratiosamplevar1<-c(SEbatachesmean[477])/SEbatachesmean[546]
   
@@ -2843,11 +2843,11 @@ simulatedbatch_ABSE_SE<-foreach(batchnumber =c((1:length(allkurtlognorm))), .com
   
   meansd_unscaled1<-apply((SEbataches[1:batchsize,346:475]), 2, se_sd)
   
-  mean_SE1<-meansd_unscaled1/simulatedbatch_asymptoticbias[batchnumber,334]
+  mean_SE1<-meansd_unscaled1/sqrt(targetvar)
   mean_SEbatachesmeanprocess<-t(t(SEbataches[1:batchsize,346:475])/ratiomean1)
   
   meansd1<-apply((mean_SEbatachesmeanprocess), 2, se_sd)
-  mean_SSE1<-meansd1/simulatedbatch_asymptoticbias[batchnumber,334]
+  mean_SSE1<-meansd1/sqrt(targetvar)
   
   ratiovar1<-SEbatachesmean[476:570]/SEbatachesmean[546]
   
@@ -3334,7 +3334,7 @@ simulatedbatch_asymptoticbias<-foreach(batchnumber = (1:length(allkurtgnorm)), .
   momentssd<-c(sd=sqrt(momentsx[2]),imoments1[1522],imoments1[1523],imoments1[1524])
   
   allrawmoBias<-c(
-    firstbias=abs(c(Huberx,SMWM9,imoments1[1],momentsx[1],imoments1[7:52],imoments1[121:166],imoments1[1391:1418],mean_medianMAD1=moments_medianMAD1[1],mean_QE1=moments_QE1[1],mean_RMLE1=moments_RMLE1[1],MoM4=MoM4,MoRM4=MoRM4)-targetm)/momentssd[1],
+    firstbias=abs(c(Huberx,SMWM9,imoments1[1],momentsx[1],imoments1[7:52],imoments1[121:166],imoments1[1391:1418],mean_medianMAD1=moments_medianMAD1[1],mean_QE1=moments_QE1[1],mean_RMLE1=moments_RMLE1[1],MoM4=MoM4,MoRM4=MoRM4)-targetm)/sqrt(targetvar),
     secondbias=abs(c(imoments1[2],momentsx[2],imoments1[53:86],imoments1[167:200],imoments1[1442:1463],var_medianMAD1=moments_medianMAD1[2],var_QE1=moments_QE1[2],var_RMLE1=moments_RMLE1[2])-targetvar)/momentssd[2],
     thirdbias=abs(c(imoments1[3],momentsx[3],imoments1[87:106],imoments1[201:220],imoments1[1481:1494],tm_medianMAD1=moments_medianMAD1[3],tm_QE1=moments_QE1[3],tm_RMLE1=moments_RMLE1[3])-targettm)/momentssd[3],
     fourbias=abs(c(imoments1[4],momentsx[4],imoments1[107:120],imoments1[221:234],imoments1[1505:1514],fm_medianMAD1=moments_medianMAD1[4],fm_QE1=moments_QE1[4],fm_RMLE1=moments_RMLE1[4])-targetfm)/momentssd[4])
@@ -3437,7 +3437,7 @@ simulatedbatch_ABSE<-foreach(batchnumber =c((1:length(allkurtgnorm))), .combine 
   write.csv(SEbataches,paste("gnorm_raw_ABSSE_finite",samplesize,round(kurtx,digits = 1),".csv", sep = ","), row.names = FALSE)
   
   
-  RMSE1_mean<-sqrt(colMeans((SEbataches[,7:136])^2))/simulatedbatch_asymptoticbias[batchnumber,334]
+  RMSE1_mean<-sqrt(colMeans((SEbataches[,7:136])^2))/sqrt(targetvar)
   
   RMSE1_var<-sqrt(colMeans((SEbataches[,137:231])^2))/simulatedbatch_asymptoticbias[batchnumber,335]
   
@@ -3445,7 +3445,7 @@ simulatedbatch_ABSE<-foreach(batchnumber =c((1:length(allkurtgnorm))), .combine 
   
   RMSE1_fm<-sqrt(colMeans((SEbataches[,291:333])^2))/simulatedbatch_asymptoticbias[batchnumber,337]
   
-  AB1_mean<-abs(colMeans((SEbataches[,7:136])))/simulatedbatch_asymptoticbias[batchnumber,334]
+  AB1_mean<-abs(colMeans((SEbataches[,7:136])))/sqrt(targetvar)
   
   AB1_var<-abs(colMeans((SEbataches[,137:231])))/simulatedbatch_asymptoticbias[batchnumber,335]
   
@@ -3457,7 +3457,7 @@ simulatedbatch_ABSE<-foreach(batchnumber =c((1:length(allkurtgnorm))), .combine 
   
   samplemeansd_unscaled1<-unbiasedsd(x=SEbataches[1:batchsize,350])
   
-  samplemean_SE1<-samplemeansd_unscaled1/simulatedbatch_asymptoticbias[batchnumber,334]
+  samplemean_SE1<-samplemeansd_unscaled1/sqrt(targetvar)
   
   samplevarsd_unscaled1<-unbiasedsd(x=SEbataches[1:batchsize,477])
   
@@ -3476,7 +3476,7 @@ simulatedbatch_ABSE<-foreach(batchnumber =c((1:length(allkurtgnorm))), .combine 
   samplemean_SEbatachesmeanprocess<-t(t(SEbataches[1:batchsize,350])/ratiosamplemean1)
   
   samplemeansd1<-apply((samplemean_SEbatachesmeanprocess), 2, unbiasedsd)
-  samplemean_SSE1<-samplemeansd1/simulatedbatch_asymptoticbias[batchnumber,334]
+  samplemean_SSE1<-samplemeansd1/sqrt(targetvar)
   
   ratiosamplevar1<-c(SEbatachesmean[477])/SEbatachesmean[546]
   
@@ -3504,11 +3504,11 @@ simulatedbatch_ABSE<-foreach(batchnumber =c((1:length(allkurtgnorm))), .combine 
   
   meansd_unscaled1<-apply((SEbataches[1:batchsize,346:475]), 2, unbiasedsd)
   
-  mean_SE1<-meansd_unscaled1/simulatedbatch_asymptoticbias[batchnumber,334]
+  mean_SE1<-meansd_unscaled1/sqrt(targetvar)
   mean_SEbatachesmeanprocess<-t(t(SEbataches[1:batchsize,346:475])/ratiomean1)
   
   meansd1<-apply((mean_SEbatachesmeanprocess), 2, unbiasedsd)
-  mean_SSE1<-meansd1/simulatedbatch_asymptoticbias[batchnumber,334]
+  mean_SSE1<-meansd1/sqrt(targetvar)
   
   ratiovar1<-SEbatachesmean[476:570]/SEbatachesmean[546]
   
@@ -3588,7 +3588,7 @@ simulatedbatch_ABSE_SE<-foreach(batchnumber =c((1:length(allkurtgnorm))), .combi
   
   samplemeansd_unscaled1<-se_sd(x=SEbataches[1:batchsize,350])
   
-  samplemean_SE1<-samplemeansd_unscaled1/simulatedbatch_asymptoticbias[batchnumber,334]
+  samplemean_SE1<-samplemeansd_unscaled1/sqrt(targetvar)
   
   samplevarsd_unscaled1<-se_sd(x=SEbataches[1:batchsize,477])
   
@@ -3607,7 +3607,7 @@ simulatedbatch_ABSE_SE<-foreach(batchnumber =c((1:length(allkurtgnorm))), .combi
   samplemean_SEbatachesmeanprocess<-t(t(SEbataches[1:batchsize,350])/ratiosamplemean1)
   
   samplemeansd1<-apply((samplemean_SEbatachesmeanprocess), 2, se_sd)
-  samplemean_SSE1<-samplemeansd1/simulatedbatch_asymptoticbias[batchnumber,334]
+  samplemean_SSE1<-samplemeansd1/sqrt(targetvar)
   
   ratiosamplevar1<-c(SEbatachesmean[477])/SEbatachesmean[546]
   
@@ -3635,11 +3635,11 @@ simulatedbatch_ABSE_SE<-foreach(batchnumber =c((1:length(allkurtgnorm))), .combi
   
   meansd_unscaled1<-apply((SEbataches[1:batchsize,346:475]), 2, se_sd)
   
-  mean_SE1<-meansd_unscaled1/simulatedbatch_asymptoticbias[batchnumber,334]
+  mean_SE1<-meansd_unscaled1/sqrt(targetvar)
   mean_SEbatachesmeanprocess<-t(t(SEbataches[1:batchsize,346:475])/ratiomean1)
   
   meansd1<-apply((mean_SEbatachesmeanprocess), 2, se_sd)
-  mean_SSE1<-meansd1/simulatedbatch_asymptoticbias[batchnumber,334]
+  mean_SSE1<-meansd1/sqrt(targetvar)
   
   ratiovar1<-SEbatachesmean[476:570]/SEbatachesmean[546]
   
