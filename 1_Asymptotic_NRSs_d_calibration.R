@@ -86,7 +86,7 @@ simulatedbatchWeibull_bias<-foreach(batchnumber = (1:length(allkurtWeibull)), .c
   all1<-t(c(kurtx,skewx,dall))
 }
 
-write.csv(simulatedbatchWeibull_bias,paste("asymptotic_Weibull_dcalibration_raw_SWA",largesize,".csv", sep = ","), row.names = FALSE)
+write.csv(simulatedbatchWeibull_bias,paste("asymptotic_Weibull_dcalibration_raw",largesize,".csv", sep = ","), row.names = FALSE)
 
 asymptotic_d_Weibull<-simulatedbatchWeibull_bias[,c(1,2,seq(from=5, to=346, by=3))]
 
@@ -94,7 +94,7 @@ Label_Weibull1<- read.csv(("d_label.csv"))
 
 colnames(asymptotic_d_Weibull)<-colnames(Label_Weibull1[3:118])
 
-write.csv(asymptotic_d_Weibull,paste("asymptotic_d_Weibull_SWA.csv", sep = ","), row.names = FALSE)
+write.csv(asymptotic_d_Weibull,paste("asymptotic_d_Weibull.csv", sep = ","), row.names = FALSE)
 
 stopCluster(cl)
 registerDoSEQ()
