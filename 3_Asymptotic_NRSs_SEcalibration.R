@@ -74,7 +74,7 @@ unibatchran<-matrix(SFMT(samplesize*batchsize),ncol=batchsize)
 unibatch<-colSort(unibatchran, descend = FALSE, stable = FALSE, parallel = TRUE)
 
 #input the d value table previously generated
-d_values<- read.csv(("d_SWA.csv"))
+d_values<- read.csv(("d_values.csv"))
 #Then, start the Monte Simulation
 
 simulatedbatch_bias_Monte<-foreach(batchnumber =c((1:length(allkurtWeibull))), .combine = 'rbind') %dopar% {
