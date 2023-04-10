@@ -81,9 +81,9 @@ quasiuni_sorted3_asymptotic<-c()
 quasiuni_sorted4_asymptotic<-c()
 
 #load asymptotic d for two parameter distributions
-d_values<- read.csv(("d_SWA.csv"))
-I_values<- read.csv(("I_SWA.csv"))
-Imoments_values<- read.csv(("Imoments_SWA.csv"))
+d_values<- read.csv(("d_values.csv"))
+I_values<- read.csv(("I_values.csv"))
+Imoments_values<- read.csv(("Imoments_values.csv"))
 
 
 #set the stop criterion
@@ -646,7 +646,7 @@ simulatedbatch_bias_Monte<-foreach(batchnumber =c((1:100)), .combine = 'rbind') 
     SEbataches<-rbind(SEbataches,all1)
   }
   
-  write.csv(SEbataches,paste("finite_Weibull_bootstrapsize_raw_SWA",batchnumber,round(kurtx,digits = 1),".csv", sep = ","), row.names = FALSE)
+  write.csv(SEbataches,paste("finite_Weibull_bootstrapsize_raw",batchnumber,round(kurtx,digits = 1),".csv", sep = ","), row.names = FALSE)
   
   RMSE1_mean<-sqrt(colMeans((SEbataches[,7:136])^2))/sqrt(targetvar)
   
@@ -771,7 +771,7 @@ simulatedbatch_bias_Monte<-foreach(batchnumber =c((1:100)), .combine = 'rbind') 
   allErrors
 }
 
-write.csv(simulatedbatch_bias_Monte,paste("finite_Weibull_bootstrapsize_raw_SWA",samplesize,".csv", sep = ","), row.names = FALSE)
+write.csv(simulatedbatch_bias_Monte,paste("finite_Weibull_bootstrapsize_raw",samplesize,".csv", sep = ","), row.names = FALSE)
 
 simulatedbatch_bias_Monte_SE<-foreach(batchnumber =c((1:100)), .combine = 'rbind') %dopar% {
   library(Rfast)
@@ -787,7 +787,7 @@ simulatedbatch_bias_Monte_SE<-foreach(batchnumber =c((1:100)), .combine = 'rbind
   kurtx<-targetfm/(targetvar^(4/2))
   skewx<-targettm/(targetvar^(3/2))
   
-  SEbataches<- read.csv(paste("finite_Weibull_bootstrapsize_raw_SWA",batchnumber,round(kurtx,digits = 1),".csv", sep = ","))
+  SEbataches<- read.csv(paste("finite_Weibull_bootstrapsize_raw",batchnumber,round(kurtx,digits = 1),".csv", sep = ","))
   
   SEbatachesmean <- colMeans(SEbataches)
   
@@ -898,7 +898,7 @@ simulatedbatch_bias_Monte_SE<-foreach(batchnumber =c((1:100)), .combine = 'rbind
 }
 
 
-write.csv(simulatedbatch_bias_Monte_SE,paste("finite_Weibull_bootstrapsize_raw_SWA_error",samplesize,".csv", sep = ","), row.names = FALSE)
+write.csv(simulatedbatch_bias_Monte_SE,paste("finite_Weibull_bootstrapsize_raw_error",samplesize,".csv", sep = ","), row.names = FALSE)
 
 
 
@@ -1434,7 +1434,7 @@ simulatedbatch_bias_Monte<-foreach(batchnumber =c((1:100)), .combine = 'rbind') 
     SEbataches<-rbind(SEbataches,all1)
   }
   
-  write.csv(SEbataches,paste("finite_gamma_bootstrapsize_raw_SWA",batchnumber,round(kurtx,digits = 1),".csv", sep = ","), row.names = FALSE)
+  write.csv(SEbataches,paste("finite_gamma_bootstrapsize_raw",batchnumber,round(kurtx,digits = 1),".csv", sep = ","), row.names = FALSE)
   
   RMSE1_mean<-sqrt(colMeans((SEbataches[,7:136])^2))/sqrt(targetvar)
   
@@ -1559,7 +1559,7 @@ simulatedbatch_bias_Monte<-foreach(batchnumber =c((1:100)), .combine = 'rbind') 
   allErrors
 }
 
-write.csv(simulatedbatch_bias_Monte,paste("finite_gamma_bootstrapsize_raw_SWA",samplesize,".csv", sep = ","), row.names = FALSE)
+write.csv(simulatedbatch_bias_Monte,paste("finite_gamma_bootstrapsize_raw",samplesize,".csv", sep = ","), row.names = FALSE)
 
 simulatedbatch_bias_Monte_SE<-foreach(batchnumber =c((1:100)), .combine = 'rbind') %dopar% {
   library(Rfast)
@@ -1575,7 +1575,7 @@ simulatedbatch_bias_Monte_SE<-foreach(batchnumber =c((1:100)), .combine = 'rbind
   kurtx<-targetfm/(targetvar^(4/2))
   skewx<-targettm/(targetvar^(3/2))
   
-  SEbataches<- read.csv(paste("finite_gamma_bootstrapsize_raw_SWA",batchnumber,round(kurtx,digits = 1),".csv", sep = ","))
+  SEbataches<- read.csv(paste("finite_gamma_bootstrapsize_raw",batchnumber,round(kurtx,digits = 1),".csv", sep = ","))
   
   SEbatachesmean <- colMeans(SEbataches)
   
@@ -1686,7 +1686,7 @@ simulatedbatch_bias_Monte_SE<-foreach(batchnumber =c((1:100)), .combine = 'rbind
 }
 
 
-write.csv(simulatedbatch_bias_Monte_SE,paste("finite_gamma_bootstrapsize_raw_SWA_error",samplesize,".csv", sep = ","), row.names = FALSE)
+write.csv(simulatedbatch_bias_Monte_SE,paste("finite_gamma_bootstrapsize_raw_error",samplesize,".csv", sep = ","), row.names = FALSE)
 
 
 
@@ -2226,7 +2226,7 @@ simulatedbatch_bias_Monte<-foreach(batchnumber =c((1:100)), .combine = 'rbind') 
     SEbataches<-rbind(SEbataches,all1)
   }
   
-  write.csv(SEbataches,paste("finite_Pareto_bootstrapsize_raw_SWA",batchnumber,round(kurtx,digits = 1),".csv", sep = ","), row.names = FALSE)
+  write.csv(SEbataches,paste("finite_Pareto_bootstrapsize_raw",batchnumber,round(kurtx,digits = 1),".csv", sep = ","), row.names = FALSE)
   
   RMSE1_mean<-sqrt(colMeans((SEbataches[,7:136])^2))/sqrt(targetvar)
   
@@ -2351,7 +2351,7 @@ simulatedbatch_bias_Monte<-foreach(batchnumber =c((1:100)), .combine = 'rbind') 
   allErrors
 }
 
-write.csv(simulatedbatch_bias_Monte,paste("finite_Pareto_bootstrapsize_raw_SWA",samplesize,".csv", sep = ","), row.names = FALSE)
+write.csv(simulatedbatch_bias_Monte,paste("finite_Pareto_bootstrapsize_raw",samplesize,".csv", sep = ","), row.names = FALSE)
 
 simulatedbatch_bias_Monte_SE<-foreach(batchnumber =c((1:100)), .combine = 'rbind') %dopar% {
   library(Rfast)
@@ -2367,7 +2367,7 @@ simulatedbatch_bias_Monte_SE<-foreach(batchnumber =c((1:100)), .combine = 'rbind
   kurtx<-targetfm/(targetvar^(4/2))
   skewx<-targettm/(targetvar^(3/2))
   
-  SEbataches<- read.csv(paste("finite_Pareto_bootstrapsize_raw_SWA",batchnumber,round(kurtx,digits = 1),".csv", sep = ","))
+  SEbataches<- read.csv(paste("finite_Pareto_bootstrapsize_raw",batchnumber,round(kurtx,digits = 1),".csv", sep = ","))
   
   SEbatachesmean <- colMeans(SEbataches)
   
@@ -2478,7 +2478,7 @@ simulatedbatch_bias_Monte_SE<-foreach(batchnumber =c((1:100)), .combine = 'rbind
 }
 
 
-write.csv(simulatedbatch_bias_Monte_SE,paste("finite_Pareto_bootstrapsize_raw_SWA_error",samplesize,".csv", sep = ","), row.names = FALSE)
+write.csv(simulatedbatch_bias_Monte_SE,paste("finite_Pareto_bootstrapsize_raw_error",samplesize,".csv", sep = ","), row.names = FALSE)
 
 
 
@@ -3018,7 +3018,7 @@ simulatedbatch_bias_Monte<-foreach(batchnumber =c((1:100)), .combine = 'rbind') 
     SEbataches<-rbind(SEbataches,all1)
   }
   
-  write.csv(SEbataches,paste("finite_lognormal_bootstrapsize_raw_SWA",batchnumber,round(kurtx,digits = 1),".csv", sep = ","), row.names = FALSE)
+  write.csv(SEbataches,paste("finite_lognormal_bootstrapsize_raw",batchnumber,round(kurtx,digits = 1),".csv", sep = ","), row.names = FALSE)
   
   RMSE1_mean<-sqrt(colMeans((SEbataches[,7:136])^2))/sqrt(targetvar)
   
@@ -3143,7 +3143,7 @@ simulatedbatch_bias_Monte<-foreach(batchnumber =c((1:100)), .combine = 'rbind') 
   allErrors
 }
 
-write.csv(simulatedbatch_bias_Monte,paste("finite_lognormal_bootstrapsize_raw_SWA",samplesize,".csv", sep = ","), row.names = FALSE)
+write.csv(simulatedbatch_bias_Monte,paste("finite_lognormal_bootstrapsize_raw",samplesize,".csv", sep = ","), row.names = FALSE)
 
 simulatedbatch_bias_Monte_SE<-foreach(batchnumber =c((1:100)), .combine = 'rbind') %dopar% {
   library(Rfast)
@@ -3159,7 +3159,7 @@ simulatedbatch_bias_Monte_SE<-foreach(batchnumber =c((1:100)), .combine = 'rbind
   kurtx<-targetfm/(targetvar^(4/2))
   skewx<-targettm/(targetvar^(3/2))
   
-  SEbataches<- read.csv(paste("finite_lognormal_bootstrapsize_raw_SWA",batchnumber,round(kurtx,digits = 1),".csv", sep = ","))
+  SEbataches<- read.csv(paste("finite_lognormal_bootstrapsize_raw",batchnumber,round(kurtx,digits = 1),".csv", sep = ","))
   
   SEbatachesmean <- colMeans(SEbataches)
   
@@ -3270,7 +3270,7 @@ simulatedbatch_bias_Monte_SE<-foreach(batchnumber =c((1:100)), .combine = 'rbind
 }
 
 
-write.csv(simulatedbatch_bias_Monte_SE,paste("finite_lognormal_bootstrapsize_raw_SWA_error",samplesize,".csv", sep = ","), row.names = FALSE)
+write.csv(simulatedbatch_bias_Monte_SE,paste("finite_lognormal_bootstrapsize_raw_error",samplesize,".csv", sep = ","), row.names = FALSE)
 
 
 
@@ -3809,7 +3809,7 @@ simulatedbatch_bias_Monte<-foreach(batchnumber =c((1:100)), .combine = 'rbind') 
     SEbataches<-rbind(SEbataches,all1)
   }
   
-  write.csv(SEbataches,paste("finite_gnorm_bootstrapsize_raw_SWA",batchnumber,round(kurtx,digits = 1),".csv", sep = ","), row.names = FALSE)
+  write.csv(SEbataches,paste("finite_gnorm_bootstrapsize_raw",batchnumber,round(kurtx,digits = 1),".csv", sep = ","), row.names = FALSE)
   
   RMSE1_mean<-sqrt(colMeans((SEbataches[,7:136])^2))/sqrt(targetvar)
   
@@ -3934,7 +3934,7 @@ simulatedbatch_bias_Monte<-foreach(batchnumber =c((1:100)), .combine = 'rbind') 
   allErrors
 }
 
-write.csv(simulatedbatch_bias_Monte,paste("finite_gnorm_bootstrapsize_raw_SWA",samplesize,".csv", sep = ","), row.names = FALSE)
+write.csv(simulatedbatch_bias_Monte,paste("finite_gnorm_bootstrapsize_raw",samplesize,".csv", sep = ","), row.names = FALSE)
 
 simulatedbatch_bias_Monte_SE<-foreach(batchnumber =c((1:100)), .combine = 'rbind') %dopar% {
   library(Rfast)
@@ -3949,7 +3949,7 @@ simulatedbatch_bias_Monte_SE<-foreach(batchnumber =c((1:100)), .combine = 'rbind
   kurtx<-targetfm/(targetvar^(4/2))
   skewx<-targettm/(targetvar^(3/2))
   
-  SEbataches<- read.csv(paste("finite_gnorm_bootstrapsize_raw_SWA",batchnumber,round(kurtx,digits = 1),".csv", sep = ","))
+  SEbataches<- read.csv(paste("finite_gnorm_bootstrapsize_raw",batchnumber,round(kurtx,digits = 1),".csv", sep = ","))
   
   SEbatachesmean <- colMeans(SEbataches)
   
@@ -4060,7 +4060,7 @@ simulatedbatch_bias_Monte_SE<-foreach(batchnumber =c((1:100)), .combine = 'rbind
 }
 
 
-write.csv(simulatedbatch_bias_Monte_SE,paste("finite_gnorm_bootstrapsize_raw_SWA_error",samplesize,".csv", sep = ","), row.names = FALSE)
+write.csv(simulatedbatch_bias_Monte_SE,paste("finite_gnorm_bootstrapsize_raw_error",samplesize,".csv", sep = ","), row.names = FALSE)
 
 
 
