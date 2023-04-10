@@ -81,9 +81,9 @@ quasiuni_sorted3_asymptotic<-c()
 quasiuni_sorted4_asymptotic<-c()
 
 #load asymptotic d for two parameter distributions
-d_values<- read.csv(("d_SWA.csv"))
-I_values<- read.csv(("I_SWA.csv"))
-Imoments_values<- read.csv(("Imoments_SWA.csv"))
+d_values<- read.csv(("d_values.csv"))
+I_values<- read.csv(("I_values.csv"))
+Imoments_values<- read.csv(("Imoments_values.csv"))
 #set the stop criterion
 criterionset=1e-10
 
