@@ -80,7 +80,7 @@ unibatchran<-matrix(SFMT(samplesize*batchsize),ncol=batchsize)
 unibatch<-colSort(unibatchran, descend = FALSE, stable = FALSE, parallel = TRUE)
 
 #input the d value table previously generated
-d_values<- read.csv(("d_SWA.csv"))
+d_values<- read.csv(("d_values.csv"))
 #Then, start the Monte Simulation
 
 simulatedbatch_bias_Monte<-foreach(batchnumber =c((1:length(allkurtWeibull))), .combine = 'rbind') %dopar% {
@@ -115,7 +115,7 @@ simulatedbatch_bias_Monte<-foreach(batchnumber =c((1:length(allkurtWeibull))), .
     SEbataches<-rbind(SEbataches,all1)
   }
   
-  write.csv(SEbataches,paste("finite_Weibull_Icalibration_raw_SWA",samplesize,round(kurtx,digits = 1),".csv", sep = ","), row.names = FALSE)
+  write.csv(SEbataches,paste("finite_Weibull_Icalibration_raw",samplesize,round(kurtx,digits = 1),".csv", sep = ","), row.names = FALSE)
   
   SEbatachesmean <-apply(SEbataches, 2, calculate_column_mean)
   
@@ -129,13 +129,13 @@ simulatedbatch_bias_Monte<-foreach(batchnumber =c((1:length(allkurtWeibull))), .
   allresultsSE<-c(samplesize=samplesize,type=1,kurtx,skewx,rankkurtall1,rankskewall1,SEbatachesmean,SErqkurt=rqkurt,SErqskew=rqskew)
 }
 
-write.csv(simulatedbatch_bias_Monte,paste("finite_Weibull_Icalibration_raw_SWA",samplesize,".csv", sep = ","), row.names = FALSE)
+write.csv(simulatedbatch_bias_Monte,paste("finite_Weibull_Icalibration_raw",samplesize,".csv", sep = ","), row.names = FALSE)
 
-simulatedbatch_bias_Monte<- read.csv(paste("finite_Weibull_Icalibration_raw_SWA",samplesize,".csv", sep = ","))
+simulatedbatch_bias_Monte<- read.csv(paste("finite_Weibull_Icalibration_raw",samplesize,".csv", sep = ","))
 
 Optimum_SE<-simulatedbatch_bias_Monte[,1:582]
 
-write.csv(Optimum_SE,paste("finite_I_Weibull_SWA.csv", sep = ","), row.names = FALSE)
+write.csv(Optimum_SE,paste("finite_I_Weibull.csv", sep = ","), row.names = FALSE)
 
 simulatedbatch_bias_Monte_SE<-foreach(batchnumber =c((1:length(allkurtWeibull))), .combine = 'rbind') %dopar% {
   library(Rfast)
@@ -152,7 +152,7 @@ simulatedbatch_bias_Monte_SE<-foreach(batchnumber =c((1:length(allkurtWeibull)))
   kurtx<-targetfm/(targetvar^(4/2))
   skewx<-targettm/(targetvar^(3/2))
   
-  SEbataches<- read.csv(paste("finite_Weibull_Icalibration_raw_SWA",samplesize,round(kurtx,digits = 1),".csv", sep = ","))
+  SEbataches<- read.csv(paste("finite_Weibull_Icalibration_raw",samplesize,round(kurtx,digits = 1),".csv", sep = ","))
   
   se_mean_all1<-apply((SEbataches[1:batchsize,]), 2, se_mean)
   
@@ -165,19 +165,19 @@ simulatedbatch_bias_Monte_SE<-foreach(batchnumber =c((1:length(allkurtWeibull)))
   allresultsSE
 }
 
-write.csv(simulatedbatch_bias_Monte_SE,paste("finite_Weibull_Icalibration_raw_SWA_error",samplesize,".csv", sep = ","), row.names = FALSE)
+write.csv(simulatedbatch_bias_Monte_SE,paste("finite_Weibull_Icalibration_raw_error",samplesize,".csv", sep = ","), row.names = FALSE)
 
 
-finite_I_Weibull<- read.csv(("finite_I_Weibull_SWA.csv"))
+finite_I_Weibull<- read.csv(("finite_I_Weibull.csv"))
 
 
 finite_I_Weibull<-data.frame(finite_I_Weibull)
 
-asymptotic_I_Weibull<- read.csv(paste("asymptotic_I_SWA.csv", sep = ","))
+asymptotic_I_Weibull<- read.csv(paste("asymptotic_I.csv", sep = ","))
 colnames(finite_I_Weibull)<-colnames(asymptotic_I_Weibull)
 all1<-rbind(asymptotic_I_Weibull,finite_I_Weibull)
 
-write.csv(all1,paste("I_SWA.csv", sep = ","), row.names = FALSE)
+write.csv(all1,paste("I_values.csv", sep = ","), row.names = FALSE)
 
 
 
