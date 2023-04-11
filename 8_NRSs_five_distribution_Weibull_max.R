@@ -46,12 +46,12 @@ quasiuni_sorted3 <- na.omit(rowSort(quasiuni[,1:3], descend = FALSE, stable = FA
 quasiuni_sorted4 <- na.omit(rowSort(quasiuni, descend = FALSE, stable = FALSE, parallel = TRUE))
 # Forever...
 
-asymptotic_n <- 2048*9*3*2
+asymptotic_n <- 2048*900*3*2
 (asymptotic_n%%10)==0
 # maximum order of moments
 morder <- 4
 #large sample size (asymptotic bias)
-largesize<-2048*9*2
+largesize<-2048*900*2
 
 #generate quasirandom numbers based on the Sobol sequence
 quasiunisobol_asymptotic<-sobol(n=asymptotic_n, dim = morder, init = TRUE, scrambling = 0, seed = NULL, normal = FALSE,
@@ -84,12 +84,12 @@ quasiuni_sorted4_asymptotic<-c()
 
 # Forever...
 
-asymptotic_n <- 2048*9*3*2
+asymptotic_n <- 2048*900*3*2
 (asymptotic_n%%10)==0
 # maximum order of moments
 morder <- 10
 #large sample size (asymptotic bias)
-largesize<-2048*9*2
+largesize<-2048*900*2
 
 #generate quasirandom numbers based on the Sobol sequence
 quasiunisobol_asymptotic<-sobol(n=asymptotic_n, dim = morder, init = TRUE, scrambling = 0, seed = NULL, normal = FALSE,
