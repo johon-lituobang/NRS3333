@@ -46,12 +46,12 @@ quasiuni_sorted3 <- na.omit(rowSort(quasiuni[,1:3], descend = FALSE, stable = FA
 quasiuni_sorted4 <- na.omit(rowSort(quasiuni, descend = FALSE, stable = FALSE, parallel = TRUE))
 # Forever...
 
-asymptotic_n <- 2048*900*3*2
+asymptotic_n <- 2048*9*3*2
 (asymptotic_n%%10)==0
 # maximum order of moments
 morder <- 4
 #large sample size (asymptotic bias)
-largesize<-2048*900*2
+largesize<-2048*9*2
 
 #generate quasirandom numbers based on the Sobol sequence
 quasiunisobol_asymptotic<-sobol(n=asymptotic_n, dim = morder, init = TRUE, scrambling = 0, seed = NULL, normal = FALSE,
@@ -84,12 +84,12 @@ quasiuni_sorted4_asymptotic<-c()
 
 # Forever...
 
-asymptotic_n <- 2048*900*3*2
+asymptotic_n <- 2048*9*3*2
 (asymptotic_n%%10)==0
 # maximum order of moments
 morder <- 10
 #large sample size (asymptotic bias)
-largesize<-2048*900*2
+largesize<-2048*9*2
 
 #generate quasirandom numbers based on the Sobol sequence
 quasiunisobol_asymptotic<-sobol(n=asymptotic_n, dim = morder, init = TRUE, scrambling = 0, seed = NULL, normal = FALSE,
@@ -410,7 +410,6 @@ write.csv(cbind(simulatedbatch_asymptoticbias[1:1000,1:370]),paste("asymptotic_P
 kurtlognorm<- read.csv(("kurtlognorm_31150.csv"))
 allkurtlognorm<-unlist(kurtlognorm)
 
-
 simulatedbatch_asymptoticbias<-foreach(batchnumber = (1:1000), .combine = 'rbind') %dopar% {
   library(Rfast)
   library(matrixStats)
@@ -418,7 +417,7 @@ simulatedbatch_asymptoticbias<-foreach(batchnumber = (1:1000), .combine = 'rbind
   library(NRSReview)
   setSeed(1)
   set.seed(1)
-  a=seq(from = 0.01, to = 100, length.out = 1000)[batchnumber]
+  a=seq(from = 0.01, to = 20, length.out = 1000)[batchnumber]
   x<-c(dslnorm(uni=quasiuni_asymptotic, meanlog =0, sdlog  = a/1))
   targetm<-exp((a^2)/2)
   targetvar<-(exp((a/1)^2)*(-1+exp((a/1)^2)))
@@ -511,7 +510,7 @@ simulatedbatch_asymptoticbias<-foreach(batchnumber = (1:1000), .combine = 'rbind
   library(NRSReview)
   setSeed(1)
   set.seed(1)
-  a=seq(from = 0.01, to = 100, length.out = 1000)[batchnumber]
+  a=seq(from = 0.1, to = 20, length.out = 1000)[batchnumber]
   x<-c(dsgnorm(uni=quasiuni_asymptotic, shape=a/1, scale = 1))
 
   targetm<-0
