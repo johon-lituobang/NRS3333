@@ -136,7 +136,7 @@ simulatedbatch_asymptoticbias<-foreach(batchnumber = (1:1000), .combine = 'rbind
   library(NRSReview)
   setSeed(1)
   set.seed(1)
-  a=0.01*batchnumber
+  a=0.02*batchnumber
   x<-c(dsWeibull(uni=quasiuni_asymptotic, shape=a/1, scale = 1))
   targetm<-gamma(1+1/(a/1))
   targetvar<-(gamma(1+2/(a/1))-(gamma(((1+1/(a/1)))))^2)
@@ -230,7 +230,7 @@ simulatedbatch_asymptoticbias<-foreach(batchnumber = (1:1000), .combine = 'rbind
   library(NRSReview)
   setSeed(1)
   set.seed(1)
-  a=0.01*batchnumber
+  a=0.02*batchnumber
   x<-c(dsgamma(uni=quasiuni_asymptotic, shape=a/1, rate  = 1))
   targetm<-a
   targetvar<-(a)
@@ -511,7 +511,7 @@ simulatedbatch_asymptoticbias<-foreach(batchnumber = (1:1000), .combine = 'rbind
   library(NRSReview)
   setSeed(1)
   set.seed(1)
-  a=0.01*batchnumber
+  a=0.02*batchnumber
   x<-c(dsgnorm(uni=quasiuni_asymptotic, shape=a/1, scale = 1))
 
   targetm<-0
