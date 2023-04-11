@@ -99,13 +99,6 @@ quasiuni_M<-rbind(quasiunisobol_asymptotic)
 
 quasiunisobol_asymptotic<-c()
 
-# orderlist1_AB2_quasi<-createorderlist(quni1=quasiuni_M[,1:2],size=largesize,interval=16,dimension=2)
-# orderlist1_AB2_quasi<-orderlist1_AB2_quasi[1:largesize,]
-# orderlist1_AB3_quasi<-createorderlist(quni1=quasiuni_M[,1:3],size=largesize,interval=16,dimension=3)
-# orderlist1_AB3_quasi<-orderlist1_AB3_quasi[1:largesize,]
-# orderlist1_AB4_quasi<-createorderlist(quni1=quasiuni_M[,1:4],size=largesize,interval=16,dimension=4)
-# orderlist1_AB4_quasi<-orderlist1_AB4_quasi[1:largesize,]
-
 orderlist1_AB10_quasi<-createorderlist(quni1=quasiuni_M[,1:10],size=largesize,interval=16,dimension=10)
 orderlist1_AB10_quasi<-orderlist1_AB10_quasi[1:largesize,]
 
