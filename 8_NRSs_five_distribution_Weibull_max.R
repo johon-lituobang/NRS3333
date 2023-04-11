@@ -126,17 +126,17 @@ Imoments_values<- read.csv(("Imoments_values.csv"))
 #set the stop criterion
 criterionset=1e-10
 
-kurtWeibull<- read.csv(("kurtWeibull_31150.csv"))
+kurtWeibull<- read.csv(("kurtWeibull_2810000.csv"))
 allkurtWeibull<-unlist(kurtWeibull)
 
-simulatedbatch_asymptoticbias<-foreach(batchnumber = (1:1000), .combine = 'rbind') %dopar% {
+simulatedbatch_asymptoticbias<-foreach(batchnumber = (1:length(allkurtWeibull)), .combine = 'rbind') %dopar% {
   library(Rfast)
   library(matrixStats)
   library(randtoolbox)
   library(NRSReview)
   setSeed(1)
   set.seed(1)
-  a=seq(from = 0.02, to = 20, length.out = 1000)[batchnumber]
+  a=allkurtWeibull[batchnumber]
   x<-c(dsWeibull(uni=quasiuni_asymptotic, shape=a/1, scale = 1))
   targetm<-gamma(1+1/(a/1))
   targetvar<-(gamma(1+2/(a/1))-(gamma(((1+1/(a/1)))))^2)
@@ -216,21 +216,21 @@ simulatedbatch_asymptoticbias<-foreach(batchnumber = (1:1000), .combine = 'rbind
 
 write.csv(simulatedbatch_asymptoticbias,paste("asymptotic_Weibull_raw_Process_max",largesize,".csv", sep = ","), row.names = FALSE)
 
-write.csv(cbind(simulatedbatch_asymptoticbias[1:1000,c(1:370)]),paste("asymptotic_Weibull_max",largesize,".csv", sep = ","), row.names = FALSE)
+write.csv(cbind(simulatedbatch_asymptoticbias[1:998,c(1:370)]),paste("asymptotic_Weibull_max",largesize,".csv", sep = ","), row.names = FALSE)
 
 
 
-kurtgamma<- read.csv(("kurtgamma_31150.csv"))
+kurtgamma<- read.csv(("kurtgamma_3110000.csv"))
 allkurtgamma<-unlist(kurtgamma)
 
-simulatedbatch_asymptoticbias<-foreach(batchnumber = (1:1000), .combine = 'rbind') %dopar% {
+simulatedbatch_asymptoticbias<-foreach(batchnumber = (1:997), .combine = 'rbind') %dopar% {
   library(Rfast)
   library(matrixStats)
   library(randtoolbox)
   library(NRSReview)
   setSeed(1)
   set.seed(1)
-  a=seq(from = 0.001, to = 20, length.out = 1000)[batchnumber]
+  a=allkurtgamma[batchnumber]
   x<-c(dsgamma(uni=quasiuni_asymptotic, shape=a/1, rate  = 1))
   targetm<-a
   targetvar<-(a)
@@ -311,20 +311,20 @@ simulatedbatch_asymptoticbias<-foreach(batchnumber = (1:1000), .combine = 'rbind
 
 write.csv(simulatedbatch_asymptoticbias,paste("asymptotic_gamma_raw_Process_max",largesize,".csv", sep = ","), row.names = FALSE)
 
-write.csv(cbind(simulatedbatch_asymptoticbias[1:1000,c(1:370)]),paste("asymptotic_gamma_max",largesize,".csv", sep = ","), row.names = FALSE)
+write.csv(cbind(simulatedbatch_asymptoticbias[1:997,c(1:370)]),paste("asymptotic_gamma_max",largesize,".csv", sep = ","), row.names = FALSE)
 
 
-kurtPareto<- read.csv(("kurtPareto_91210.csv"))
+kurtPareto<- read.csv(("kurtPareto_9110000.csv"))
 allkurtPareto<-unlist(kurtPareto)
 
-simulatedbatch_asymptoticbias<-foreach(batchnumber = (1:1000), .combine = 'rbind') %dopar% {
+simulatedbatch_asymptoticbias<-foreach(batchnumber = (1:991), .combine = 'rbind') %dopar% {
   library(Rfast)
   library(matrixStats)
   library(randtoolbox)
   library(NRSReview)
   setSeed(1)
   set.seed(1)
-  a=seq(from = 2.01, to = 200, length.out = 1000)[batchnumber]
+  a=allkurtPareto[batchnumber]
   x<-c(dsPareto(uni=quasiuni_asymptotic, shape=a/1, scale = 1))
 
   targetm<-a/(a-1)
@@ -404,20 +404,20 @@ simulatedbatch_asymptoticbias<-foreach(batchnumber = (1:1000), .combine = 'rbind
 
 write.csv(simulatedbatch_asymptoticbias,paste("asymptotic_Pareto_raw_Process_max",largesize,".csv", sep = ","), row.names = FALSE)
 
-write.csv(cbind(simulatedbatch_asymptoticbias[1:1000,1:370]),paste("asymptotic_Pareto_max",largesize,".csv", sep = ","), row.names = FALSE)
+write.csv(cbind(simulatedbatch_asymptoticbias[1:991,1:370]),paste("asymptotic_Pareto_max",largesize,".csv", sep = ","), row.names = FALSE)
 
 
-kurtlognorm<- read.csv(("kurtlognorm_31150.csv"))
+kurtlognorm<- read.csv(("kurtlognorm_3110000.csv"))
 allkurtlognorm<-unlist(kurtlognorm)
 
-simulatedbatch_asymptoticbias<-foreach(batchnumber = (1:1000), .combine = 'rbind') %dopar% {
+simulatedbatch_asymptoticbias<-foreach(batchnumber = (1:997), .combine = 'rbind') %dopar% {
   library(Rfast)
   library(matrixStats)
   library(randtoolbox)
   library(NRSReview)
   setSeed(1)
   set.seed(1)
-  a=seq(from = 0.01, to = 20, length.out = 1000)[batchnumber]
+  a=allkurtlognorm[batchnumber]
   x<-c(dslnorm(uni=quasiuni_asymptotic, meanlog =0, sdlog  = a/1))
   targetm<-exp((a^2)/2)
   targetvar<-(exp((a/1)^2)*(-1+exp((a/1)^2)))
@@ -497,20 +497,20 @@ simulatedbatch_asymptoticbias<-foreach(batchnumber = (1:1000), .combine = 'rbind
 
 write.csv(simulatedbatch_asymptoticbias,paste("asymptotic_lognorm_raw_Process_max",largesize,".csv", sep = ","), row.names = FALSE)
 
-write.csv(cbind(simulatedbatch_asymptoticbias[1:1000,1:370]),paste("asymptotic_lognorm_max",largesize,".csv", sep = ","), row.names = FALSE)
+write.csv(cbind(simulatedbatch_asymptoticbias[1:997,1:370]),paste("asymptotic_lognorm_max",largesize,".csv", sep = ","), row.names = FALSE)
 
-kurtgnorm<- read.csv(("kurtgnorm_31150.csv"))
+kurtgnorm<- read.csv(("kurtgnorm_2110000.csv"))
 allkurtgnorm<-unlist(kurtgnorm)
 
 
-simulatedbatch_asymptoticbias<-foreach(batchnumber = (1:1000), .combine = 'rbind') %dopar% {
+simulatedbatch_asymptoticbias<-foreach(batchnumber = (1:998), .combine = 'rbind') %dopar% {
   library(Rfast)
   library(matrixStats)
   library(randtoolbox)
   library(NRSReview)
   setSeed(1)
   set.seed(1)
-  a=seq(from = 0.1, to = 20, length.out = 1000)[batchnumber]
+  a=allkurtgnorm[batchnumber]
   x<-c(dsgnorm(uni=quasiuni_asymptotic, shape=a/1, scale = 1))
 
   targetm<-0
@@ -589,7 +589,7 @@ simulatedbatch_asymptoticbias<-foreach(batchnumber = (1:1000), .combine = 'rbind
 }
 write.csv(simulatedbatch_asymptoticbias,paste("asymptotic_gnorm_raw_Process_max",largesize,".csv", sep = ","), row.names = FALSE)
 
-write.csv(cbind(simulatedbatch_asymptoticbias[1:1000,1:370]),paste("asymptotic_gnorm_max",largesize,".csv", sep = ","), row.names = FALSE)
+write.csv(cbind(simulatedbatch_asymptoticbias[1:998,1:370]),paste("asymptotic_gnorm_max",largesize,".csv", sep = ","), row.names = FALSE)
 
 
 stopCluster(cl)
