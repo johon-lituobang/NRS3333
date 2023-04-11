@@ -52,6 +52,8 @@ mHLM(x,dimension=4,boot=TRUE,quasi=FALSE,largesize=1.8*10^4)
 #compared to median of means 
 median_of_means(x,korder=4)
 
+mHLM10(x,boot=TRUE,quasi=FALSE,largesize=1.8*10^4)
+
 #compared to recombined mean and quantile mean
 rqm(x)
 
