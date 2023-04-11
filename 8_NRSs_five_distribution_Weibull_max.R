@@ -46,12 +46,12 @@ quasiuni_sorted3 <- na.omit(rowSort(quasiuni[,1:3], descend = FALSE, stable = FA
 quasiuni_sorted4 <- na.omit(rowSort(quasiuni, descend = FALSE, stable = FALSE, parallel = TRUE))
 # Forever...
 
-asymptotic_n <- 2048*900*3*2
+asymptotic_n <- 2048*9*3*2
 (asymptotic_n%%10)==0
 # maximum order of moments
 morder <- 4
 #large sample size (asymptotic bias)
-largesize<-2048*900*2
+largesize<-2048*9*2
 
 #generate quasirandom numbers based on the Sobol sequence
 quasiunisobol_asymptotic<-sobol(n=asymptotic_n, dim = morder, init = TRUE, scrambling = 0, seed = NULL, normal = FALSE,
@@ -84,12 +84,12 @@ quasiuni_sorted4_asymptotic<-c()
 
 # Forever...
 
-asymptotic_n <- 2048*900*3*2
+asymptotic_n <- 2048*9*3*2
 (asymptotic_n%%10)==0
 # maximum order of moments
 morder <- 10
 #large sample size (asymptotic bias)
-largesize<-2048*900*2
+largesize<-2048*9*2
 
 #generate quasirandom numbers based on the Sobol sequence
 quasiunisobol_asymptotic<-sobol(n=asymptotic_n, dim = morder, init = TRUE, scrambling = 0, seed = NULL, normal = FALSE,
@@ -126,7 +126,7 @@ Imoments_values<- read.csv(("Imoments_values.csv"))
 #set the stop criterion
 criterionset=1e-10
 
-kurtWeibull<- read.csv(("kurtWeibull_2810000.csv"))
+kurtWeibull<- read.csv(("kurtWeibull_28100000.csv"))
 allkurtWeibull<-unlist(kurtWeibull)
 
 simulatedbatch_asymptoticbias<-foreach(batchnumber = (1:length(allkurtWeibull)), .combine = 'rbind') %dopar% {
@@ -213,17 +213,17 @@ simulatedbatch_asymptoticbias<-foreach(batchnumber = (1:length(allkurtWeibull)),
   standardizedm<-c(imoments1[1398]/momentssd[1],imoments1[1449]/momentssd[2],imoments1[1486]/momentssd[3],imoments1[1510]/momentssd[4])
   all1<-(c(kurtx=kurtx,skewx=skewx,momentsx,allrawmoBias,momentssd,medianmoments,standardizedm=standardizedm,allrawmo1,Huberx,SMWM9,imoments1,targetall))
 }
-
+hos<-colRanks(simulatedbatch_asymptoticbias)
 write.csv(simulatedbatch_asymptoticbias,paste("asymptotic_Weibull_raw_Process_max",largesize,".csv", sep = ","), row.names = FALSE)
 
-write.csv(cbind(simulatedbatch_asymptoticbias[1:998,c(1:370)]),paste("asymptotic_Weibull_max",largesize,".csv", sep = ","), row.names = FALSE)
+write.csv(cbind(simulatedbatch_asymptoticbias[1:length(allkurtWeibull),c(1:370)]),paste("asymptotic_Weibull_max",largesize,".csv", sep = ","), row.names = FALSE)
 
 
 
-kurtgamma<- read.csv(("kurtgamma_3110000.csv"))
+kurtgamma<- read.csv(("kurtgamma_31100000.csv"))
 allkurtgamma<-unlist(kurtgamma)
 
-simulatedbatch_asymptoticbias<-foreach(batchnumber = (1:997), .combine = 'rbind') %dopar% {
+simulatedbatch_asymptoticbias<-foreach(batchnumber = (1:length(allkurtgamma)), .combine = 'rbind') %dopar% {
   library(Rfast)
   library(matrixStats)
   library(randtoolbox)
@@ -311,13 +311,13 @@ simulatedbatch_asymptoticbias<-foreach(batchnumber = (1:997), .combine = 'rbind'
 
 write.csv(simulatedbatch_asymptoticbias,paste("asymptotic_gamma_raw_Process_max",largesize,".csv", sep = ","), row.names = FALSE)
 
-write.csv(cbind(simulatedbatch_asymptoticbias[1:997,c(1:370)]),paste("asymptotic_gamma_max",largesize,".csv", sep = ","), row.names = FALSE)
+write.csv(cbind(simulatedbatch_asymptoticbias[1:length(allkurtgamma),c(1:370)]),paste("asymptotic_gamma_max",largesize,".csv", sep = ","), row.names = FALSE)
+hg1<-colRanks(simulatedbatch_asymptoticbias)
 
-
-kurtPareto<- read.csv(("kurtPareto_9110000.csv"))
+kurtPareto<- read.csv(("kurtPareto_91100000.csv"))
 allkurtPareto<-unlist(kurtPareto)
 
-simulatedbatch_asymptoticbias<-foreach(batchnumber = (1:991), .combine = 'rbind') %dopar% {
+simulatedbatch_asymptoticbias<-foreach(batchnumber = (1:length(allkurtPareto)), .combine = 'rbind') %dopar% {
   library(Rfast)
   library(matrixStats)
   library(randtoolbox)
@@ -404,13 +404,13 @@ simulatedbatch_asymptoticbias<-foreach(batchnumber = (1:991), .combine = 'rbind'
 
 write.csv(simulatedbatch_asymptoticbias,paste("asymptotic_Pareto_raw_Process_max",largesize,".csv", sep = ","), row.names = FALSE)
 
-write.csv(cbind(simulatedbatch_asymptoticbias[1:991,1:370]),paste("asymptotic_Pareto_max",largesize,".csv", sep = ","), row.names = FALSE)
+write.csv(cbind(simulatedbatch_asymptoticbias[1:length(allkurtPareto),1:370]),paste("asymptotic_Pareto_max",largesize,".csv", sep = ","), row.names = FALSE)
 
 
-kurtlognorm<- read.csv(("kurtlognorm_3110000.csv"))
+kurtlognorm<- read.csv(("kurtlognorm_31100000.csv"))
 allkurtlognorm<-unlist(kurtlognorm)
 
-simulatedbatch_asymptoticbias<-foreach(batchnumber = (1:997), .combine = 'rbind') %dopar% {
+simulatedbatch_asymptoticbias<-foreach(batchnumber = (1:length(allkurtlognorm)), .combine = 'rbind') %dopar% {
   library(Rfast)
   library(matrixStats)
   library(randtoolbox)
@@ -497,13 +497,13 @@ simulatedbatch_asymptoticbias<-foreach(batchnumber = (1:997), .combine = 'rbind'
 
 write.csv(simulatedbatch_asymptoticbias,paste("asymptotic_lognorm_raw_Process_max",largesize,".csv", sep = ","), row.names = FALSE)
 
-write.csv(cbind(simulatedbatch_asymptoticbias[1:997,1:370]),paste("asymptotic_lognorm_max",largesize,".csv", sep = ","), row.names = FALSE)
+write.csv(cbind(simulatedbatch_asymptoticbias[1:length(allkurtlognorm),1:370]),paste("asymptotic_lognorm_max",largesize,".csv", sep = ","), row.names = FALSE)
 
-kurtgnorm<- read.csv(("kurtgnorm_2110000.csv"))
+kurtgnorm<- read.csv(("kurtgnorm_21100000.csv"))
 allkurtgnorm<-unlist(kurtgnorm)
 
 
-simulatedbatch_asymptoticbias<-foreach(batchnumber = (1:998), .combine = 'rbind') %dopar% {
+simulatedbatch_asymptoticbias<-foreach(batchnumber = (1:length(allkurtgnorm)), .combine = 'rbind') %dopar% {
   library(Rfast)
   library(matrixStats)
   library(randtoolbox)
@@ -589,7 +589,7 @@ simulatedbatch_asymptoticbias<-foreach(batchnumber = (1:998), .combine = 'rbind'
 }
 write.csv(simulatedbatch_asymptoticbias,paste("asymptotic_gnorm_raw_Process_max",largesize,".csv", sep = ","), row.names = FALSE)
 
-write.csv(cbind(simulatedbatch_asymptoticbias[1:998,1:370]),paste("asymptotic_gnorm_max",largesize,".csv", sep = ","), row.names = FALSE)
+write.csv(cbind(simulatedbatch_asymptoticbias[1:length(allkurtgnorm),1:370]),paste("asymptotic_gnorm_max",largesize,".csv", sep = ","), row.names = FALSE)
 
 
 stopCluster(cl)
