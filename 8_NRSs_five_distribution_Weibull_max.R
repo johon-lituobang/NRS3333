@@ -175,7 +175,7 @@ simulatedbatch_asymptoticbias<-foreach(batchnumber = (1:1000), .combine = 'rbind
 
 write.csv(simulatedbatch_asymptoticbias,paste("asymptotic_Weibull_raw_Process_max",largesize,".csv", sep = ","), row.names = FALSE)
 
-write.csv(cbind(simulatedbatch_asymptoticbias[1:1000,c(1:351)]),paste("asymptotic_Weibull_max",largesize,".csv", sep = ","), row.names = FALSE)
+write.csv(cbind(simulatedbatch_asymptoticbias[1:1000,c(1:352)]),paste("asymptotic_Weibull_max",largesize,".csv", sep = ","), row.names = FALSE)
 
 
 
@@ -268,7 +268,7 @@ simulatedbatch_asymptoticbias<-foreach(batchnumber = (1:1000), .combine = 'rbind
 
 write.csv(simulatedbatch_asymptoticbias,paste("asymptotic_gamma_raw_Process_max",largesize,".csv", sep = ","), row.names = FALSE)
 
-write.csv(cbind(simulatedbatch_asymptoticbias[1:1000,c(1:351)]),paste("asymptotic_gamma_max",largesize,".csv", sep = ","), row.names = FALSE)
+write.csv(cbind(simulatedbatch_asymptoticbias[1:1000,c(1:352)]),paste("asymptotic_gamma_max",largesize,".csv", sep = ","), row.names = FALSE)
 
 
 kurtPareto<- read.csv(("kurtPareto_91210.csv"))
@@ -360,7 +360,7 @@ simulatedbatch_asymptoticbias<-foreach(batchnumber = (1:1000), .combine = 'rbind
 
 write.csv(simulatedbatch_asymptoticbias,paste("asymptotic_Pareto_raw_Process_max",largesize,".csv", sep = ","), row.names = FALSE)
 
-write.csv(cbind(simulatedbatch_asymptoticbias[1:1000,1:351]),paste("asymptotic_Pareto_max",largesize,".csv", sep = ","), row.names = FALSE)
+write.csv(cbind(simulatedbatch_asymptoticbias[1:1000,1:352]),paste("asymptotic_Pareto_max",largesize,".csv", sep = ","), row.names = FALSE)
 
 
 kurtlognorm<- read.csv(("kurtlognorm_31150.csv"))
@@ -453,7 +453,7 @@ simulatedbatch_asymptoticbias<-foreach(batchnumber = (1:1000), .combine = 'rbind
 
 write.csv(simulatedbatch_asymptoticbias,paste("asymptotic_lognorm_raw_Process_max",largesize,".csv", sep = ","), row.names = FALSE)
 
-write.csv(cbind(simulatedbatch_asymptoticbias[1:1000,1:351]),paste("asymptotic_lognorm_max",largesize,".csv", sep = ","), row.names = FALSE)
+write.csv(cbind(simulatedbatch_asymptoticbias[1:1000,1:352]),paste("asymptotic_lognorm_max",largesize,".csv", sep = ","), row.names = FALSE)
 
 kurtgnorm<- read.csv(("kurtgnorm_31150.csv"))
 allkurtgnorm<-unlist(kurtgnorm)
@@ -544,7 +544,7 @@ simulatedbatch_asymptoticbias<-foreach(batchnumber = (1:1000), .combine = 'rbind
 }
 write.csv(simulatedbatch_asymptoticbias,paste("asymptotic_gnorm_raw_Process_max",largesize,".csv", sep = ","), row.names = FALSE)
 
-write.csv(cbind(simulatedbatch_asymptoticbias[1:1000,1:351]),paste("asymptotic_gnorm_max",largesize,".csv", sep = ","), row.names = FALSE)
+write.csv(cbind(simulatedbatch_asymptoticbias[1:1000,1:352]),paste("asymptotic_gnorm_max",largesize,".csv", sep = ","), row.names = FALSE)
 
 
 stopCluster(cl)
