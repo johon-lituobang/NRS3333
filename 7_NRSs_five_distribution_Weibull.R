@@ -354,7 +354,7 @@ simulatedbatch_ABSE<-foreach(batchnumber =c((1:length(allkurtWeibull))), .combin
   
   write.csv(SEbataches,paste("Weibull_raw_ABSSE_finite",samplesize,round(kurtx,digits = 1),".csv", sep = ","), row.names = FALSE)
   
-  SEbatachesmean[]
+  
   RMSE1_mean<-sqrt(colMeans((SEbataches[,7:161])^2))/sqrt(targetvar)
   
   RMSE1_var<-sqrt(colMeans((SEbataches[,162:256])^2))/simulatedbatch_asymptoticbias[batchnumber,360]
