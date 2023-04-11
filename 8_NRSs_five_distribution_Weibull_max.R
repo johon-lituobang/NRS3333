@@ -46,12 +46,12 @@ quasiuni_sorted3 <- na.omit(rowSort(quasiuni[,1:3], descend = FALSE, stable = FA
 quasiuni_sorted4 <- na.omit(rowSort(quasiuni, descend = FALSE, stable = FALSE, parallel = TRUE))
 # Forever...
 
-asymptotic_n <- 2048*9*3*2
+asymptotic_n <- 2048*900*3*2
 (asymptotic_n%%10)==0
 # maximum order of moments
 morder <- 4
 #large sample size (asymptotic bias)
-largesize<-2048*9*2
+largesize<-2048*900*2
 
 #generate quasirandom numbers based on the Sobol sequence
 quasiunisobol_asymptotic<-sobol(n=asymptotic_n, dim = morder, init = TRUE, scrambling = 0, seed = NULL, normal = FALSE,
@@ -84,12 +84,12 @@ quasiuni_sorted4_asymptotic<-c()
 
 # Forever...
 
-asymptotic_n <- 2048*9*3*2
+asymptotic_n <- 2048*900*3*2
 (asymptotic_n%%10)==0
 # maximum order of moments
 morder <- 10
 #large sample size (asymptotic bias)
-largesize<-2048*9*2
+largesize<-2048*900*2
 
 #generate quasirandom numbers based on the Sobol sequence
 quasiunisobol_asymptotic<-sobol(n=asymptotic_n, dim = morder, init = TRUE, scrambling = 0, seed = NULL, normal = FALSE,
@@ -98,13 +98,6 @@ quasiunisobol_asymptotic<-sobol(n=asymptotic_n, dim = morder, init = TRUE, scram
 quasiuni_M<-rbind(quasiunisobol_asymptotic)
 
 quasiunisobol_asymptotic<-c()
-
-# orderlist1_AB2_quasi<-createorderlist(quni1=quasiuni_M[,1:2],size=largesize,interval=16,dimension=2)
-# orderlist1_AB2_quasi<-orderlist1_AB2_quasi[1:largesize,]
-# orderlist1_AB3_quasi<-createorderlist(quni1=quasiuni_M[,1:3],size=largesize,interval=16,dimension=3)
-# orderlist1_AB3_quasi<-orderlist1_AB3_quasi[1:largesize,]
-# orderlist1_AB4_quasi<-createorderlist(quni1=quasiuni_M[,1:4],size=largesize,interval=16,dimension=4)
-# orderlist1_AB4_quasi<-orderlist1_AB4_quasi[1:largesize,]
 
 orderlist1_AB10_quasi<-createorderlist(quni1=quasiuni_M[,1:10],size=largesize,interval=16,dimension=10)
 orderlist1_AB10_quasi<-orderlist1_AB10_quasi[1:largesize,]
