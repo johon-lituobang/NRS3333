@@ -236,7 +236,7 @@ simulatedbatch_asymptoticbias<-foreach(batchnumber = (1:length(allkurtWeibull)),
 
 write.csv(simulatedbatch_asymptoticbias,paste("asymptotic_Weibull_raw_Process",largesize,".csv", sep = ","), row.names = FALSE)
 
-write.csv(cbind(simulatedbatch_asymptoticbias[1:length(allkurtWeibull),c(1:345)]),paste("asymptotic_Weibull",largesize,".csv", sep = ","), row.names = FALSE)
+write.csv(cbind(simulatedbatch_asymptoticbias[1:length(allkurtWeibull),c(1:370)]),paste("asymptotic_Weibull",largesize,".csv", sep = ","), row.names = FALSE)
 
 largesize1<-2048*9
 samplesize=2048*2
@@ -1072,7 +1072,7 @@ simulatedbatch_asymptoticbias<-foreach(batchnumber = (1:length(allkurtgamma)), .
 
 write.csv(simulatedbatch_asymptoticbias,paste("asymptotic_gamma_raw_Process",largesize,".csv", sep = ","), row.names = FALSE)
 
-write.csv(cbind(simulatedbatch_asymptoticbias[1:length(allkurtgamma),c(1:345)]),paste("asymptotic_gamma",largesize,".csv", sep = ","), row.names = FALSE)
+write.csv(cbind(simulatedbatch_asymptoticbias[1:length(allkurtgamma),c(1:370)]),paste("asymptotic_gamma",largesize,".csv", sep = ","), row.names = FALSE)
 
 simulatedbatch_ABSE<-foreach(batchnumber =c((1:length(allkurtgamma))), .combine = 'rbind') %dopar% {
   library(Rfast)
@@ -1886,7 +1886,7 @@ simulatedbatch_asymptoticbias<-foreach(batchnumber = (1:length(allkurtPareto)), 
 
 write.csv(simulatedbatch_asymptoticbias,paste("asymptotic_Pareto_raw_Process",largesize,".csv", sep = ","), row.names = FALSE)
 
-write.csv(cbind(simulatedbatch_asymptoticbias[1:length(allkurtPareto),1:345]),paste("asymptotic_Pareto",largesize,".csv", sep = ","), row.names = FALSE)
+write.csv(cbind(simulatedbatch_asymptoticbias[1:length(allkurtPareto),1:370]),paste("asymptotic_Pareto",largesize,".csv", sep = ","), row.names = FALSE)
 
 simulatedbatch_ABSE<-foreach(batchnumber =c((1:length(allkurtPareto))), .combine = 'rbind') %dopar% {
   library(Rfast)
@@ -2702,7 +2702,7 @@ simulatedbatch_asymptoticbias<-foreach(batchnumber = (1:length(allkurtlognorm)),
 
 write.csv(simulatedbatch_asymptoticbias,paste("asymptotic_lognorm_raw_Process",largesize,".csv", sep = ","), row.names = FALSE)
 
-write.csv(cbind(simulatedbatch_asymptoticbias[1:length(allkurtlognorm),1:345]),paste("asymptotic_lognorm",largesize,".csv", sep = ","), row.names = FALSE)
+write.csv(cbind(simulatedbatch_asymptoticbias[1:length(allkurtlognorm),1:370]),paste("asymptotic_lognorm",largesize,".csv", sep = ","), row.names = FALSE)
 
 simulatedbatch_ABSE<-foreach(batchnumber =c((1:length(allkurtlognorm))), .combine = 'rbind') %dopar% {
   library(Rfast)
@@ -3517,7 +3517,7 @@ simulatedbatch_asymptoticbias<-foreach(batchnumber = (1:length(allkurtgnorm)), .
 }
 write.csv(simulatedbatch_asymptoticbias,paste("asymptotic_gnorm_raw_Process",largesize,".csv", sep = ","), row.names = FALSE)
 
-write.csv(cbind(simulatedbatch_asymptoticbias[1:length(allkurtgnorm),1:345]),paste("asymptotic_gnorm",largesize,".csv", sep = ","), row.names = FALSE)
+write.csv(cbind(simulatedbatch_asymptoticbias[1:length(allkurtgnorm),1:370]),paste("asymptotic_gnorm",largesize,".csv", sep = ","), row.names = FALSE)
 
 simulatedbatch_ABSE<-foreach(batchnumber =c((1:length(allkurtgnorm))), .combine = 'rbind') %dopar% {
   library(Rfast)
