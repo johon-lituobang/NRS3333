@@ -99,6 +99,13 @@ quasiuni_M<-rbind(quasiunisobol_asymptotic)
 
 quasiunisobol_asymptotic<-c()
 
+# orderlist1_AB2_quasi<-createorderlist(quni1=quasiuni_M[,1:2],size=largesize,interval=16,dimension=2)
+# orderlist1_AB2_quasi<-orderlist1_AB2_quasi[1:largesize,]
+# orderlist1_AB3_quasi<-createorderlist(quni1=quasiuni_M[,1:3],size=largesize,interval=16,dimension=3)
+# orderlist1_AB3_quasi<-orderlist1_AB3_quasi[1:largesize,]
+# orderlist1_AB4_quasi<-createorderlist(quni1=quasiuni_M[,1:4],size=largesize,interval=16,dimension=4)
+# orderlist1_AB4_quasi<-orderlist1_AB4_quasi[1:largesize,]
+
 orderlist1_AB10_quasi<-createorderlist(quni1=quasiuni_M[,1:10],size=largesize,interval=16,dimension=10)
 orderlist1_AB10_quasi<-orderlist1_AB10_quasi[1:largesize,]
 
@@ -163,7 +170,12 @@ simulatedbatch_asymptoticbias<-foreach(batchnumber = (1:length(allkurtWeibull)),
   alpha2<-QE1[1]+0.3
   
   #X He, WK Fung, Method of medians for lifetime data with weibull models. Stat. medicine 18, 1993–2009 (1999)
-  RMLE1<-Weibull_RMLE(sortedx,alpha1=alpha1,alpha2=alpha2)
+  RMLE1<-tryCatch({
+    Weibull_RMLE(sortedx,alpha1=alpha1,alpha2=alpha2)
+  }, error = function(e) {
+    cat("Error: ", conditionMessage(e), "\n")
+    rep(NA,2)
+  })
   
   #all parameter setting are from
   #K Boudt, D Caliskan, C Croux, Robust explicit estimators of weibull parameters. Metrika 73, 187–209 (2011).
@@ -206,7 +218,7 @@ simulatedbatch_asymptoticbias<-foreach(batchnumber = (1:length(allkurtWeibull)),
   standardizedm<-c(imoments1[1398]/momentssd[1],imoments1[1449]/momentssd[2],imoments1[1486]/momentssd[3],imoments1[1510]/momentssd[4])
   all1<-(c(kurtx=kurtx,skewx=skewx,momentsx,allrawmoBias,momentssd,medianmoments,standardizedm=standardizedm,allrawmo1,Huberx,SMWM9,imoments1,targetall))
 }
-hos<-colRanks(simulatedbatch_asymptoticbias)
+
 write.csv(simulatedbatch_asymptoticbias,paste("asymptotic_Weibull_raw_Process_max",largesize,".csv", sep = ","), row.names = FALSE)
 
 write.csv(cbind(simulatedbatch_asymptoticbias[1:length(allkurtWeibull),c(1:370)]),paste("asymptotic_Weibull_max",largesize,".csv", sep = ","), row.names = FALSE)
@@ -258,8 +270,12 @@ simulatedbatch_asymptoticbias<-foreach(batchnumber = (1:length(allkurtgamma)), .
   alpha2<-QE1[1]+0.3
   
   #X He, WK Fung, Method of medians for lifetime data with weibull models. Stat. medicine 18, 1993–2009 (1999)
-  RMLE1<-Weibull_RMLE(sortedx,alpha1=alpha1,alpha2=alpha2)
-  
+  RMLE1<-tryCatch({
+    Weibull_RMLE(sortedx,alpha1=alpha1,alpha2=alpha2)
+  }, error = function(e) {
+    cat("Error: ", conditionMessage(e), "\n")
+    rep(NA,2)
+  })
   #all parameter setting are from
   #K Boudt, D Caliskan, C Croux, Robust explicit estimators of weibull parameters. Metrika 73, 187–209 (2011).
   
@@ -305,7 +321,6 @@ simulatedbatch_asymptoticbias<-foreach(batchnumber = (1:length(allkurtgamma)), .
 write.csv(simulatedbatch_asymptoticbias,paste("asymptotic_gamma_raw_Process_max",largesize,".csv", sep = ","), row.names = FALSE)
 
 write.csv(cbind(simulatedbatch_asymptoticbias[1:length(allkurtgamma),c(1:370)]),paste("asymptotic_gamma_max",largesize,".csv", sep = ","), row.names = FALSE)
-hg1<-colRanks(simulatedbatch_asymptoticbias)
 
 kurtPareto<- read.csv(("kurtPareto_91100000.csv"))
 allkurtPareto<-unlist(kurtPareto)
@@ -353,8 +368,12 @@ simulatedbatch_asymptoticbias<-foreach(batchnumber = (1:length(allkurtPareto)), 
   alpha2<-QE1[1]+0.3
   
   #X He, WK Fung, Method of medians for lifetime data with weibull models. Stat. medicine 18, 1993–2009 (1999)
-  RMLE1<-Weibull_RMLE(sortedx,alpha1=alpha1,alpha2=alpha2)
-  
+  RMLE1<-tryCatch({
+    Weibull_RMLE(sortedx,alpha1=alpha1,alpha2=alpha2)
+  }, error = function(e) {
+    cat("Error: ", conditionMessage(e), "\n")
+    rep(NA,2)
+  })
   #all parameter setting are from
   #K Boudt, D Caliskan, C Croux, Robust explicit estimators of weibull parameters. Metrika 73, 187–209 (2011).
   
@@ -445,8 +464,12 @@ simulatedbatch_asymptoticbias<-foreach(batchnumber = (1:length(allkurtlognorm)),
   alpha2<-QE1[1]+0.3
   
   #X He, WK Fung, Method of medians for lifetime data with weibull models. Stat. medicine 18, 1993–2009 (1999)
-  RMLE1<-Weibull_RMLE(sortedx,alpha1=alpha1,alpha2=alpha2)
-  
+  RMLE1<-tryCatch({
+    Weibull_RMLE(sortedx,alpha1=alpha1,alpha2=alpha2)
+  }, error = function(e) {
+    cat("Error: ", conditionMessage(e), "\n")
+    rep(NA,2)
+  })
   #all parameter setting are from
   #K Boudt, D Caliskan, C Croux, Robust explicit estimators of weibull parameters. Metrika 73, 187–209 (2011).
   
@@ -539,8 +562,12 @@ simulatedbatch_asymptoticbias<-foreach(batchnumber = (1:length(allkurtgnorm)), .
   alpha2<-QE1[1]+0.3
   
   #X He, WK Fung, Method of medians for lifetime data with weibull models. Stat. medicine 18, 1993–2009 (1999)
-  RMLE1<-Weibull_RMLE(sortedx,alpha1=alpha1,alpha2=alpha2)
-  
+  RMLE1<-tryCatch({
+    Weibull_RMLE(sortedx,alpha1=alpha1,alpha2=alpha2)
+  }, error = function(e) {
+    cat("Error: ", conditionMessage(e), "\n")
+    rep(NA,2)
+  })
   #all parameter setting are from
   #K Boudt, D Caliskan, C Croux, Robust explicit estimators of weibull parameters. Metrika 73, 187–209 (2011).
   
