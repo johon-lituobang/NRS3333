@@ -80,6 +80,70 @@ quasiuni_sorted2_asymptotic<-c()
 quasiuni_sorted3_asymptotic<-c()
 quasiuni_sorted4_asymptotic<-c()
 
+
+
+# Forever...
+
+asymptotic_n <- 2048*900*3*2
+(asymptotic_n%%10)==0
+# maximum order of moments
+morder <- 10
+#large sample size (asymptotic bias)
+largesize<-2048*900*2
+
+#generate quasirandom numbers based on the Sobol sequence
+quasiunisobol_asymptotic<-sobol(n=asymptotic_n, dim = morder, init = TRUE, scrambling = 0, seed = NULL, normal = FALSE,
+                                mixed = FALSE, method = "C", start = 1)
+
+quasiuni_M<-rbind(quasiunisobol_asymptotic)
+
+quasiunisobol_asymptotic<-c()
+
+# orderlist1_AB2_quasi<-createorderlist(quni1=quasiuni_M[,1:2],size=largesize,interval=16,dimension=2)
+# orderlist1_AB2_quasi<-orderlist1_AB2_quasi[1:largesize,]
+# orderlist1_AB3_quasi<-createorderlist(quni1=quasiuni_M[,1:3],size=largesize,interval=16,dimension=3)
+# orderlist1_AB3_quasi<-orderlist1_AB3_quasi[1:largesize,]
+# orderlist1_AB4_quasi<-createorderlist(quni1=quasiuni_M[,1:4],size=largesize,interval=16,dimension=4)
+# orderlist1_AB4_quasi<-orderlist1_AB4_quasi[1:largesize,]
+orderlist1_AB5_quasi<-createorderlist(quni1=quasiuni_M[,1:5],size=largesize,interval=16,dimension=5)
+orderlist1_AB5_quasi<-orderlist1_AB5_quasi[1:largesize,]
+orderlist1_AB6_quasi<-createorderlist(quni1=quasiuni_M[,1:6],size=largesize,interval=16,dimension=6)
+orderlist1_AB6_quasi<-orderlist1_AB6_quasi[1:largesize,]
+orderlist1_AB7_quasi<-createorderlist(quni1=quasiuni_M[,1:7],size=largesize,interval=16,dimension=7)
+orderlist1_AB7_quasi<-orderlist1_AB7_quasi[1:largesize,]
+orderlist1_AB8_quasi<-createorderlist(quni1=quasiuni_M[,1:8],size=largesize,interval=16,dimension=8)
+orderlist1_AB8_quasi<-orderlist1_AB8_quasi[1:largesize,]
+orderlist1_AB9_quasi<-createorderlist(quni1=quasiuni_M[,1:9],size=largesize,interval=16,dimension=9)
+orderlist1_AB9_quasi<-orderlist1_AB9_quasi[1:largesize,]
+orderlist1_AB10_quasi<-createorderlist(quni1=quasiuni_M[,1:10],size=largesize,interval=16,dimension=10)
+orderlist1_AB10_quasi<-orderlist1_AB10_quasi[1:largesize,]
+
+quasiuni_M<-c()
+setSeed(1)
+unibatchran_M<-matrix(randtoolbox::SFMT(largesize*3*morder),ncol=morder)
+
+orderlist1_AB2_random<-createorderlist(quni1=unibatchran_M[,1:2],size=largesize,interval=16,dimension=2)
+orderlist1_AB2_random<-orderlist1_AB2_random[1:largesize,]
+orderlist1_AB3_random<-createorderlist(quni1=unibatchran_M[,1:3],size=largesize,interval=16,dimension=3)
+orderlist1_AB3_random<-orderlist1_AB3_random[1:largesize,]
+orderlist1_AB4_random<-createorderlist(quni1=unibatchran_M[,1:4],size=largesize,interval=16,dimension=4)
+orderlist1_AB4_random<-orderlist1_AB4_random[1:largesize,]
+orderlist1_AB5_random<-createorderlist(quni1=unibatchran_M[,1:5],size=largesize,interval=16,dimension=5)
+orderlist1_AB5_random<-orderlist1_AB5_random[1:largesize,]
+orderlist1_AB6_random<-createorderlist(quni1=unibatchran_M[,1:6],size=largesize,interval=16,dimension=6)
+orderlist1_AB6_random<-orderlist1_AB6_random[1:largesize,]
+orderlist1_AB7_random<-createorderlist(quni1=unibatchran_M[,1:7],size=largesize,interval=16,dimension=7)
+orderlist1_AB7_random<-orderlist1_AB7_random[1:largesize,]
+orderlist1_AB8_random<-createorderlist(quni1=unibatchran_M[,1:8],size=largesize,interval=16,dimension=8)
+orderlist1_AB8_random<-orderlist1_AB8_random[1:largesize,]
+orderlist1_AB9_random<-createorderlist(quni1=unibatchran_M[,1:9],size=largesize,interval=16,dimension=9)
+orderlist1_AB9_random<-orderlist1_AB9_random[1:largesize,]
+orderlist1_AB10_random<-createorderlist(quni1=unibatchran_M[,1:10],size=largesize,interval=16,dimension=10)
+orderlist1_AB10_random<-orderlist1_AB10_random[1:largesize,]
+
+unibatchran_M<-c()
+
+
 #load asymptotic d for two parameter distributions
 d_values<- read.csv(("d_values.csv"))
 I_values<- read.csv(("I_values.csv"))
@@ -151,21 +215,21 @@ simulatedbatch_asymptoticbias<-foreach(batchnumber = (1:1000), .combine = 'rbind
   MoM8<-median_of_means(sortedx,korder=8)
   MoM9<-median_of_means(sortedx,korder=9)
   MoM10<-median_of_means(sortedx,korder=10)
-  MoRM2<-mHLM(x=sortedx,dimension=2,boot=TRUE,quasi=FALSE,largesize=largesize)
-  MoRM3<-mHLM(x=sortedx,dimension=3,boot=TRUE,quasi=FALSE,largesize=largesize)
-  MoRM4<-mHLM(x=sortedx,dimension=4,boot=TRUE,quasi=FALSE,largesize=largesize)
-  MoRM5<-mHLM(x=sortedx,dimension=5,boot=TRUE,quasi=FALSE,largesize=largesize)
-  MoRM6<-mHLM(x=sortedx,dimension=6,boot=TRUE,quasi=FALSE,largesize=largesize)
-  MoRM7<-mHLM(x=sortedx,dimension=7,boot=TRUE,quasi=FALSE,largesize=largesize)
-  MoRM8<-mHLM(x=sortedx,dimension=8,boot=TRUE,quasi=FALSE,largesize=largesize)
-  MoRM9<-mHLM(x=sortedx,dimension=9,boot=TRUE,quasi=FALSE,largesize=largesize)
-  MoRM10<-mHLM(x=sortedx,dimension=10,boot=TRUE,quasi=FALSE,largesize=largesize)
-  mHLM5<-mHLM(x=sortedx,dimension=5,boot=TRUE,quasi=TRUE,largesize=largesize)
-  mHLM6<-mHLM(x=sortedx,dimension=6,boot=TRUE,quasi=TRUE,largesize=largesize)
-  mHLM7<-mHLM(x=sortedx,dimension=7,boot=TRUE,quasi=TRUE,largesize=largesize)
-  mHLM8<-mHLM(x=sortedx,dimension=8,boot=TRUE,quasi=TRUE,largesize=largesize)
-  mHLM9<-mHLM(x=sortedx,dimension=9,boot=TRUE,quasi=TRUE,largesize=largesize)
-  mHLM10<-mHLM(x=sortedx,dimension=10,boot=TRUE,quasi=TRUE,largesize=largesize)
+  MoRM2<-mHLM(x=sortedx,orderlist1=orderlist1_AB2_random,dimension=2,boot=TRUE,quasi=FALSE,largesize=largesize)
+  MoRM3<-mHLM(x=sortedx,orderlist1=orderlist1_AB3_random,dimension=3,boot=TRUE,quasi=FALSE,largesize=largesize)
+  MoRM4<-mHLM(x=sortedx,orderlist1=orderlist1_AB4_random,dimension=4,boot=TRUE,quasi=FALSE,largesize=largesize)
+  MoRM5<-mHLM(x=sortedx,orderlist1=orderlist1_AB5_random,dimension=5,boot=TRUE,quasi=FALSE,largesize=largesize)
+  MoRM6<-mHLM(x=sortedx,orderlist1=orderlist1_AB6_random,dimension=6,boot=TRUE,quasi=FALSE,largesize=largesize)
+  MoRM7<-mHLM(x=sortedx,orderlist1=orderlist1_AB7_random,dimension=7,boot=TRUE,quasi=FALSE,largesize=largesize)
+  MoRM8<-mHLM(x=sortedx,orderlist1=orderlist1_AB8_random,dimension=8,boot=TRUE,quasi=FALSE,largesize=largesize)
+  MoRM9<-mHLM(x=sortedx,orderlist1=orderlist1_AB9_random,dimension=9,boot=TRUE,quasi=FALSE,largesize=largesize)
+  MoRM10<-mHLM(x=sortedx,orderlist1=orderlist1_AB10_random,dimension=10,boot=TRUE,quasi=FALSE,largesize=largesize)
+  mHLM5<-mHLM(x=sortedx,orderlist1=orderlist1_AB5_quasi,dimension=5,boot=TRUE,quasi=TRUE,largesize=largesize)
+  mHLM6<-mHLM(x=sortedx,orderlist1=orderlist1_AB6_quasi,dimension=6,boot=TRUE,quasi=TRUE,largesize=largesize)
+  mHLM7<-mHLM(x=sortedx,orderlist1=orderlist1_AB7_quasi,dimension=7,boot=TRUE,quasi=TRUE,largesize=largesize)
+  mHLM8<-mHLM(x=sortedx,orderlist1=orderlist1_AB8_quasi,dimension=8,boot=TRUE,quasi=TRUE,largesize=largesize)
+  mHLM9<-mHLM(x=sortedx,orderlist1=orderlist1_AB9_quasi,dimension=9,boot=TRUE,quasi=TRUE,largesize=largesize)
+  mHLM10<-mHLM(x=sortedx,orderlist1=orderlist1_AB10_quasi,dimension=10,boot=TRUE,quasi=TRUE,largesize=largesize)
   
   sortedx<-c()
   momentssd<-c(sd=sqrt(momentsx[2]),imoments1[1522],imoments1[1523],imoments1[1524])
@@ -259,21 +323,22 @@ simulatedbatch_asymptoticbias<-foreach(batchnumber = (1:1000), .combine = 'rbind
   MoM8<-median_of_means(sortedx,korder=8)
   MoM9<-median_of_means(sortedx,korder=9)
   MoM10<-median_of_means(sortedx,korder=10)
-  MoRM2<-mHLM(x=sortedx,dimension=2,boot=TRUE,quasi=FALSE,largesize=largesize)
-  MoRM3<-mHLM(x=sortedx,dimension=3,boot=TRUE,quasi=FALSE,largesize=largesize)
-  MoRM4<-mHLM(x=sortedx,dimension=4,boot=TRUE,quasi=FALSE,largesize=largesize)
-  MoRM5<-mHLM(x=sortedx,dimension=5,boot=TRUE,quasi=FALSE,largesize=largesize)
-  MoRM6<-mHLM(x=sortedx,dimension=6,boot=TRUE,quasi=FALSE,largesize=largesize)
-  MoRM7<-mHLM(x=sortedx,dimension=7,boot=TRUE,quasi=FALSE,largesize=largesize)
-  MoRM8<-mHLM(x=sortedx,dimension=8,boot=TRUE,quasi=FALSE,largesize=largesize)
-  MoRM9<-mHLM(x=sortedx,dimension=9,boot=TRUE,quasi=FALSE,largesize=largesize)
-  MoRM10<-mHLM(x=sortedx,dimension=10,boot=TRUE,quasi=FALSE,largesize=largesize)
-  mHLM5<-mHLM(x=sortedx,dimension=5,boot=TRUE,quasi=TRUE,largesize=largesize)
-  mHLM6<-mHLM(x=sortedx,dimension=6,boot=TRUE,quasi=TRUE,largesize=largesize)
-  mHLM7<-mHLM(x=sortedx,dimension=7,boot=TRUE,quasi=TRUE,largesize=largesize)
-  mHLM8<-mHLM(x=sortedx,dimension=8,boot=TRUE,quasi=TRUE,largesize=largesize)
-  mHLM9<-mHLM(x=sortedx,dimension=9,boot=TRUE,quasi=TRUE,largesize=largesize)
-  mHLM10<-mHLM(x=sortedx,dimension=10,boot=TRUE,quasi=TRUE,largesize=largesize)
+  MoRM2<-mHLM(x=sortedx,orderlist1=orderlist1_AB2_random,dimension=2,boot=TRUE,quasi=FALSE,largesize=largesize)
+  MoRM3<-mHLM(x=sortedx,orderlist1=orderlist1_AB3_random,dimension=3,boot=TRUE,quasi=FALSE,largesize=largesize)
+  MoRM4<-mHLM(x=sortedx,orderlist1=orderlist1_AB4_random,dimension=4,boot=TRUE,quasi=FALSE,largesize=largesize)
+  MoRM5<-mHLM(x=sortedx,orderlist1=orderlist1_AB5_random,dimension=5,boot=TRUE,quasi=FALSE,largesize=largesize)
+  MoRM6<-mHLM(x=sortedx,orderlist1=orderlist1_AB6_random,dimension=6,boot=TRUE,quasi=FALSE,largesize=largesize)
+  MoRM7<-mHLM(x=sortedx,orderlist1=orderlist1_AB7_random,dimension=7,boot=TRUE,quasi=FALSE,largesize=largesize)
+  MoRM8<-mHLM(x=sortedx,orderlist1=orderlist1_AB8_random,dimension=8,boot=TRUE,quasi=FALSE,largesize=largesize)
+  MoRM9<-mHLM(x=sortedx,orderlist1=orderlist1_AB9_random,dimension=9,boot=TRUE,quasi=FALSE,largesize=largesize)
+  MoRM10<-mHLM(x=sortedx,orderlist1=orderlist1_AB10_random,dimension=10,boot=TRUE,quasi=FALSE,largesize=largesize)
+  mHLM5<-mHLM(x=sortedx,orderlist1=orderlist1_AB5_quasi,dimension=5,boot=TRUE,quasi=TRUE,largesize=largesize)
+  mHLM6<-mHLM(x=sortedx,orderlist1=orderlist1_AB6_quasi,dimension=6,boot=TRUE,quasi=TRUE,largesize=largesize)
+  mHLM7<-mHLM(x=sortedx,orderlist1=orderlist1_AB7_quasi,dimension=7,boot=TRUE,quasi=TRUE,largesize=largesize)
+  mHLM8<-mHLM(x=sortedx,orderlist1=orderlist1_AB8_quasi,dimension=8,boot=TRUE,quasi=TRUE,largesize=largesize)
+  mHLM9<-mHLM(x=sortedx,orderlist1=orderlist1_AB9_quasi,dimension=9,boot=TRUE,quasi=TRUE,largesize=largesize)
+  mHLM10<-mHLM(x=sortedx,orderlist1=orderlist1_AB10_quasi,dimension=10,boot=TRUE,quasi=TRUE,largesize=largesize)
+  
   
   sortedx<-c()
   momentssd<-c(sd=sqrt(momentsx[2]),imoments1[1522],imoments1[1523],imoments1[1524])
@@ -367,21 +432,22 @@ simulatedbatch_asymptoticbias<-foreach(batchnumber = (1:1000), .combine = 'rbind
   MoM8<-median_of_means(sortedx,korder=8)
   MoM9<-median_of_means(sortedx,korder=9)
   MoM10<-median_of_means(sortedx,korder=10)
-  MoRM2<-mHLM(x=sortedx,dimension=2,boot=TRUE,quasi=FALSE,largesize=largesize)
-  MoRM3<-mHLM(x=sortedx,dimension=3,boot=TRUE,quasi=FALSE,largesize=largesize)
-  MoRM4<-mHLM(x=sortedx,dimension=4,boot=TRUE,quasi=FALSE,largesize=largesize)
-  MoRM5<-mHLM(x=sortedx,dimension=5,boot=TRUE,quasi=FALSE,largesize=largesize)
-  MoRM6<-mHLM(x=sortedx,dimension=6,boot=TRUE,quasi=FALSE,largesize=largesize)
-  MoRM7<-mHLM(x=sortedx,dimension=7,boot=TRUE,quasi=FALSE,largesize=largesize)
-  MoRM8<-mHLM(x=sortedx,dimension=8,boot=TRUE,quasi=FALSE,largesize=largesize)
-  MoRM9<-mHLM(x=sortedx,dimension=9,boot=TRUE,quasi=FALSE,largesize=largesize)
-  MoRM10<-mHLM(x=sortedx,dimension=10,boot=TRUE,quasi=FALSE,largesize=largesize)
-  mHLM5<-mHLM(x=sortedx,dimension=5,boot=TRUE,quasi=TRUE,largesize=largesize)
-  mHLM6<-mHLM(x=sortedx,dimension=6,boot=TRUE,quasi=TRUE,largesize=largesize)
-  mHLM7<-mHLM(x=sortedx,dimension=7,boot=TRUE,quasi=TRUE,largesize=largesize)
-  mHLM8<-mHLM(x=sortedx,dimension=8,boot=TRUE,quasi=TRUE,largesize=largesize)
-  mHLM9<-mHLM(x=sortedx,dimension=9,boot=TRUE,quasi=TRUE,largesize=largesize)
-  mHLM10<-mHLM(x=sortedx,dimension=10,boot=TRUE,quasi=TRUE,largesize=largesize)
+  MoRM2<-mHLM(x=sortedx,orderlist1=orderlist1_AB2_random,dimension=2,boot=TRUE,quasi=FALSE,largesize=largesize)
+  MoRM3<-mHLM(x=sortedx,orderlist1=orderlist1_AB3_random,dimension=3,boot=TRUE,quasi=FALSE,largesize=largesize)
+  MoRM4<-mHLM(x=sortedx,orderlist1=orderlist1_AB4_random,dimension=4,boot=TRUE,quasi=FALSE,largesize=largesize)
+  MoRM5<-mHLM(x=sortedx,orderlist1=orderlist1_AB5_random,dimension=5,boot=TRUE,quasi=FALSE,largesize=largesize)
+  MoRM6<-mHLM(x=sortedx,orderlist1=orderlist1_AB6_random,dimension=6,boot=TRUE,quasi=FALSE,largesize=largesize)
+  MoRM7<-mHLM(x=sortedx,orderlist1=orderlist1_AB7_random,dimension=7,boot=TRUE,quasi=FALSE,largesize=largesize)
+  MoRM8<-mHLM(x=sortedx,orderlist1=orderlist1_AB8_random,dimension=8,boot=TRUE,quasi=FALSE,largesize=largesize)
+  MoRM9<-mHLM(x=sortedx,orderlist1=orderlist1_AB9_random,dimension=9,boot=TRUE,quasi=FALSE,largesize=largesize)
+  MoRM10<-mHLM(x=sortedx,orderlist1=orderlist1_AB10_random,dimension=10,boot=TRUE,quasi=FALSE,largesize=largesize)
+  mHLM5<-mHLM(x=sortedx,orderlist1=orderlist1_AB5_quasi,dimension=5,boot=TRUE,quasi=TRUE,largesize=largesize)
+  mHLM6<-mHLM(x=sortedx,orderlist1=orderlist1_AB6_quasi,dimension=6,boot=TRUE,quasi=TRUE,largesize=largesize)
+  mHLM7<-mHLM(x=sortedx,orderlist1=orderlist1_AB7_quasi,dimension=7,boot=TRUE,quasi=TRUE,largesize=largesize)
+  mHLM8<-mHLM(x=sortedx,orderlist1=orderlist1_AB8_quasi,dimension=8,boot=TRUE,quasi=TRUE,largesize=largesize)
+  mHLM9<-mHLM(x=sortedx,orderlist1=orderlist1_AB9_quasi,dimension=9,boot=TRUE,quasi=TRUE,largesize=largesize)
+  mHLM10<-mHLM(x=sortedx,orderlist1=orderlist1_AB10_quasi,dimension=10,boot=TRUE,quasi=TRUE,largesize=largesize)
+  
   
   sortedx<-c()
   momentssd<-c(sd=sqrt(momentsx[2]),imoments1[1522],imoments1[1523],imoments1[1524])
@@ -474,21 +540,22 @@ simulatedbatch_asymptoticbias<-foreach(batchnumber = (1:1000), .combine = 'rbind
   MoM8<-median_of_means(sortedx,korder=8)
   MoM9<-median_of_means(sortedx,korder=9)
   MoM10<-median_of_means(sortedx,korder=10)
-  MoRM2<-mHLM(x=sortedx,dimension=2,boot=TRUE,quasi=FALSE,largesize=largesize)
-  MoRM3<-mHLM(x=sortedx,dimension=3,boot=TRUE,quasi=FALSE,largesize=largesize)
-  MoRM4<-mHLM(x=sortedx,dimension=4,boot=TRUE,quasi=FALSE,largesize=largesize)
-  MoRM5<-mHLM(x=sortedx,dimension=5,boot=TRUE,quasi=FALSE,largesize=largesize)
-  MoRM6<-mHLM(x=sortedx,dimension=6,boot=TRUE,quasi=FALSE,largesize=largesize)
-  MoRM7<-mHLM(x=sortedx,dimension=7,boot=TRUE,quasi=FALSE,largesize=largesize)
-  MoRM8<-mHLM(x=sortedx,dimension=8,boot=TRUE,quasi=FALSE,largesize=largesize)
-  MoRM9<-mHLM(x=sortedx,dimension=9,boot=TRUE,quasi=FALSE,largesize=largesize)
-  MoRM10<-mHLM(x=sortedx,dimension=10,boot=TRUE,quasi=FALSE,largesize=largesize)
-  mHLM5<-mHLM(x=sortedx,dimension=5,boot=TRUE,quasi=TRUE,largesize=largesize)
-  mHLM6<-mHLM(x=sortedx,dimension=6,boot=TRUE,quasi=TRUE,largesize=largesize)
-  mHLM7<-mHLM(x=sortedx,dimension=7,boot=TRUE,quasi=TRUE,largesize=largesize)
-  mHLM8<-mHLM(x=sortedx,dimension=8,boot=TRUE,quasi=TRUE,largesize=largesize)
-  mHLM9<-mHLM(x=sortedx,dimension=9,boot=TRUE,quasi=TRUE,largesize=largesize)
-  mHLM10<-mHLM(x=sortedx,dimension=10,boot=TRUE,quasi=TRUE,largesize=largesize)
+  MoRM2<-mHLM(x=sortedx,orderlist1=orderlist1_AB2_random,dimension=2,boot=TRUE,quasi=FALSE,largesize=largesize)
+  MoRM3<-mHLM(x=sortedx,orderlist1=orderlist1_AB3_random,dimension=3,boot=TRUE,quasi=FALSE,largesize=largesize)
+  MoRM4<-mHLM(x=sortedx,orderlist1=orderlist1_AB4_random,dimension=4,boot=TRUE,quasi=FALSE,largesize=largesize)
+  MoRM5<-mHLM(x=sortedx,orderlist1=orderlist1_AB5_random,dimension=5,boot=TRUE,quasi=FALSE,largesize=largesize)
+  MoRM6<-mHLM(x=sortedx,orderlist1=orderlist1_AB6_random,dimension=6,boot=TRUE,quasi=FALSE,largesize=largesize)
+  MoRM7<-mHLM(x=sortedx,orderlist1=orderlist1_AB7_random,dimension=7,boot=TRUE,quasi=FALSE,largesize=largesize)
+  MoRM8<-mHLM(x=sortedx,orderlist1=orderlist1_AB8_random,dimension=8,boot=TRUE,quasi=FALSE,largesize=largesize)
+  MoRM9<-mHLM(x=sortedx,orderlist1=orderlist1_AB9_random,dimension=9,boot=TRUE,quasi=FALSE,largesize=largesize)
+  MoRM10<-mHLM(x=sortedx,orderlist1=orderlist1_AB10_random,dimension=10,boot=TRUE,quasi=FALSE,largesize=largesize)
+  mHLM5<-mHLM(x=sortedx,orderlist1=orderlist1_AB5_quasi,dimension=5,boot=TRUE,quasi=TRUE,largesize=largesize)
+  mHLM6<-mHLM(x=sortedx,orderlist1=orderlist1_AB6_quasi,dimension=6,boot=TRUE,quasi=TRUE,largesize=largesize)
+  mHLM7<-mHLM(x=sortedx,orderlist1=orderlist1_AB7_quasi,dimension=7,boot=TRUE,quasi=TRUE,largesize=largesize)
+  mHLM8<-mHLM(x=sortedx,orderlist1=orderlist1_AB8_quasi,dimension=8,boot=TRUE,quasi=TRUE,largesize=largesize)
+  mHLM9<-mHLM(x=sortedx,orderlist1=orderlist1_AB9_quasi,dimension=9,boot=TRUE,quasi=TRUE,largesize=largesize)
+  mHLM10<-mHLM(x=sortedx,orderlist1=orderlist1_AB10_quasi,dimension=10,boot=TRUE,quasi=TRUE,largesize=largesize)
+  
   sortedx<-c()
   momentssd<-c(sd=sqrt(momentsx[2]),imoments1[1522],imoments1[1523],imoments1[1524])
   
@@ -581,22 +648,22 @@ simulatedbatch_asymptoticbias<-foreach(batchnumber = (1:1000), .combine = 'rbind
   MoM8<-median_of_means(sortedx,korder=8)
   MoM9<-median_of_means(sortedx,korder=9)
   MoM10<-median_of_means(sortedx,korder=10)
-  MoRM2<-mHLM(x=sortedx,dimension=2,boot=TRUE,quasi=FALSE,largesize=largesize)
-  MoRM3<-mHLM(x=sortedx,dimension=3,boot=TRUE,quasi=FALSE,largesize=largesize)
-  MoRM4<-mHLM(x=sortedx,dimension=4,boot=TRUE,quasi=FALSE,largesize=largesize)
-  MoRM5<-mHLM(x=sortedx,dimension=5,boot=TRUE,quasi=FALSE,largesize=largesize)
-  MoRM6<-mHLM(x=sortedx,dimension=6,boot=TRUE,quasi=FALSE,largesize=largesize)
-  MoRM7<-mHLM(x=sortedx,dimension=7,boot=TRUE,quasi=FALSE,largesize=largesize)
-  MoRM8<-mHLM(x=sortedx,dimension=8,boot=TRUE,quasi=FALSE,largesize=largesize)
-  MoRM9<-mHLM(x=sortedx,dimension=9,boot=TRUE,quasi=FALSE,largesize=largesize)
-  MoRM10<-mHLM(x=sortedx,dimension=10,boot=TRUE,quasi=FALSE,largesize=largesize)
-  mHLM5<-mHLM(x=sortedx,dimension=5,boot=TRUE,quasi=TRUE,largesize=largesize)
-  mHLM6<-mHLM(x=sortedx,dimension=6,boot=TRUE,quasi=TRUE,largesize=largesize)
-  mHLM7<-mHLM(x=sortedx,dimension=7,boot=TRUE,quasi=TRUE,largesize=largesize)
-  mHLM8<-mHLM(x=sortedx,dimension=8,boot=TRUE,quasi=TRUE,largesize=largesize)
-  mHLM9<-mHLM(x=sortedx,dimension=9,boot=TRUE,quasi=TRUE,largesize=largesize)
-  mHLM10<-mHLM(x=sortedx,dimension=10,boot=TRUE,quasi=TRUE,largesize=largesize)
-  
+  MoRM2<-mHLM(x=sortedx,orderlist1=orderlist1_AB2_random,dimension=2,boot=TRUE,quasi=FALSE,largesize=largesize)
+  MoRM3<-mHLM(x=sortedx,orderlist1=orderlist1_AB3_random,dimension=3,boot=TRUE,quasi=FALSE,largesize=largesize)
+  MoRM4<-mHLM(x=sortedx,orderlist1=orderlist1_AB4_random,dimension=4,boot=TRUE,quasi=FALSE,largesize=largesize)
+  MoRM5<-mHLM(x=sortedx,orderlist1=orderlist1_AB5_random,dimension=5,boot=TRUE,quasi=FALSE,largesize=largesize)
+  MoRM6<-mHLM(x=sortedx,orderlist1=orderlist1_AB6_random,dimension=6,boot=TRUE,quasi=FALSE,largesize=largesize)
+  MoRM7<-mHLM(x=sortedx,orderlist1=orderlist1_AB7_random,dimension=7,boot=TRUE,quasi=FALSE,largesize=largesize)
+  MoRM8<-mHLM(x=sortedx,orderlist1=orderlist1_AB8_random,dimension=8,boot=TRUE,quasi=FALSE,largesize=largesize)
+  MoRM9<-mHLM(x=sortedx,orderlist1=orderlist1_AB9_random,dimension=9,boot=TRUE,quasi=FALSE,largesize=largesize)
+  MoRM10<-mHLM(x=sortedx,orderlist1=orderlist1_AB10_random,dimension=10,boot=TRUE,quasi=FALSE,largesize=largesize)
+  mHLM5<-mHLM(x=sortedx,orderlist1=orderlist1_AB5_quasi,dimension=5,boot=TRUE,quasi=TRUE,largesize=largesize)
+  mHLM6<-mHLM(x=sortedx,orderlist1=orderlist1_AB6_quasi,dimension=6,boot=TRUE,quasi=TRUE,largesize=largesize)
+  mHLM7<-mHLM(x=sortedx,orderlist1=orderlist1_AB7_quasi,dimension=7,boot=TRUE,quasi=TRUE,largesize=largesize)
+  mHLM8<-mHLM(x=sortedx,orderlist1=orderlist1_AB8_quasi,dimension=8,boot=TRUE,quasi=TRUE,largesize=largesize)
+  mHLM9<-mHLM(x=sortedx,orderlist1=orderlist1_AB9_quasi,dimension=9,boot=TRUE,quasi=TRUE,largesize=largesize)
+  mHLM10<-mHLM(x=sortedx,orderlist1=orderlist1_AB10_quasi,dimension=10,boot=TRUE,quasi=TRUE,largesize=largesize)
+
   sortedx<-c()
   momentssd<-c(sd=sqrt(momentsx[2]),imoments1[1522],imoments1[1523],imoments1[1524])
   
