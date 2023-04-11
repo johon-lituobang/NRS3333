@@ -248,7 +248,7 @@ simulatedbatch_ABSE<-foreach(batchnumber =c((1:length(allkurtWeibull))), .combin
     
     MoM4<-median_of_means(sortedx,korder=4)
     
-    MoRM4<-mHLM(x=sortedx,dimension=4,boot = TRUE,quasi= FALSE, largesize =largesize)
+    MoRM4<-mHLM(x=sortedx,dimension=4,boot = TRUE,quasi= FALSE, largesize =largesize1)
     
     sortedx<-c()
     momentssd<-c(sd=sqrt(momentsx[2]),imoments1[1522],imoments1[1523],imoments1[1524])
@@ -1036,7 +1036,7 @@ simulatedbatch_ABSE<-foreach(batchnumber =c((1:length(allkurtgamma))), .combine 
     
     MoM4<-median_of_means(sortedx,korder=4)
     
-    MoRM4<-mHLM(x=sortedx,dimension=4,boot = TRUE,quasi= FALSE, largesize =largesize)
+    MoRM4<-mHLM(x=sortedx,dimension=4,boot = TRUE,quasi= FALSE, largesize =largesize1)
     
     sortedx<-c()
     momentssd<-c(sd=sqrt(momentsx[2]),imoments1[1522],imoments1[1523],imoments1[1524])
@@ -1826,7 +1826,7 @@ simulatedbatch_ABSE<-foreach(batchnumber =c((1:length(allkurtPareto))), .combine
     
     MoM4<-median_of_means(sortedx,korder=4)
     
-    MoRM4<-mHLM(x=sortedx,dimension=4,boot = TRUE,quasi= FALSE, largesize =largesize)
+    MoRM4<-mHLM(x=sortedx,dimension=4,boot = TRUE,quasi= FALSE, largesize =largesize1)
     
     sortedx<-c()
     momentssd<-c(sd=sqrt(momentsx[2]),imoments1[1522],imoments1[1523],imoments1[1524])
@@ -2617,7 +2617,7 @@ simulatedbatch_ABSE<-foreach(batchnumber =c((1:length(allkurtlognorm))), .combin
     
     MoM4<-median_of_means(sortedx,korder=4)
     
-    MoRM4<-mHLM(x=sortedx,dimension=4,boot = TRUE,quasi = TRUE, largesize =largesize)
+    MoRM4<-mHLM(x=sortedx,dimension=4,boot = TRUE,quasi = FALSE, largesize =largesize1)
     
     sortedx<-c()
     momentssd<-c(sd=sqrt(momentsx[2]),imoments1[1522],imoments1[1523],imoments1[1524])
@@ -3409,7 +3409,7 @@ simulatedbatch_ABSE<-foreach(batchnumber =c((1:length(allkurtgnorm))), .combine 
     
     MoM4<-median_of_means(sortedx,korder=4)
     
-    MoRM4<-mHLM(x=sortedx,dimension=4,boot = TRUE,quasi= FALSE, largesize =largesize)
+    MoRM4<-mHLM(x=sortedx,dimension=4,boot = TRUE,quasi= FALSE, largesize =largesize1)
     
     sortedx<-c()
     momentssd<-c(sd=sqrt(momentsx[2]),imoments1[1522],imoments1[1523],imoments1[1524])
