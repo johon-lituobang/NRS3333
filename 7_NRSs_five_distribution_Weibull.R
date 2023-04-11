@@ -327,7 +327,7 @@ simulatedbatch_ABSE<-foreach(batchnumber =c((1:length(allkurtWeibull))), .combin
     MoM9<-median_of_means(sortedx,korder=9)
     MoM10<-median_of_means(sortedx,korder=10)
     
-    MoRMall<-mHLM10(x=sortedx,orderlist1=orderlist1_AB10_randomall[,(seq(from=1, to=10000,by=10)[batchnumber]):(seq(from=10, to=10000,by=10)[batchnumber])],boot=TRUE,quasi=FALSE,largesize=largesize1)
+    MoRMall<-mHLM10(x=sortedx,orderlist1=orderlist1_AB10_randomall[,(seq(from=1, to=10000,by=10)[batch1]):(seq(from=10, to=10000,by=10)[batch1])],boot=TRUE,quasi=FALSE,largesize=largesize1)
     mHLMall<-mHLM10(x=sortedx,orderlist1=orderlist1_AB10_quasi,boot=TRUE,quasi=TRUE,largesize=largesize1)
     
     sortedx<-c()
@@ -1137,7 +1137,7 @@ simulatedbatch_ABSE<-foreach(batchnumber =c((1:length(allkurtgamma))), .combine 
     MoM8<-median_of_means(sortedx,korder=8)
     MoM9<-median_of_means(sortedx,korder=9)
     MoM10<-median_of_means(sortedx,korder=10)
-    MoRMall<-mHLM10(x=sortedx,orderlist1=orderlist1_AB10_randomall[,(seq(from=1, to=10000,by=10)[batchnumber]):(seq(from=10, to=10000,by=10)[batchnumber])],boot=TRUE,quasi=FALSE,largesize=largesize1)
+    MoRMall<-mHLM10(x=sortedx,orderlist1=orderlist1_AB10_randomall[,(seq(from=1, to=10000,by=10)[batch1]):(seq(from=10, to=10000,by=10)[batch1])],boot=TRUE,quasi=FALSE,largesize=largesize1)
     mHLMall<-mHLM10(x=sortedx,orderlist1=orderlist1_AB10_quasi,boot=TRUE,quasi=TRUE,largesize=largesize1)
     
     sortedx<-c()
@@ -1951,7 +1951,7 @@ simulatedbatch_ABSE<-foreach(batchnumber =c((1:length(allkurtPareto))), .combine
     MoM8<-median_of_means(sortedx,korder=8)
     MoM9<-median_of_means(sortedx,korder=9)
     MoM10<-median_of_means(sortedx,korder=10)
-    MoRMall<-mHLM10(x=sortedx,orderlist1=orderlist1_AB10_randomall[,(seq(from=1, to=10000,by=10)[batchnumber]):(seq(from=10, to=10000,by=10)[batchnumber])],boot=TRUE,quasi=FALSE,largesize=largesize1)
+    MoRMall<-mHLM10(x=sortedx,orderlist1=orderlist1_AB10_randomall[,(seq(from=1, to=10000,by=10)[batch1]):(seq(from=10, to=10000,by=10)[batch1])],boot=TRUE,quasi=FALSE,largesize=largesize1)
     mHLMall<-mHLM10(x=sortedx,orderlist1=orderlist1_AB10_quasi,boot=TRUE,quasi=TRUE,largesize=largesize1)
     
     sortedx<-c()
@@ -2766,7 +2766,7 @@ simulatedbatch_ABSE<-foreach(batchnumber =c((1:length(allkurtlognorm))), .combin
     MoM8<-median_of_means(sortedx,korder=8)
     MoM9<-median_of_means(sortedx,korder=9)
     MoM10<-median_of_means(sortedx,korder=10)
-    MoRMall<-mHLM10(x=sortedx,orderlist1=orderlist1_AB10_randomall[,(seq(from=1, to=10000,by=10)[batchnumber]):(seq(from=10, to=10000,by=10)[batchnumber])],boot=TRUE,quasi=FALSE,largesize=largesize1)
+    MoRMall<-mHLM10(x=sortedx,orderlist1=orderlist1_AB10_randomall[,(seq(from=1, to=10000,by=10)[batch1]):(seq(from=10, to=10000,by=10)[batch1])],boot=TRUE,quasi=FALSE,largesize=largesize1)
     mHLMall<-mHLM10(x=sortedx,orderlist1=orderlist1_AB10_quasi,boot=TRUE,quasi=TRUE,largesize=largesize1)
     
     sortedx<-c()
@@ -3582,7 +3582,7 @@ simulatedbatch_ABSE<-foreach(batchnumber =c((1:length(allkurtgnorm))), .combine 
     MoM8<-median_of_means(sortedx,korder=8)
     MoM9<-median_of_means(sortedx,korder=9)
     MoM10<-median_of_means(sortedx,korder=10)
-    MoRMall<-mHLM10(x=sortedx,orderlist1=orderlist1_AB10_randomall[,(seq(from=1, to=10000,by=10)[batchnumber]):(seq(from=10, to=10000,by=10)[batchnumber])],boot=TRUE,quasi=FALSE,largesize=largesize1)
+    MoRMall<-mHLM10(x=sortedx,orderlist1=orderlist1_AB10_randomall[,(seq(from=1, to=10000,by=10)[batch1]):(seq(from=10, to=10000,by=10)[batch1])],boot=TRUE,quasi=FALSE,largesize=largesize1)
     mHLMall<-mHLM10(x=sortedx,orderlist1=orderlist1_AB10_quasi,boot=TRUE,quasi=TRUE,largesize=largesize1)
     
     sortedx<-c()
