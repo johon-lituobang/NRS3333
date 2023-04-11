@@ -145,22 +145,37 @@ simulatedbatch_asymptoticbias<-foreach(batchnumber = (1:1000), .combine = 'rbind
   MoM2<-median_of_means(sortedx,korder=2)
   MoM3<-median_of_means(sortedx,korder=3)
   MoM4<-median_of_means(sortedx,korder=4)
+  MoM5<-median_of_means(sortedx,korder=5)
+  MoM6<-median_of_means(sortedx,korder=6)
+  MoM7<-median_of_means(sortedx,korder=7)
+  MoM8<-median_of_means(sortedx,korder=8)
+  MoM9<-median_of_means(sortedx,korder=9)
   MoM10<-median_of_means(sortedx,korder=10)
   MoRM2<-mHLM(x=sortedx,dimension=2,boot=TRUE,quasi=FALSE,largesize=largesize)
   MoRM3<-mHLM(x=sortedx,dimension=3,boot=TRUE,quasi=FALSE,largesize=largesize)
   MoRM4<-mHLM(x=sortedx,dimension=4,boot=TRUE,quasi=FALSE,largesize=largesize)
+  MoRM5<-mHLM(x=sortedx,dimension=5,boot=TRUE,quasi=FALSE,largesize=largesize)
+  MoRM6<-mHLM(x=sortedx,dimension=6,boot=TRUE,quasi=FALSE,largesize=largesize)
+  MoRM7<-mHLM(x=sortedx,dimension=7,boot=TRUE,quasi=FALSE,largesize=largesize)
+  MoRM8<-mHLM(x=sortedx,dimension=8,boot=TRUE,quasi=FALSE,largesize=largesize)
+  MoRM9<-mHLM(x=sortedx,dimension=9,boot=TRUE,quasi=FALSE,largesize=largesize)
   MoRM10<-mHLM(x=sortedx,dimension=10,boot=TRUE,quasi=FALSE,largesize=largesize)
+  mHLM5<-mHLM(x=sortedx,dimension=5,boot=TRUE,quasi=TRUE,largesize=largesize)
+  mHLM6<-mHLM(x=sortedx,dimension=6,boot=TRUE,quasi=TRUE,largesize=largesize)
+  mHLM7<-mHLM(x=sortedx,dimension=7,boot=TRUE,quasi=TRUE,largesize=largesize)
+  mHLM8<-mHLM(x=sortedx,dimension=8,boot=TRUE,quasi=TRUE,largesize=largesize)
+  mHLM9<-mHLM(x=sortedx,dimension=9,boot=TRUE,quasi=TRUE,largesize=largesize)
   mHLM10<-mHLM(x=sortedx,dimension=10,boot=TRUE,quasi=TRUE,largesize=largesize)
   
   sortedx<-c()
   momentssd<-c(sd=sqrt(momentsx[2]),imoments1[1522],imoments1[1523],imoments1[1524])
   
   allrawmoBias<-c(
-    firstbias=abs(c(Huberx,SMWM9,imoments1[1],momentsx[1],imoments1[7:52],imoments1[121:166],imoments1[1391:1418],mean_medianMAD1=moments_medianMAD1[1],mean_QE1=moments_QE1[1],mean_RMLE1=moments_RMLE1[1],MoM2=MoM2,MoM3=MoM3,MoM4=MoM4,MoM10=MoM10,MoRM2=MoRM2,MoRM3=MoRM3,MoRM4=MoRM4,MoRM10=MoRM10,mHLM10=mHLM10)-targetm)/sqrt(targetvar),
+    firstbias=abs(c(Huberx,SMWM9,imoments1[1],momentsx[1],imoments1[7:52],imoments1[121:166],imoments1[1391:1418],mean_medianMAD1=moments_medianMAD1[1],mean_QE1=moments_QE1[1],mean_RMLE1=moments_RMLE1[1],MoM2=MoM2,MoM3=MoM3,MoM4=MoM4,MoM5=MoM5,MoM6=MoM6,MoM7=MoM7,MoM8=MoM8,MoM9=MoM9,MoM10=MoM10,MoRM2=MoRM2,MoRM3=MoRM3,MoRM4=MoRM4,MoRM5=MoRM5,MoRM6=MoRM6,MoRM7=MoRM7,MoRM8=MoRM8,MoRM9=MoRM9,MoRM10=MoRM10,mHLM5=mHLM5,mHLM6=mHLM6,mHLM7=mHLM7,mHLM8=mHLM8,mHLM9=mHLM9,mHLM10=mHLM10)-targetm)/sqrt(targetvar),
     secondbias=abs(c(imoments1[2],momentsx[2],imoments1[53:86],imoments1[167:200],imoments1[1442:1463],var_medianMAD1=moments_medianMAD1[2],var_QE1=moments_QE1[2],var_RMLE1=moments_RMLE1[2])-targetvar)/momentssd[2],
     thirdbias=abs(c(imoments1[3],momentsx[3],imoments1[87:106],imoments1[201:220],imoments1[1481:1494],tm_medianMAD1=moments_medianMAD1[3],tm_QE1=moments_QE1[3],tm_RMLE1=moments_RMLE1[3])-targettm)/momentssd[3],
     fourbias=abs(c(imoments1[4],momentsx[4],imoments1[107:120],imoments1[221:234],imoments1[1505:1514],fm_medianMAD1=moments_medianMAD1[4],fm_QE1=moments_QE1[4],fm_RMLE1=moments_RMLE1[4])-targetfm)/momentssd[4])
-  allrawmo1<-c(first=c(Huberx,SMWM9,imoments1[1],momentsx[1],imoments1[7:52],imoments1[121:166],imoments1[1391:1418],mean_medianMAD1=moments_medianMAD1[1],mean_QE1=moments_QE1[1],mean_RMLE1=moments_RMLE1[1],MoM2=MoM2,MoM3=MoM3,MoM4=MoM4,MoM10=MoM10,MoRM2=MoRM2,MoRM3=MoRM3,MoRM4=MoRM4,MoRM10=MoRM10,mHLM10=mHLM10),
+  allrawmo1<-c(first=c(Huberx,SMWM9,imoments1[1],momentsx[1],imoments1[7:52],imoments1[121:166],imoments1[1391:1418],mean_medianMAD1=moments_medianMAD1[1],mean_QE1=moments_QE1[1],mean_RMLE1=moments_RMLE1[1],MoM2=MoM2,MoM3=MoM3,MoM4=MoM4,MoM5=MoM5,MoM6=MoM6,MoM7=MoM7,MoM8=MoM8,MoM9=MoM9,MoM10=MoM10,MoRM2=MoRM2,MoRM3=MoRM3,MoRM4=MoRM4,MoRM5=MoRM5,MoRM6=MoRM6,MoRM7=MoRM7,MoRM8=MoRM8,MoRM9=MoRM9,MoRM10=MoRM10,mHLM5=mHLM5,mHLM6=mHLM6,mHLM7=mHLM7,mHLM8=mHLM8,mHLM9=mHLM9,mHLM10=mHLM10),
                second=c(imoments1[2],momentsx[2],imoments1[53:86],imoments1[167:200],imoments1[1442:1463],var_medianMAD1=moments_medianMAD1[2],var_QE1=moments_QE1[2],var_RMLE1=moments_RMLE1[2]),
                third=c(imoments1[3],momentsx[3],imoments1[87:106],imoments1[201:220],imoments1[1481:1494],tm_medianMAD1=moments_medianMAD1[3],tm_QE1=moments_QE1[3],tm_RMLE1=moments_RMLE1[3]),
                fourth=c(imoments1[4],momentsx[4],imoments1[107:120],imoments1[221:234],imoments1[1505:1514],fm_medianMAD1=moments_medianMAD1[4],fm_QE1=moments_QE1[4],fm_RMLE1=moments_RMLE1[4])
@@ -238,22 +253,37 @@ simulatedbatch_asymptoticbias<-foreach(batchnumber = (1:1000), .combine = 'rbind
   MoM2<-median_of_means(sortedx,korder=2)
   MoM3<-median_of_means(sortedx,korder=3)
   MoM4<-median_of_means(sortedx,korder=4)
+  MoM5<-median_of_means(sortedx,korder=5)
+  MoM6<-median_of_means(sortedx,korder=6)
+  MoM7<-median_of_means(sortedx,korder=7)
+  MoM8<-median_of_means(sortedx,korder=8)
+  MoM9<-median_of_means(sortedx,korder=9)
   MoM10<-median_of_means(sortedx,korder=10)
   MoRM2<-mHLM(x=sortedx,dimension=2,boot=TRUE,quasi=FALSE,largesize=largesize)
   MoRM3<-mHLM(x=sortedx,dimension=3,boot=TRUE,quasi=FALSE,largesize=largesize)
   MoRM4<-mHLM(x=sortedx,dimension=4,boot=TRUE,quasi=FALSE,largesize=largesize)
+  MoRM5<-mHLM(x=sortedx,dimension=5,boot=TRUE,quasi=FALSE,largesize=largesize)
+  MoRM6<-mHLM(x=sortedx,dimension=6,boot=TRUE,quasi=FALSE,largesize=largesize)
+  MoRM7<-mHLM(x=sortedx,dimension=7,boot=TRUE,quasi=FALSE,largesize=largesize)
+  MoRM8<-mHLM(x=sortedx,dimension=8,boot=TRUE,quasi=FALSE,largesize=largesize)
+  MoRM9<-mHLM(x=sortedx,dimension=9,boot=TRUE,quasi=FALSE,largesize=largesize)
   MoRM10<-mHLM(x=sortedx,dimension=10,boot=TRUE,quasi=FALSE,largesize=largesize)
+  mHLM5<-mHLM(x=sortedx,dimension=5,boot=TRUE,quasi=TRUE,largesize=largesize)
+  mHLM6<-mHLM(x=sortedx,dimension=6,boot=TRUE,quasi=TRUE,largesize=largesize)
+  mHLM7<-mHLM(x=sortedx,dimension=7,boot=TRUE,quasi=TRUE,largesize=largesize)
+  mHLM8<-mHLM(x=sortedx,dimension=8,boot=TRUE,quasi=TRUE,largesize=largesize)
+  mHLM9<-mHLM(x=sortedx,dimension=9,boot=TRUE,quasi=TRUE,largesize=largesize)
   mHLM10<-mHLM(x=sortedx,dimension=10,boot=TRUE,quasi=TRUE,largesize=largesize)
   
   sortedx<-c()
   momentssd<-c(sd=sqrt(momentsx[2]),imoments1[1522],imoments1[1523],imoments1[1524])
   
   allrawmoBias<-c(
-    firstbias=abs(c(Huberx,SMWM9,imoments1[1],momentsx[1],imoments1[7:52],imoments1[121:166],imoments1[1391:1418],mean_medianMAD1=moments_medianMAD1[1],mean_QE1=moments_QE1[1],mean_RMLE1=moments_RMLE1[1],MoM2=MoM2,MoM3=MoM3,MoM4=MoM4,MoM10=MoM10,MoRM2=MoRM2,MoRM3=MoRM3,MoRM4=MoRM4,MoRM10=MoRM10,mHLM10=mHLM10)-targetm)/sqrt(targetvar),
+    firstbias=abs(c(Huberx,SMWM9,imoments1[1],momentsx[1],imoments1[7:52],imoments1[121:166],imoments1[1391:1418],mean_medianMAD1=moments_medianMAD1[1],mean_QE1=moments_QE1[1],mean_RMLE1=moments_RMLE1[1],MoM2=MoM2,MoM3=MoM3,MoM4=MoM4,MoM5=MoM5,MoM6=MoM6,MoM7=MoM7,MoM8=MoM8,MoM9=MoM9,MoM10=MoM10,MoRM2=MoRM2,MoRM3=MoRM3,MoRM4=MoRM4,MoRM5=MoRM5,MoRM6=MoRM6,MoRM7=MoRM7,MoRM8=MoRM8,MoRM9=MoRM9,MoRM10=MoRM10,mHLM5=mHLM5,mHLM6=mHLM6,mHLM7=mHLM7,mHLM8=mHLM8,mHLM9=mHLM9,mHLM10=mHLM10)-targetm)/sqrt(targetvar),
     secondbias=abs(c(imoments1[2],momentsx[2],imoments1[53:86],imoments1[167:200],imoments1[1442:1463],var_medianMAD1=moments_medianMAD1[2],var_QE1=moments_QE1[2],var_RMLE1=moments_RMLE1[2])-targetvar)/momentssd[2],
     thirdbias=abs(c(imoments1[3],momentsx[3],imoments1[87:106],imoments1[201:220],imoments1[1481:1494],tm_medianMAD1=moments_medianMAD1[3],tm_QE1=moments_QE1[3],tm_RMLE1=moments_RMLE1[3])-targettm)/momentssd[3],
     fourbias=abs(c(imoments1[4],momentsx[4],imoments1[107:120],imoments1[221:234],imoments1[1505:1514],fm_medianMAD1=moments_medianMAD1[4],fm_QE1=moments_QE1[4],fm_RMLE1=moments_RMLE1[4])-targetfm)/momentssd[4])
-  allrawmo1<-c(first=c(Huberx,SMWM9,imoments1[1],momentsx[1],imoments1[7:52],imoments1[121:166],imoments1[1391:1418],mean_medianMAD1=moments_medianMAD1[1],mean_QE1=moments_QE1[1],mean_RMLE1=moments_RMLE1[1],MoM2=MoM2,MoM3=MoM3,MoM4=MoM4,MoM10=MoM10,MoRM2=MoRM2,MoRM3=MoRM3,MoRM4=MoRM4,MoRM10=MoRM10,mHLM10=mHLM10),
+  allrawmo1<-c(first=c(Huberx,SMWM9,imoments1[1],momentsx[1],imoments1[7:52],imoments1[121:166],imoments1[1391:1418],mean_medianMAD1=moments_medianMAD1[1],mean_QE1=moments_QE1[1],mean_RMLE1=moments_RMLE1[1],MoM2=MoM2,MoM3=MoM3,MoM4=MoM4,MoM5=MoM5,MoM6=MoM6,MoM7=MoM7,MoM8=MoM8,MoM9=MoM9,MoM10=MoM10,MoRM2=MoRM2,MoRM3=MoRM3,MoRM4=MoRM4,MoRM5=MoRM5,MoRM6=MoRM6,MoRM7=MoRM7,MoRM8=MoRM8,MoRM9=MoRM9,MoRM10=MoRM10,mHLM5=mHLM5,mHLM6=mHLM6,mHLM7=mHLM7,mHLM8=mHLM8,mHLM9=mHLM9,mHLM10=mHLM10),
                second=c(imoments1[2],momentsx[2],imoments1[53:86],imoments1[167:200],imoments1[1442:1463],var_medianMAD1=moments_medianMAD1[2],var_QE1=moments_QE1[2],var_RMLE1=moments_RMLE1[2]),
                third=c(imoments1[3],momentsx[3],imoments1[87:106],imoments1[201:220],imoments1[1481:1494],tm_medianMAD1=moments_medianMAD1[3],tm_QE1=moments_QE1[3],tm_RMLE1=moments_RMLE1[3]),
                fourth=c(imoments1[4],momentsx[4],imoments1[107:120],imoments1[221:234],imoments1[1505:1514],fm_medianMAD1=moments_medianMAD1[4],fm_QE1=moments_QE1[4],fm_RMLE1=moments_RMLE1[4])
@@ -331,22 +361,37 @@ simulatedbatch_asymptoticbias<-foreach(batchnumber = (1:1000), .combine = 'rbind
   MoM2<-median_of_means(sortedx,korder=2)
   MoM3<-median_of_means(sortedx,korder=3)
   MoM4<-median_of_means(sortedx,korder=4)
+  MoM5<-median_of_means(sortedx,korder=5)
+  MoM6<-median_of_means(sortedx,korder=6)
+  MoM7<-median_of_means(sortedx,korder=7)
+  MoM8<-median_of_means(sortedx,korder=8)
+  MoM9<-median_of_means(sortedx,korder=9)
   MoM10<-median_of_means(sortedx,korder=10)
   MoRM2<-mHLM(x=sortedx,dimension=2,boot=TRUE,quasi=FALSE,largesize=largesize)
   MoRM3<-mHLM(x=sortedx,dimension=3,boot=TRUE,quasi=FALSE,largesize=largesize)
   MoRM4<-mHLM(x=sortedx,dimension=4,boot=TRUE,quasi=FALSE,largesize=largesize)
+  MoRM5<-mHLM(x=sortedx,dimension=5,boot=TRUE,quasi=FALSE,largesize=largesize)
+  MoRM6<-mHLM(x=sortedx,dimension=6,boot=TRUE,quasi=FALSE,largesize=largesize)
+  MoRM7<-mHLM(x=sortedx,dimension=7,boot=TRUE,quasi=FALSE,largesize=largesize)
+  MoRM8<-mHLM(x=sortedx,dimension=8,boot=TRUE,quasi=FALSE,largesize=largesize)
+  MoRM9<-mHLM(x=sortedx,dimension=9,boot=TRUE,quasi=FALSE,largesize=largesize)
   MoRM10<-mHLM(x=sortedx,dimension=10,boot=TRUE,quasi=FALSE,largesize=largesize)
+  mHLM5<-mHLM(x=sortedx,dimension=5,boot=TRUE,quasi=TRUE,largesize=largesize)
+  mHLM6<-mHLM(x=sortedx,dimension=6,boot=TRUE,quasi=TRUE,largesize=largesize)
+  mHLM7<-mHLM(x=sortedx,dimension=7,boot=TRUE,quasi=TRUE,largesize=largesize)
+  mHLM8<-mHLM(x=sortedx,dimension=8,boot=TRUE,quasi=TRUE,largesize=largesize)
+  mHLM9<-mHLM(x=sortedx,dimension=9,boot=TRUE,quasi=TRUE,largesize=largesize)
   mHLM10<-mHLM(x=sortedx,dimension=10,boot=TRUE,quasi=TRUE,largesize=largesize)
   
   sortedx<-c()
   momentssd<-c(sd=sqrt(momentsx[2]),imoments1[1522],imoments1[1523],imoments1[1524])
   
   allrawmoBias<-c(
-    firstbias=abs(c(Huberx,SMWM9,imoments1[1],momentsx[1],imoments1[7:52],imoments1[121:166],imoments1[1391:1418],mean_medianMAD1=moments_medianMAD1[1],mean_QE1=moments_QE1[1],mean_RMLE1=moments_RMLE1[1],MoM2=MoM2,MoM3=MoM3,MoM4=MoM4,MoM10=MoM10,MoRM2=MoRM2,MoRM3=MoRM3,MoRM4=MoRM4,MoRM10=MoRM10,mHLM10=mHLM10)-targetm)/sqrt(targetvar),
+    firstbias=abs(c(Huberx,SMWM9,imoments1[1],momentsx[1],imoments1[7:52],imoments1[121:166],imoments1[1391:1418],mean_medianMAD1=moments_medianMAD1[1],mean_QE1=moments_QE1[1],mean_RMLE1=moments_RMLE1[1],MoM2=MoM2,MoM3=MoM3,MoM4=MoM4,MoM5=MoM5,MoM6=MoM6,MoM7=MoM7,MoM8=MoM8,MoM9=MoM9,MoM10=MoM10,MoRM2=MoRM2,MoRM3=MoRM3,MoRM4=MoRM4,MoRM5=MoRM5,MoRM6=MoRM6,MoRM7=MoRM7,MoRM8=MoRM8,MoRM9=MoRM9,MoRM10=MoRM10,mHLM5=mHLM5,mHLM6=mHLM6,mHLM7=mHLM7,mHLM8=mHLM8,mHLM9=mHLM9,mHLM10=mHLM10)-targetm)/sqrt(targetvar),
     secondbias=abs(c(imoments1[2],momentsx[2],imoments1[53:86],imoments1[167:200],imoments1[1442:1463],var_medianMAD1=moments_medianMAD1[2],var_QE1=moments_QE1[2],var_RMLE1=moments_RMLE1[2])-targetvar)/momentssd[2],
     thirdbias=abs(c(imoments1[3],momentsx[3],imoments1[87:106],imoments1[201:220],imoments1[1481:1494],tm_medianMAD1=moments_medianMAD1[3],tm_QE1=moments_QE1[3],tm_RMLE1=moments_RMLE1[3])-targettm)/momentssd[3],
     fourbias=abs(c(imoments1[4],momentsx[4],imoments1[107:120],imoments1[221:234],imoments1[1505:1514],fm_medianMAD1=moments_medianMAD1[4],fm_QE1=moments_QE1[4],fm_RMLE1=moments_RMLE1[4])-targetfm)/momentssd[4])
-  allrawmo1<-c(first=c(Huberx,SMWM9,imoments1[1],momentsx[1],imoments1[7:52],imoments1[121:166],imoments1[1391:1418],mean_medianMAD1=moments_medianMAD1[1],mean_QE1=moments_QE1[1],mean_RMLE1=moments_RMLE1[1],MoM2=MoM2,MoM3=MoM3,MoM4=MoM4,MoM10=MoM10,MoRM2=MoRM2,MoRM3=MoRM3,MoRM4=MoRM4,MoRM10=MoRM10,mHLM10=mHLM10),
+  allrawmo1<-c(first=c(Huberx,SMWM9,imoments1[1],momentsx[1],imoments1[7:52],imoments1[121:166],imoments1[1391:1418],mean_medianMAD1=moments_medianMAD1[1],mean_QE1=moments_QE1[1],mean_RMLE1=moments_RMLE1[1],MoM2=MoM2,MoM3=MoM3,MoM4=MoM4,MoM5=MoM5,MoM6=MoM6,MoM7=MoM7,MoM8=MoM8,MoM9=MoM9,MoM10=MoM10,MoRM2=MoRM2,MoRM3=MoRM3,MoRM4=MoRM4,MoRM5=MoRM5,MoRM6=MoRM6,MoRM7=MoRM7,MoRM8=MoRM8,MoRM9=MoRM9,MoRM10=MoRM10,mHLM5=mHLM5,mHLM6=mHLM6,mHLM7=mHLM7,mHLM8=mHLM8,mHLM9=mHLM9,mHLM10=mHLM10),
                second=c(imoments1[2],momentsx[2],imoments1[53:86],imoments1[167:200],imoments1[1442:1463],var_medianMAD1=moments_medianMAD1[2],var_QE1=moments_QE1[2],var_RMLE1=moments_RMLE1[2]),
                third=c(imoments1[3],momentsx[3],imoments1[87:106],imoments1[201:220],imoments1[1481:1494],tm_medianMAD1=moments_medianMAD1[3],tm_QE1=moments_QE1[3],tm_RMLE1=moments_RMLE1[3]),
                fourth=c(imoments1[4],momentsx[4],imoments1[107:120],imoments1[221:234],imoments1[1505:1514],fm_medianMAD1=moments_medianMAD1[4],fm_QE1=moments_QE1[4],fm_RMLE1=moments_RMLE1[4])
@@ -423,22 +468,36 @@ simulatedbatch_asymptoticbias<-foreach(batchnumber = (1:1000), .combine = 'rbind
   MoM2<-median_of_means(sortedx,korder=2)
   MoM3<-median_of_means(sortedx,korder=3)
   MoM4<-median_of_means(sortedx,korder=4)
+  MoM5<-median_of_means(sortedx,korder=5)
+  MoM6<-median_of_means(sortedx,korder=6)
+  MoM7<-median_of_means(sortedx,korder=7)
+  MoM8<-median_of_means(sortedx,korder=8)
+  MoM9<-median_of_means(sortedx,korder=9)
   MoM10<-median_of_means(sortedx,korder=10)
   MoRM2<-mHLM(x=sortedx,dimension=2,boot=TRUE,quasi=FALSE,largesize=largesize)
   MoRM3<-mHLM(x=sortedx,dimension=3,boot=TRUE,quasi=FALSE,largesize=largesize)
   MoRM4<-mHLM(x=sortedx,dimension=4,boot=TRUE,quasi=FALSE,largesize=largesize)
+  MoRM5<-mHLM(x=sortedx,dimension=5,boot=TRUE,quasi=FALSE,largesize=largesize)
+  MoRM6<-mHLM(x=sortedx,dimension=6,boot=TRUE,quasi=FALSE,largesize=largesize)
+  MoRM7<-mHLM(x=sortedx,dimension=7,boot=TRUE,quasi=FALSE,largesize=largesize)
+  MoRM8<-mHLM(x=sortedx,dimension=8,boot=TRUE,quasi=FALSE,largesize=largesize)
+  MoRM9<-mHLM(x=sortedx,dimension=9,boot=TRUE,quasi=FALSE,largesize=largesize)
   MoRM10<-mHLM(x=sortedx,dimension=10,boot=TRUE,quasi=FALSE,largesize=largesize)
+  mHLM5<-mHLM(x=sortedx,dimension=5,boot=TRUE,quasi=TRUE,largesize=largesize)
+  mHLM6<-mHLM(x=sortedx,dimension=6,boot=TRUE,quasi=TRUE,largesize=largesize)
+  mHLM7<-mHLM(x=sortedx,dimension=7,boot=TRUE,quasi=TRUE,largesize=largesize)
+  mHLM8<-mHLM(x=sortedx,dimension=8,boot=TRUE,quasi=TRUE,largesize=largesize)
+  mHLM9<-mHLM(x=sortedx,dimension=9,boot=TRUE,quasi=TRUE,largesize=largesize)
   mHLM10<-mHLM(x=sortedx,dimension=10,boot=TRUE,quasi=TRUE,largesize=largesize)
-  
   sortedx<-c()
   momentssd<-c(sd=sqrt(momentsx[2]),imoments1[1522],imoments1[1523],imoments1[1524])
   
   allrawmoBias<-c(
-    firstbias=abs(c(Huberx,SMWM9,imoments1[1],momentsx[1],imoments1[7:52],imoments1[121:166],imoments1[1391:1418],mean_medianMAD1=moments_medianMAD1[1],mean_QE1=moments_QE1[1],mean_RMLE1=moments_RMLE1[1],MoM2=MoM2,MoM3=MoM3,MoM4=MoM4,MoM10=MoM10,MoRM2=MoRM2,MoRM3=MoRM3,MoRM4=MoRM4,MoRM10=MoRM10,mHLM10=mHLM10)-targetm)/sqrt(targetvar),
+    firstbias=abs(c(Huberx,SMWM9,imoments1[1],momentsx[1],imoments1[7:52],imoments1[121:166],imoments1[1391:1418],mean_medianMAD1=moments_medianMAD1[1],mean_QE1=moments_QE1[1],mean_RMLE1=moments_RMLE1[1],MoM2=MoM2,MoM3=MoM3,MoM4=MoM4,MoM5=MoM5,MoM6=MoM6,MoM7=MoM7,MoM8=MoM8,MoM9=MoM9,MoM10=MoM10,MoRM2=MoRM2,MoRM3=MoRM3,MoRM4=MoRM4,MoRM5=MoRM5,MoRM6=MoRM6,MoRM7=MoRM7,MoRM8=MoRM8,MoRM9=MoRM9,MoRM10=MoRM10,mHLM5=mHLM5,mHLM6=mHLM6,mHLM7=mHLM7,mHLM8=mHLM8,mHLM9=mHLM9,mHLM10=mHLM10)-targetm)/sqrt(targetvar),
     secondbias=abs(c(imoments1[2],momentsx[2],imoments1[53:86],imoments1[167:200],imoments1[1442:1463],var_medianMAD1=moments_medianMAD1[2],var_QE1=moments_QE1[2],var_RMLE1=moments_RMLE1[2])-targetvar)/momentssd[2],
     thirdbias=abs(c(imoments1[3],momentsx[3],imoments1[87:106],imoments1[201:220],imoments1[1481:1494],tm_medianMAD1=moments_medianMAD1[3],tm_QE1=moments_QE1[3],tm_RMLE1=moments_RMLE1[3])-targettm)/momentssd[3],
     fourbias=abs(c(imoments1[4],momentsx[4],imoments1[107:120],imoments1[221:234],imoments1[1505:1514],fm_medianMAD1=moments_medianMAD1[4],fm_QE1=moments_QE1[4],fm_RMLE1=moments_RMLE1[4])-targetfm)/momentssd[4])
-  allrawmo1<-c(first=c(Huberx,SMWM9,imoments1[1],momentsx[1],imoments1[7:52],imoments1[121:166],imoments1[1391:1418],mean_medianMAD1=moments_medianMAD1[1],mean_QE1=moments_QE1[1],mean_RMLE1=moments_RMLE1[1],MoM2=MoM2,MoM3=MoM3,MoM4=MoM4,MoM10=MoM10,MoRM2=MoRM2,MoRM3=MoRM3,MoRM4=MoRM4,MoRM10=MoRM10,mHLM10=mHLM10),
+  allrawmo1<-c(first=c(Huberx,SMWM9,imoments1[1],momentsx[1],imoments1[7:52],imoments1[121:166],imoments1[1391:1418],mean_medianMAD1=moments_medianMAD1[1],mean_QE1=moments_QE1[1],mean_RMLE1=moments_RMLE1[1],MoM2=MoM2,MoM3=MoM3,MoM4=MoM4,MoM5=MoM5,MoM6=MoM6,MoM7=MoM7,MoM8=MoM8,MoM9=MoM9,MoM10=MoM10,MoRM2=MoRM2,MoRM3=MoRM3,MoRM4=MoRM4,MoRM5=MoRM5,MoRM6=MoRM6,MoRM7=MoRM7,MoRM8=MoRM8,MoRM9=MoRM9,MoRM10=MoRM10,mHLM5=mHLM5,mHLM6=mHLM6,mHLM7=mHLM7,mHLM8=mHLM8,mHLM9=mHLM9,mHLM10=mHLM10),
                second=c(imoments1[2],momentsx[2],imoments1[53:86],imoments1[167:200],imoments1[1442:1463],var_medianMAD1=moments_medianMAD1[2],var_QE1=moments_QE1[2],var_RMLE1=moments_RMLE1[2]),
                third=c(imoments1[3],momentsx[3],imoments1[87:106],imoments1[201:220],imoments1[1481:1494],tm_medianMAD1=moments_medianMAD1[3],tm_QE1=moments_QE1[3],tm_RMLE1=moments_RMLE1[3]),
                fourth=c(imoments1[4],momentsx[4],imoments1[107:120],imoments1[221:234],imoments1[1505:1514],fm_medianMAD1=moments_medianMAD1[4],fm_QE1=moments_QE1[4],fm_RMLE1=moments_RMLE1[4])
@@ -516,22 +575,37 @@ simulatedbatch_asymptoticbias<-foreach(batchnumber = (1:1000), .combine = 'rbind
   MoM2<-median_of_means(sortedx,korder=2)
   MoM3<-median_of_means(sortedx,korder=3)
   MoM4<-median_of_means(sortedx,korder=4)
+  MoM5<-median_of_means(sortedx,korder=5)
+  MoM6<-median_of_means(sortedx,korder=6)
+  MoM7<-median_of_means(sortedx,korder=7)
+  MoM8<-median_of_means(sortedx,korder=8)
+  MoM9<-median_of_means(sortedx,korder=9)
   MoM10<-median_of_means(sortedx,korder=10)
   MoRM2<-mHLM(x=sortedx,dimension=2,boot=TRUE,quasi=FALSE,largesize=largesize)
   MoRM3<-mHLM(x=sortedx,dimension=3,boot=TRUE,quasi=FALSE,largesize=largesize)
   MoRM4<-mHLM(x=sortedx,dimension=4,boot=TRUE,quasi=FALSE,largesize=largesize)
+  MoRM5<-mHLM(x=sortedx,dimension=5,boot=TRUE,quasi=FALSE,largesize=largesize)
+  MoRM6<-mHLM(x=sortedx,dimension=6,boot=TRUE,quasi=FALSE,largesize=largesize)
+  MoRM7<-mHLM(x=sortedx,dimension=7,boot=TRUE,quasi=FALSE,largesize=largesize)
+  MoRM8<-mHLM(x=sortedx,dimension=8,boot=TRUE,quasi=FALSE,largesize=largesize)
+  MoRM9<-mHLM(x=sortedx,dimension=9,boot=TRUE,quasi=FALSE,largesize=largesize)
   MoRM10<-mHLM(x=sortedx,dimension=10,boot=TRUE,quasi=FALSE,largesize=largesize)
+  mHLM5<-mHLM(x=sortedx,dimension=5,boot=TRUE,quasi=TRUE,largesize=largesize)
+  mHLM6<-mHLM(x=sortedx,dimension=6,boot=TRUE,quasi=TRUE,largesize=largesize)
+  mHLM7<-mHLM(x=sortedx,dimension=7,boot=TRUE,quasi=TRUE,largesize=largesize)
+  mHLM8<-mHLM(x=sortedx,dimension=8,boot=TRUE,quasi=TRUE,largesize=largesize)
+  mHLM9<-mHLM(x=sortedx,dimension=9,boot=TRUE,quasi=TRUE,largesize=largesize)
   mHLM10<-mHLM(x=sortedx,dimension=10,boot=TRUE,quasi=TRUE,largesize=largesize)
   
   sortedx<-c()
   momentssd<-c(sd=sqrt(momentsx[2]),imoments1[1522],imoments1[1523],imoments1[1524])
   
   allrawmoBias<-c(
-    firstbias=abs(c(Huberx,SMWM9,imoments1[1],momentsx[1],imoments1[7:52],imoments1[121:166],imoments1[1391:1418],mean_medianMAD1=moments_medianMAD1[1],mean_QE1=moments_QE1[1],mean_RMLE1=moments_RMLE1[1],MoM2=MoM2,MoM3=MoM3,MoM4=MoM4,MoM10=MoM10,MoRM2=MoRM2,MoRM3=MoRM3,MoRM4=MoRM4,MoRM10=MoRM10,mHLM10=mHLM10)-targetm)/sqrt(targetvar),
+    firstbias=abs(c(Huberx,SMWM9,imoments1[1],momentsx[1],imoments1[7:52],imoments1[121:166],imoments1[1391:1418],mean_medianMAD1=moments_medianMAD1[1],mean_QE1=moments_QE1[1],mean_RMLE1=moments_RMLE1[1],MoM2=MoM2,MoM3=MoM3,MoM4=MoM4,MoM5=MoM5,MoM6=MoM6,MoM7=MoM7,MoM8=MoM8,MoM9=MoM9,MoM10=MoM10,MoRM2=MoRM2,MoRM3=MoRM3,MoRM4=MoRM4,MoRM5=MoRM5,MoRM6=MoRM6,MoRM7=MoRM7,MoRM8=MoRM8,MoRM9=MoRM9,MoRM10=MoRM10,mHLM5=mHLM5,mHLM6=mHLM6,mHLM7=mHLM7,mHLM8=mHLM8,mHLM9=mHLM9,mHLM10=mHLM10)-targetm)/sqrt(targetvar),
     secondbias=abs(c(imoments1[2],momentsx[2],imoments1[53:86],imoments1[167:200],imoments1[1442:1463],var_medianMAD1=moments_medianMAD1[2],var_QE1=moments_QE1[2],var_RMLE1=moments_RMLE1[2])-targetvar)/momentssd[2],
     thirdbias=abs(c(imoments1[3],momentsx[3],imoments1[87:106],imoments1[201:220],imoments1[1481:1494],tm_medianMAD1=moments_medianMAD1[3],tm_QE1=moments_QE1[3],tm_RMLE1=moments_RMLE1[3])-targettm)/momentssd[3],
     fourbias=abs(c(imoments1[4],momentsx[4],imoments1[107:120],imoments1[221:234],imoments1[1505:1514],fm_medianMAD1=moments_medianMAD1[4],fm_QE1=moments_QE1[4],fm_RMLE1=moments_RMLE1[4])-targetfm)/momentssd[4])
-  allrawmo1<-c(first=c(Huberx,SMWM9,imoments1[1],momentsx[1],imoments1[7:52],imoments1[121:166],imoments1[1391:1418],mean_medianMAD1=moments_medianMAD1[1],mean_QE1=moments_QE1[1],mean_RMLE1=moments_RMLE1[1],MoM2=MoM2,MoM3=MoM3,MoM4=MoM4,MoM10=MoM10,MoRM2=MoRM2,MoRM3=MoRM3,MoRM4=MoRM4,MoRM10=MoRM10,mHLM10=mHLM10),
+  allrawmo1<-c(first=c(Huberx,SMWM9,imoments1[1],momentsx[1],imoments1[7:52],imoments1[121:166],imoments1[1391:1418],mean_medianMAD1=moments_medianMAD1[1],mean_QE1=moments_QE1[1],mean_RMLE1=moments_RMLE1[1],MoM2=MoM2,MoM3=MoM3,MoM4=MoM4,MoM5=MoM5,MoM6=MoM6,MoM7=MoM7,MoM8=MoM8,MoM9=MoM9,MoM10=MoM10,MoRM2=MoRM2,MoRM3=MoRM3,MoRM4=MoRM4,MoRM5=MoRM5,MoRM6=MoRM6,MoRM7=MoRM7,MoRM8=MoRM8,MoRM9=MoRM9,MoRM10=MoRM10,mHLM5=mHLM5,mHLM6=mHLM6,mHLM7=mHLM7,mHLM8=mHLM8,mHLM9=mHLM9,mHLM10=mHLM10),
                second=c(imoments1[2],momentsx[2],imoments1[53:86],imoments1[167:200],imoments1[1442:1463],var_medianMAD1=moments_medianMAD1[2],var_QE1=moments_QE1[2],var_RMLE1=moments_RMLE1[2]),
                third=c(imoments1[3],momentsx[3],imoments1[87:106],imoments1[201:220],imoments1[1481:1494],tm_medianMAD1=moments_medianMAD1[3],tm_QE1=moments_QE1[3],tm_RMLE1=moments_RMLE1[3]),
                fourth=c(imoments1[4],momentsx[4],imoments1[107:120],imoments1[221:234],imoments1[1505:1514],fm_medianMAD1=moments_medianMAD1[4],fm_QE1=moments_QE1[4],fm_RMLE1=moments_RMLE1[4])
