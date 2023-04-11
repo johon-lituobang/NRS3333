@@ -46,12 +46,12 @@ quasiuni_sorted3 <- na.omit(rowSort(quasiuni[,1:3], descend = FALSE, stable = FA
 quasiuni_sorted4 <- na.omit(rowSort(quasiuni, descend = FALSE, stable = FALSE, parallel = TRUE))
 # Forever...
 
-asymptotic_n <- 2048*900*3*2
+asymptotic_n <- 2048*9*3*2
 (asymptotic_n%%10)==0
 # maximum order of moments
 morder <- 4
 #large sample size (asymptotic bias)
-largesize<-2048*900*2
+largesize<-2048*9*2
 
 #generate quasirandom numbers based on the Sobol sequence
 quasiunisobol_asymptotic<-sobol(n=asymptotic_n, dim = morder, init = TRUE, scrambling = 0, seed = NULL, normal = FALSE,
@@ -84,12 +84,12 @@ quasiuni_sorted4_asymptotic<-c()
 
 # Forever...
 
-asymptotic_n <- 2048*900*3*2
+asymptotic_n <- 2048*9*3*2
 (asymptotic_n%%10)==0
 # maximum order of moments
 morder <- 10
 #large sample size (asymptotic bias)
-largesize<-2048*900*2
+largesize<-2048*9*2
 
 #generate quasirandom numbers based on the Sobol sequence
 quasiunisobol_asymptotic<-sobol(n=asymptotic_n, dim = morder, init = TRUE, scrambling = 0, seed = NULL, normal = FALSE,
@@ -136,7 +136,7 @@ simulatedbatch_asymptoticbias<-foreach(batchnumber = (1:1000), .combine = 'rbind
   library(NRSReview)
   setSeed(1)
   set.seed(1)
-  a=0.02*batchnumber
+  a=seq(from = 0.02, to = 20, length.out = 1000)[batchnumber]
   x<-c(dsWeibull(uni=quasiuni_asymptotic, shape=a/1, scale = 1))
   targetm<-gamma(1+1/(a/1))
   targetvar<-(gamma(1+2/(a/1))-(gamma(((1+1/(a/1)))))^2)
@@ -230,7 +230,7 @@ simulatedbatch_asymptoticbias<-foreach(batchnumber = (1:1000), .combine = 'rbind
   library(NRSReview)
   setSeed(1)
   set.seed(1)
-  a=0.02*batchnumber
+  a=seq(from = 0.001, to = 50, length.out = 1000)[batchnumber]
   x<-c(dsgamma(uni=quasiuni_asymptotic, shape=a/1, rate  = 1))
   targetm<-a
   targetvar<-(a)
@@ -324,7 +324,7 @@ simulatedbatch_asymptoticbias<-foreach(batchnumber = (1:1000), .combine = 'rbind
   library(NRSReview)
   setSeed(1)
   set.seed(1)
-  a=1+0.1*batchnumber
+  a=seq(from = 2.01, to = 100, length.out = 1000)[batchnumber]
   x<-c(dsPareto(uni=quasiuni_asymptotic, shape=a/1, scale = 1))
 
   targetm<-a/(a-1)
@@ -418,7 +418,7 @@ simulatedbatch_asymptoticbias<-foreach(batchnumber = (1:1000), .combine = 'rbind
   library(NRSReview)
   setSeed(1)
   set.seed(1)
-  a=batchnumber*0.05
+  a=seq(from = 0.01, to = 100, length.out = 1000)[batchnumber]
   x<-c(dslnorm(uni=quasiuni_asymptotic, meanlog =0, sdlog  = a/1))
   targetm<-exp((a^2)/2)
   targetvar<-(exp((a/1)^2)*(-1+exp((a/1)^2)))
@@ -511,7 +511,7 @@ simulatedbatch_asymptoticbias<-foreach(batchnumber = (1:1000), .combine = 'rbind
   library(NRSReview)
   setSeed(1)
   set.seed(1)
-  a=0.02*batchnumber
+  a=seq(from = 0.01, to = 100, length.out = 1000)[batchnumber]
   x<-c(dsgnorm(uni=quasiuni_asymptotic, shape=a/1, scale = 1))
 
   targetm<-0
