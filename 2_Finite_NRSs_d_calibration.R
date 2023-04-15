@@ -71,7 +71,7 @@ quasiuni_sorted4<-c()
 kurtWeibull<- read.csv(("kurtWeibull_28260.csv"))
 allkurtWeibull<-unlist(kurtWeibull)
 
-batchsizebase=10
+batchsizebase=1000
 
 batchsize=(batchsizebase)
 
