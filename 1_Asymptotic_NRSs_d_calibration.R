@@ -96,10 +96,6 @@ colnames(asymptotic_d_Weibull)<-colnames(Label_Weibull1[3:118])
 
 write.csv(asymptotic_d_Weibull,paste("asymptotic_d_Weibull.csv", sep = ","), row.names = FALSE)
 
-
-
-
-
 stopCluster(cl)
 registerDoSEQ()
 
