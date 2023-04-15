@@ -98,43 +98,6 @@ write.csv(asymptotic_d_Weibull,paste("asymptotic_d_Weibull.csv", sep = ","), row
 
 
 
-kurtgnorm<- read.csv(("kurtgnorm_21260.csv"))
-allkurtgnorm<-unlist(kurtgnorm)
-
-simulatedbatchgnorm_bias<-foreach(batchnumber = (1:length(allkurtgnorm)), .combine = 'rbind') %dopar% {
-  library(Rfast)
-  library(matrixStats)
-  library(NRSReview)
-  set.seed(1)
-  
-  a=allkurtgnorm[batchnumber]
-  x<-c(dsgnorm(uni=quasiuni, shape=a/1, scale = 1))
-  
-  targetm<-0
-  targetvar<-gamma(3/a)/((gamma(1/a)))
-  targettm<-0
-  targetfm<-((gamma(3/a)/((gamma(1/a))))^2)*gamma(5/a)*gamma(1/a)/((gamma(3/a))^2)
-  kurtx<-targetfm/(targetvar^(4/2))
-  skewx<-targettm/(targetvar^(3/2))
-  
-  sortedx<-Sort(x,descending=FALSE,partial=NULL,stable=FALSE,na.last=NULL)
-  x<-c()
-  dall<-compalldmoments(x=sortedx,targetm=targetm,targetvar=targetvar,targettm=targettm,targetfm=targetfm,orderlist1_sorted20=orderlist1_AB2,orderlist1_sorted30=orderlist1_AB3,orderlist1_sorted40=orderlist1_AB4,orderlist1_sorted2=orderlist1_AB2,orderlist1_sorted3=orderlist1_AB3,orderlist1_sorted4=orderlist1_AB4,percentage=1/16,batch="auto",boot=TRUE)
-  sortedx<-c()
-  all1<-t(c(kurtx,skewx,dall))
-}
-
-write.csv(simulatedbatchgnorm_bias,paste("asymptotic_gnorm_dcalibration_raw",largesize,".csv", sep = ","), row.names = FALSE)
-
-asymptotic_d_gnorm<-simulatedbatchgnorm_bias[,c(1,2,seq(from=5, to=346, by=3))]
-
-Label_gnorm1<- read.csv(("d_label.csv"))
-
-colnames(asymptotic_d_gnorm)<-colnames(Label_gnorm1[3:118])
-
-write.csv(asymptotic_d_gnorm,paste("asymptotic_d_gnorm.csv", sep = ","), row.names = FALSE)
-
-
 
 
 stopCluster(cl)
