@@ -26,12 +26,12 @@ cl <- makeCluster(numCores) # Create a cluster with the number of cores
 registerDoParallel(cl) # Register the parallel backend
 
 #bootsize for bootstrap approximation of the distributions of the kernal of U-statistics.
-n <- 2048*900*2*3
+n <- 331776*3
 (n%%10)==0
 # maximum order of moments
 morder <- 4
 #large sample size (approximating asymptotic)
-largesize<-2048*900*2
+largesize<-331776
 
 #generate quasirandom numbers based on the Sobol sequence
 quasiunisobol<-sobol(n=n, dim = morder, init = TRUE, scrambling = 0, seed = NULL, normal = FALSE,
@@ -88,11 +88,7 @@ simulatedbatchWeibull_bias<-foreach(batchnumber = (1:length(allkurtWeibull)), .c
 
 write.csv(simulatedbatchWeibull_bias,paste("asymptotic_Weibull_dcalibration_raw",largesize,".csv", sep = ","), row.names = FALSE)
 
-asymptotic_d_Weibull<-simulatedbatchWeibull_bias[,c(1,2,seq(from=5, to=346, by=3))]
-
-Label_Weibull1<- read.csv(("d_label.csv"))
-
-colnames(asymptotic_d_Weibull)<-colnames(Label_Weibull1[3:118])
+asymptotic_d_Weibull<-simulatedbatchWeibull_bias[,c(1,2,seq(from=5, to=464, by=3))]
 
 write.csv(asymptotic_d_Weibull,paste("asymptotic_d_Weibull.csv", sep = ","), row.names = FALSE)
 
