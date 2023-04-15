@@ -216,6 +216,10 @@ asymptotic_d_Weibull<- cbind(Size=rep(331776*8,nrow(asymptotic_d_Weibull)),asymp
 colnames(Monte_d_Two)<-colnames(asymptotic_d_Weibull)
 d_Merged<- rbind(asymptotic_d_Weibull,Monte_d_Two)
 
+new_colnames <-c(colnames(d_Merged)[1:4], sapply(colnames(d_Merged)[-c(1:4)], function(x) gsub(".{4}$", "", x)))
+
+colnames(d_Merged) <- new_colnames
+
 write.csv(d_Merged,paste("d_values.csv", sep = ","), row.names = FALSE)
 
 stopCluster(cl)
