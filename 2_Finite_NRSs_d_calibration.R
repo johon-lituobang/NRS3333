@@ -28,11 +28,11 @@ registerDoParallel(cl) # Register the parallel backend
 
 
 #bootsize for bootstrap approximation of the distributions of the kernal of U-statistics.
-n <- 2048*9*3
+n <- 576*9*3
 (n%%10)==0
 # maximum order of moments
 morder <- 4
-largesize<-2048*9
+largesize<-576*9
 #generate quasirandom numbers based on the Sobol sequence
 quasiunisobol<-sobol(n=n, dim = morder, init = TRUE, scrambling = 0, seed = NULL, normal = FALSE,
                      mixed = FALSE, method = "C", start = 1)
@@ -47,7 +47,7 @@ quasiuni_sorted4 <- na.omit(rowSort(quasiuni, descend = FALSE, stable = FALSE, p
 
 #the function, createorderlist, can transform the Sobol sequence into non-repeated integer sequences.
 
-samplesize=2048*2
+samplesize=576*9
 
 #the samplesize is the maximum value of this integer sequence
 orderlist1_AB20<-createorderlist(quni1=quasiuni_sorted2,size=samplesize,interval=16,dimension=2)
@@ -71,7 +71,7 @@ quasiuni_sorted4<-c()
 kurtWeibull<- read.csv(("kurtWeibull_28260.csv"))
 allkurtWeibull<-unlist(kurtWeibull)
 
-batchsizebase=1000
+batchsizebase=10
 
 batchsize=(batchsizebase)
 
@@ -104,7 +104,7 @@ simulatedbatch_bias_Monte<-foreach(batchnumber =c((1:length(allkurtWeibull))), .
 
     sortedx<-Sort(x,descending=FALSE,partial=NULL,stable=FALSE,na.last=NULL)
     x<-c()
-    dall<-compalldmoments(x=sortedx,targetm=targetm,targetvar=targetvar,targettm=targettm,targetfm=targetfm,orderlist1_sorted20=orderlist1_AB20,orderlist1_sorted30=orderlist1_AB30,orderlist1_sorted40=orderlist1_AB40,orderlist1_sorted2=orderlist1_AB2,orderlist1_sorted3=orderlist1_AB3,orderlist1_sorted4=orderlist1_AB4,percentage=1/16,batch="auto",boot=TRUE)
+    dall<-compalldmoments(x=sortedx,targetm=targetm,targetvar=targetvar,targettm=targettm,targetfm=targetfm,orderlist1_sorted20=orderlist1_AB20,orderlist1_sorted30=orderlist1_AB30,orderlist1_sorted40=orderlist1_AB40,orderlist1_sorted2=orderlist1_AB2,orderlist1_sorted3=orderlist1_AB3,orderlist1_sorted4=orderlist1_AB4,percentage=1/24,batch="auto",boot=TRUE)
     
     sortedx<-c()
     all1<-t(c(samplesize,type=1,kurtx,skewx,dall))
@@ -119,7 +119,7 @@ resultcolnames1<- read.csv(paste("finite_Weibull_dcalibration_raw",samplesize,9,
 
 colnames(simulatedbatch_bias_Monte)<-colnames(resultcolnames1)
 
-Monte_Two<-simulatedbatch_bias_Monte[,c(1,2,3,4,347:ncol(simulatedbatch_bias_Monte))]
+Monte_Two<-simulatedbatch_bias_Monte[,c(1,2,3,4,413:ncol(simulatedbatch_bias_Monte))]
 
 simulatedbatch_bias_Monte<-c()
 
@@ -142,7 +142,7 @@ write.csv(meanall,paste("finite_Weibull_dcalibration_raw_mean",samplesize,".csv"
 meanall<-as.data.frame(meanall)
 musall1<-meanall[,5:ncol(meanall)]
 compalldmoments1<-data.frame(matrix(nrow = nrow(meanall), ncol = 0))
-for (estimators in (1:57)){
+for (estimators in (1:68)){
   mmm1<-musall1[,(9*estimators-8):(9*estimators)]
   mmall<-c()
   for (allestimators in (1:nrow(meanall))){
@@ -152,11 +152,7 @@ for (estimators in (1:57)){
   }
   compalldmoments1<-cbind(compalldmoments1,mmall)
 }
-Monte_d_Two<-cbind(meanall[,1:4],compalldmoments1[,c(seq(from=1, to=342, by=3))])
-
-Label_Weibull1<- read.csv(("d_label.csv"))
-
-colnames(Monte_d_Two)<-colnames(Label_Weibull1)
+Monte_d_Two<-cbind(meanall[,1:4],compalldmoments1[,c(seq(from=1, to=408, by=3))])
 
 write.csv(Monte_d_Two,paste("finite_d_Weibull",samplesize,".csv", sep = ","), row.names = FALSE)
 
@@ -185,10 +181,10 @@ simulatedbatch_bias_Monte_SE<-foreach(batchnumber =c((1:length(allkurtWeibull)))
 Allstandarderror_each<-cbind(meanall[,1:4],simulatedbatch_bias_Monte_SE[,5:ncol(simulatedbatch_bias_Monte_SE)])
 
 All_each1<-meanall[,5:ncol(meanall)]
-Allstandarderror_each1<-Allstandarderror_each[,347:ncol(Allstandarderror_each)]
+Allstandarderror_each1<-Allstandarderror_each[,413:ncol(Allstandarderror_each)]
 
 compdall_error<-c()
-for (estimators in (1:57)){
+for (estimators in (1:68)){
   mmm1_error<-Allstandarderror_each1[,(9*estimators-8):(9*estimators)]
   mmm1_11<-All_each1[,(9*estimators-8):(9*estimators)]
 
@@ -204,9 +200,7 @@ for (estimators in (1:57)){
   }
   compdall_error<-cbind(compdall_error,mmall_error)
 }
-Monte_d_Two_error<-cbind(Allstandarderror_each[,1:4],compdall_error[,c(seq(from=1, to=342, by=3))])
-
-colnames(Monte_d_Two_error)<-colnames(Label_Weibull1)
+Monte_d_Two_error<-cbind(Allstandarderror_each[,1:4],compdall_error[,c(seq(from=1, to=408, by=3))])
 
 write.csv(Monte_d_Two_error,paste("finite_d_Weibull_error.csv", sep = ","), row.names = FALSE)
 
@@ -216,14 +210,11 @@ write.csv(Monte_d_Two,paste("finite_d.csv", sep = ","), row.names = FALSE)
 asymptotic_d_Weibull<- read.csv(paste("asymptotic_d_Weibull.csv", sep = ","))
 
 asymptotic_d_Weibull<- cbind(dtype=rep(1,nrow(asymptotic_d_Weibull)),asymptotic_d_Weibull)
-colnames(asymptotic_d_Weibull)<-NULL
-asymptotic_d_Weibull<- cbind(Size=rep(2048*900*2,nrow(asymptotic_d_Weibull)),asymptotic_d_Weibull)
 
-Label_Weibull1<- read.csv(("d_label.csv"))
-colnames(asymptotic_d_Weibull)<-colnames(Label_Weibull1)
+asymptotic_d_Weibull<- cbind(Size=rep(331776*8,nrow(asymptotic_d_Weibull)),asymptotic_d_Weibull)
+
+colnames(Monte_d_Two)<-colnames(asymptotic_d_Weibull)
 d_Merged<- rbind(asymptotic_d_Weibull,Monte_d_Two)
-Label_Weibull1<- read.csv(("d_label.csv"))
-colnames(d_Merged)<-colnames(Label_Weibull1)
 
 write.csv(d_Merged,paste("d_values.csv", sep = ","), row.names = FALSE)
 
