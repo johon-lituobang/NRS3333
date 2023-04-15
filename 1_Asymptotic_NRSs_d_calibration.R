@@ -88,7 +88,7 @@ simulatedbatchWeibull_bias<-foreach(batchnumber = (1:length(allkurtWeibull)), .c
 
 write.csv(simulatedbatchWeibull_bias,paste("asymptotic_Weibull_dcalibration_raw",largesize,".csv", sep = ","), row.names = FALSE)
 
-asymptotic_d_Weibull<-simulatedbatchWeibull_bias[,c(1,2,seq(from=5, to=464, by=3))]
+asymptotic_d_Weibull<-simulatedbatchWeibull_bias[,c(1,2,seq(from=5, to=410, by=3))]
 
 write.csv(asymptotic_d_Weibull,paste("asymptotic_d_Weibull.csv", sep = ","), row.names = FALSE)
 
