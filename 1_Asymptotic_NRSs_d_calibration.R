@@ -26,12 +26,12 @@ cl <- makeCluster(numCores) # Create a cluster with the number of cores
 registerDoParallel(cl) # Register the parallel backend
 
 #bootsize for bootstrap approximation of the distributions of the kernal of U-statistics.
-n <- 331776*3*8
+n <- 331776*3
 (n%%10)==0
 # maximum order of moments
 morder <- 4
 #large sample size (approximating asymptotic)
-largesize<-331776*8
+largesize<-331776
 
 #generate quasirandom numbers based on the Sobol sequence
 quasiunisobol<-sobol(n=n, dim = morder, init = TRUE, scrambling = 0, seed = NULL, normal = FALSE,
@@ -60,6 +60,24 @@ quasiuni_sorted2<-c()
 quasiuni_sorted3<-c()
 quasiuni_sorted4<-c()
 
+asymptotic_n <- 331776*3
+(asymptotic_n%%10)==0
+# maximum order of moments
+morder <- 6
+#large sample size (asymptotic bias)
+largesize<-331776
+
+#generate quasirandom numbers based on the Sobol sequence
+quasiunisobol_asymptotic<-sobol(n=asymptotic_n, dim = morder, init = TRUE, scrambling = 0, seed = NULL, normal = FALSE,
+                                mixed = FALSE, method = "C", start = 1)
+
+quasiuni_M<-rbind(quasiunisobol_asymptotic)
+
+quasiunisobol_asymptotic<-c()
+
+orderlist1_hllarge<-createorderlist(quni1=quasiuni_M[,1:6],size=largesize,interval=8,dimension=6)
+orderlist1_hllarge<-orderlist1_hllarge[1:largesize,]
+
 
 kurtWeibull<- read.csv(("kurtWeibull_28260.csv"))
 allkurtWeibull<-unlist(kurtWeibull)
@@ -81,14 +99,14 @@ simulatedbatchWeibull_bias<-foreach(batchnumber = (1:length(allkurtWeibull)), .c
 
   sortedx<-Sort(x,descending=FALSE,partial=NULL,stable=FALSE,na.last=NULL)
   x<-c()
-  dall<-compalldmoments(x=sortedx,targetm=targetm,targetvar=targetvar,targettm=targettm,targetfm=targetfm,orderlist1_sorted20=orderlist1_AB2,orderlist1_sorted30=orderlist1_AB3,orderlist1_sorted40=orderlist1_AB4,orderlist1_sorted2=orderlist1_AB2,orderlist1_sorted3=orderlist1_AB3,orderlist1_sorted4=orderlist1_AB4,percentage=1/24,batch="auto",boot=TRUE)
+  dall<-compalldmoments(x=sortedx,targetm=targetm,targetvar=targetvar,targettm=targettm,targetfm=targetfm,orderlist1_sorted20=orderlist1_AB2,orderlist1_sorted30=orderlist1_AB3,orderlist1_sorted40=orderlist1_AB4,orderlist1_hlsmall=orderlist1_hllarge,orderlist1_hllarge=orderlist1_hllarge,percentage=1/24,batch="auto",boot=TRUE)
   sortedx<-c()
   all1<-t(c(kurtx,skewx,dall))
 }
 
 write.csv(simulatedbatchWeibull_bias,paste("asymptotic_Weibull_dcalibration_raw",largesize,".csv", sep = ","), row.names = FALSE)
 
-asymptotic_d_Weibull<-simulatedbatchWeibull_bias[,c(1,2,seq(from=5, to=410, by=3))]
+asymptotic_d_Weibull<-simulatedbatchWeibull_bias[,c(1,2,seq(from=5, to=506, by=3))]
 
 write.csv(asymptotic_d_Weibull,paste("asymptotic_d_Weibull.csv", sep = ","), row.names = FALSE)
 
