@@ -60,12 +60,12 @@ quasiuni_sorted2<-c()
 quasiuni_sorted3<-c()
 quasiuni_sorted4<-c()
 
-asymptotic_n <- 331776*3
+asymptotic_n <- 331776*3*8
 (asymptotic_n%%10)==0
 # maximum order of moments
 morder <- 6
 #large sample size (asymptotic bias)
-largesize<-331776
+largesize<-331776*8
 
 #generate quasirandom numbers based on the Sobol sequence
 quasiunisobol_asymptotic<-sobol(n=asymptotic_n, dim = morder, init = TRUE, scrambling = 0, seed = NULL, normal = FALSE,
