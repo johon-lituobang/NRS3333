@@ -81,7 +81,7 @@ simulatedbatchWeibull_bias<-foreach(batchnumber = (1:length(allkurtWeibull)), .c
 
   sortedx<-Sort(x,descending=FALSE,partial=NULL,stable=FALSE,na.last=NULL)
   x<-c()
-  dall<-compalldmoments(x=sortedx,targetm=targetm,targetvar=targetvar,targettm=targettm,targetfm=targetfm,orderlist1_sorted20=orderlist1_AB2,orderlist1_sorted30=orderlist1_AB3,orderlist1_sorted40=orderlist1_AB4,orderlist1_sorted2=orderlist1_AB2,orderlist1_sorted3=orderlist1_AB3,orderlist1_sorted4=orderlist1_AB4,percentage=1/16,batch="auto",boot=TRUE)
+  dall<-compalldmoments(x=sortedx,targetm=targetm,targetvar=targetvar,targettm=targettm,targetfm=targetfm,orderlist1_sorted20=orderlist1_AB2,orderlist1_sorted30=orderlist1_AB3,orderlist1_sorted40=orderlist1_AB4,orderlist1_sorted2=orderlist1_AB2,orderlist1_sorted3=orderlist1_AB3,orderlist1_sorted4=orderlist1_AB4,percentage=1/24,batch="auto",boot=TRUE)
   sortedx<-c()
   all1<-t(c(kurtx,skewx,dall))
 }
