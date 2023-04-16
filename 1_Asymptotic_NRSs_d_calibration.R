@@ -26,12 +26,12 @@ cl <- makeCluster(numCores) # Create a cluster with the number of cores
 registerDoParallel(cl) # Register the parallel backend
 
 #bootsize for bootstrap approximation of the distributions of the kernal of U-statistics.
-n <- 331776*3*8
+n <- 331776*3*12
 (n%%10)==0
 # maximum order of moments
 morder <- 4
 #large sample size (approximating asymptotic)
-largesize<-331776*8
+largesize<-331776*12
 
 #generate quasirandom numbers based on the Sobol sequence
 quasiunisobol<-sobol(n=n, dim = morder, init = TRUE, scrambling = 0, seed = NULL, normal = FALSE,
@@ -60,12 +60,12 @@ quasiuni_sorted2<-c()
 quasiuni_sorted3<-c()
 quasiuni_sorted4<-c()
 
-asymptotic_n <- 331776*3*8
+asymptotic_n <- 331776*3*12
 (asymptotic_n%%10)==0
 # maximum order of moments
 morder <- 6
 #large sample size (asymptotic bias)
-largesize<-331776*8
+largesize<-331776*12
 
 #generate quasirandom numbers based on the Sobol sequence
 quasiunisobol_asymptotic<-sobol(n=asymptotic_n, dim = morder, init = TRUE, scrambling = 0, seed = NULL, normal = FALSE,
