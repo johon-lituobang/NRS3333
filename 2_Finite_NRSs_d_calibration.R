@@ -28,11 +28,11 @@ registerDoParallel(cl) # Register the parallel backend
 
 
 #bootsize for bootstrap approximation of the distributions of the kernal of U-statistics.
-n <- 576*9*3
+n <- 13824*2*3
 (n%%10)==0
 # maximum order of moments
 morder <- 4
-largesize<-576*9
+largesize<-13824*2
 #generate quasirandom numbers based on the Sobol sequence
 quasiunisobol<-sobol(n=n, dim = morder, init = TRUE, scrambling = 0, seed = NULL, normal = FALSE,
                      mixed = FALSE, method = "C", start = 1)
