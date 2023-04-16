@@ -220,7 +220,7 @@ asymptotic_d_Weibull<- read.csv(paste("asymptotic_d_Weibull.csv", sep = ","))
 
 asymptotic_d_Weibull<- cbind(dtype=rep(1,nrow(asymptotic_d_Weibull)),asymptotic_d_Weibull)
 
-asymptotic_d_Weibull<- cbind(Size=rep(331776*8,nrow(asymptotic_d_Weibull)),asymptotic_d_Weibull)
+asymptotic_d_Weibull<- cbind(Size=rep(331776*12,nrow(asymptotic_d_Weibull)),asymptotic_d_Weibull)
 
 colnames(Monte_d_Two)<-colnames(asymptotic_d_Weibull)
 d_Merged<- rbind(asymptotic_d_Weibull,Monte_d_Two)
