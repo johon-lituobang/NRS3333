@@ -150,7 +150,7 @@ write.csv(simulatedbatch_bias_Monte,paste("finite_Weibull_Icalibration_raw",samp
 
 simulatedbatch_bias_Monte<- read.csv(paste("finite_Weibull_Icalibration_raw",samplesize,".csv", sep = ","))
 
-Optimum_RMSE<-simulatedbatch_bias_Monte[,1:3540]
+Optimum_RMSE<-simulatedbatch_bias_Monte[,1:1990]
 
 write.csv(Optimum_RMSE,paste("finite_I_Weibull.csv", sep = ","), row.names = FALSE)
 
@@ -173,14 +173,23 @@ simulatedbatch_bias_Monte_SE<-foreach(batchnumber =c((1:length(allkurtWeibull)))
   
   se_mean_all1<-apply((SEbataches[1:batchsize,]), 2, se_mean)
   
-  rqkurt_se<-apply(((SEbataches[1:batchsize,c(1:728,1769:2496)])), 2, se_sd)
+  rqkurt_se<-apply(((SEbataches[1:batchsize,c(1:728)])), 2, se_sd)
   
-  rqskew_se<-apply((SEbataches[1:batchsize,c(729:1768,2497:3536)]), 2, se_sd)
+  rqskew_se<-apply((SEbataches[1:batchsize,c(729:1768)]), 2, se_sd)
   
-  allresultsSE<-c(samplesize=samplesize,type=1,kurtx,skewx,se_mean_all1,rqkurt_se,rqskew_se)
+  rqmall_se<-apply(((SEbataches[1:batchsize,c(1769:1866)])), 2, se_sd)
+  
+  rqvarall_se<-apply((SEbataches[1:batchsize,c(1867:1918)]), 2, se_sd)
+  
+  rqtmall_se<-apply(((SEbataches[1:batchsize,c(1919:1958)])), 2, se_sd)
+  
+  rqfmall_se<-apply((SEbataches[1:batchsize,c(1959:1986)]), 2, se_sd)
+  
+  allresultsSE<-c(samplesize=samplesize,type=1,kurtx,skewx,se_mean_all1,rqkurt_se,rqskew_se,rqmall_se,rqvarall_se,rqtmall_se,rqfmall_se)
   
   allresultsSE
 }
+
 
 write.csv(simulatedbatch_bias_Monte_SE,paste("finite_Weibull_Icalibration_raw_error",samplesize,".csv", sep = ","), row.names = FALSE)
 
