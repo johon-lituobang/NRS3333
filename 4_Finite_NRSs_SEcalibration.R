@@ -183,34 +183,6 @@ all1<-rbind(asymptotic_I_Weibull,finite_I_Weibull)
 write.csv(all1,paste("I_values.csv", sep = ","), row.names = FALSE)
 
 
-
-SEbataches<- read.csv(paste("finite_Weibull_Icalibration_raw",samplesize,9,".csv", sep = ","))
-
-SEbatachesmean <-apply(SEbataches, 2, calculate_column_mean)
-
-rqkurt<-sqrt(colMeans((SEbataches[1:batchsize,c(1769:2496)]-9)^2))
-
-rqskew<-sqrt(colMeans((SEbataches[1:batchsize,c(2497:3536)]-2)^2))
-
-rqmall<-sqrt(colMeans((SEbataches[1:batchsize,c(3537:3634)]-1)^2))
-
-rqvarall<-sqrt(colMeans((SEbataches[1:batchsize,c(3635:3686)]-1)^2))
-
-rqtmall<-sqrt(colMeans((SEbataches[1:batchsize,c(3687:3726)]-2)^2))
-
-rqfmall<-sqrt(colMeans((SEbataches[1:batchsize,c(3727:3754)]-9)^2))
-
-rankkurtall1<-rank(rqkurt[c(1:length(rqkurt))])
-rankskewall1<-rank(rqskew[c(1:length(rqskew))])
-
-rankrqmall1<-rank(rqmall[c(1:length(rqmall))])
-rankrqvarall1<-rank(rqvarall[c(1:length(rqvarall))])
-rankrqtmall1<-rank(rqtmall[c(1:length(rqtmall))])
-rankrqfmall1<-rank(rqfmall[c(1:length(rqfmall))])
-
-
-write.csv(c(rankkurtall1,rankskewall1,rankrqmall1,rankrqvarall1,rankrqtmall1,rankrqfmall1),paste("finite_exp_Icalibration_raw",samplesize,9,".csv", sep = ","), row.names = FALSE)
-
 stopCluster(cl)
 registerDoSEQ()
 
