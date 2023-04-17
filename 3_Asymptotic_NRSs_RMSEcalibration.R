@@ -130,7 +130,7 @@ simulatedbatch_bias_Monte<-foreach(batchnumber =c((1:length(allkurtWeibull))), .
   
   write.csv(RMSEbataches,paste("asymptotic_Weibull_Icalibration_raw",samplesize,round(kurtx,digits = 1),".csv", sep = ","), row.names = FALSE)
   RMSEbataches <- apply(RMSEbataches[1:batchsize,], 2, as.numeric)
-  SEbatachesmean <-apply(RMSEbataches, 2, calculate_column_mean)
+  RMSEbatachesmean <-apply(RMSEbataches, 2, calculate_column_mean)
   
   rqkurt<-sqrt(colMeans((RMSEbataches[1:batchsize,c(1:728)]-kurtx)^2))
   
