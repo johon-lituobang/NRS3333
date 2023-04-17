@@ -119,7 +119,7 @@ simulatedbatch_bias_Monte<-foreach(batchnumber =c((1:length(allkurtWeibull))), .
   }
   
   write.csv(SEbataches,paste("finite_Weibull_Icalibration_raw",samplesize,round(kurtx,digits = 1),".csv", sep = ","), row.names = FALSE)
-  
+  SEbataches <- apply(SEbataches[1:batchsize,], 2, as.numeric)
   SEbatachesmean <-apply(SEbataches, 2, calculate_column_mean)
   
   rqkurt<-sqrt(colMeans((SEbataches[1:batchsize,c(1:728)]-SEbatachesmean[3866])^2))
