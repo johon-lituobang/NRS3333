@@ -146,7 +146,7 @@ write.csv(simulatedbatch_bias_Monte,paste("asymptotic_Weibull_Icalibration_raw",
 
 simulatedbatch_bias_Monte<- read.csv(paste("asymptotic_Weibull_Icalibration_raw",largesize,".csv", sep = ","))
 
-Optimum_SE<-simulatedbatch_bias_Monte[,1:2500]
+Optimum_SE<-simulatedbatch_bias_Monte[,1:3540]
 
 write.csv(Optimum_SE,paste("asymptotic_I_Weibull.csv", sep = ","), row.names = FALSE)
 
