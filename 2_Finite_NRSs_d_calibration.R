@@ -78,11 +78,12 @@ unibatch<-colSort(unibatchran, descend = FALSE, stable = FALSE, parallel = TRUE)
 
 setSeed(1)
 morder=6
-unibatchran_M<-matrix(randtoolbox::SFMT(largesize*3*morder),ncol=morder)
+quasiuni_M<-sobol(n=(largesize*3*morder), dim = morder, init = TRUE, scrambling = 0, seed = NULL, normal = FALSE,
+                                mixed = FALSE, method = "C", start = 1)
 
-orderlist1_hlsmall<-createorderlist(quni1=unibatchran_M[,1:6],size=samplesize,interval=8,dimension=6)
+orderlist1_hlsmall<-createorderlist(quni1=quasiuni_M[,1:6],size=samplesize,interval=8,dimension=6)
 orderlist1_hlsmall<-orderlist1_hlsmall[1:largesize,]
-orderlist1_hllarge<-createorderlist(quni1=unibatchran_M[,1:6],size=largesize,interval=8,dimension=6)
+orderlist1_hllarge<-createorderlist(quni1=quasiuni_M[,1:6],size=largesize,interval=8,dimension=6)
 orderlist1_hllarge<-orderlist1_hllarge[1:largesize,]
 
 #Then, start the Monte Simulation
