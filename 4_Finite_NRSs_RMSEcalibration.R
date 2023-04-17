@@ -100,7 +100,7 @@ simulatedbatch_bias_Monte<-foreach(batchnumber =c((1:length(allkurtWeibull))), .
   kurtx<-c(kurtx=targetfm/(targetvar^(4/2)))
   skewx<-c(skewx=targettm/(targetvar^(3/2)))
   
-  SEbataches<-c()
+  RMSEbataches<-c()
   for (batch1 in c(1:batchsize)){
     x<-c(dsWeibull(uni=unibatch[,batch1], shape=a/1, scale = 1))
     sortedx<-Sort(x,descending=FALSE,partial=NULL,stable=FALSE,na.last=NULL)
@@ -115,21 +115,21 @@ simulatedbatch_bias_Monte<-foreach(batchnumber =c((1:length(allkurtWeibull))), .
     
     all1<-t(c(rqmoments1,targetall,standardizedmomentsx))
     
-    SEbataches<-rbind(SEbataches,all1)
+    RMSEbataches<-rbind(RMSEbataches,all1)
   }
   
-  write.csv(SEbataches,paste("finite_Weibull_Icalibration_raw",samplesize,round(kurtx,digits = 1),".csv", sep = ","), row.names = FALSE)
-  SEbataches <- apply(SEbataches[1:batchsize,], 2, as.numeric)
-  SEbatachesmean <-apply(SEbataches, 2, calculate_column_mean)
+  write.csv(RMSEbataches,paste("finite_Weibull_Icalibration_raw",samplesize,round(kurtx,digits = 1),".csv", sep = ","), row.names = FALSE)
+  RMSEbataches <- apply(RMSEbataches[1:batchsize,], 2, as.numeric)
+  RMSEbatachesmean <-apply(RMSEbataches, 2, calculate_column_mean)
   
-  rqkurt<-sqrt(colMeans((SEbataches[1:batchsize,c(1:728,1769:2496)]-SEbatachesmean[3866])^2))
+  rqkurt<-sqrt(colMeans((RMSEbataches[1:batchsize,c(1:728,1769:2496)]-RMSEbatachesmean[3866])^2))
   
-  rqskew<-sqrt(colMeans((SEbataches[1:batchsize,c(729:1768,2497:3536)]-SEbatachesmean[3867])^2))
+  rqskew<-sqrt(colMeans((RMSEbataches[1:batchsize,c(729:1768,2497:3536)]-RMSEbatachesmean[3867])^2))
   
   rankkurtall1<-rank(rqkurt[c(1:length(rqkurt))])
   rankskewall1<-rank(rqskew[c(1:length(rqskew))])
   
-  allresultsSE<-c(samplesize=samplesize,type=1,kurtx,skewx,rankkurtall1,rankskewall1,SEbatachesmean,SErqkurt=rqkurt,SErqskew=rqskew)
+  allresultsSE<-c(samplesize=samplesize,type=1,kurtx,skewx,rankkurtall1,rankskewall1,RMSEbatachesmean,RMSErqkurt=rqkurt,RMSErqskew=rqskew)
 }
 
 write.csv(simulatedbatch_bias_Monte,paste("finite_Weibull_Icalibration_raw",samplesize,".csv", sep = ","), row.names = FALSE)
