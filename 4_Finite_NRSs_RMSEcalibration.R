@@ -78,13 +78,16 @@ d_values<- read.csv(("d_values.csv"))
 #Then, start the Monte Simulation
 
 setSeed(1)
-morder=6
-unibatchran_M<-matrix(randtoolbox::SFMT(largesize*3*morder),ncol=morder)
 
-orderlist1_hlsmall<-createorderlist(quni1=unibatchran_M[,1:6],size=samplesize,interval=8,dimension=6)
+morder=6
+quasiuni_M<-sobol(n=(largesize*3*morder), dim = morder, init = TRUE, scrambling = 0, seed = NULL, normal = FALSE,
+                                mixed = FALSE, method = "C", start = 1)
+
+orderlist1_hlsmall<-createorderlist(quni1=quasiuni_M[,1:6],size=samplesize,interval=8,dimension=6)
 orderlist1_hlsmall<-orderlist1_hlsmall[1:largesize,]
-orderlist1_hllarge<-createorderlist(quni1=unibatchran_M[,1:6],size=largesize,interval=8,dimension=6)
+orderlist1_hllarge<-createorderlist(quni1=quasiuni_M[,1:6],size=largesize,interval=8,dimension=6)
 orderlist1_hllarge<-orderlist1_hllarge[1:largesize,]
+
 
 simulatedbatch_bias_Monte<-foreach(batchnumber =c((1:length(allkurtWeibull))), .combine = 'rbind') %dopar% {
   library(Rfast)
