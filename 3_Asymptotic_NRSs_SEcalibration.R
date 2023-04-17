@@ -65,7 +65,7 @@ orderlist1_AB3<-createorderlist(quni1=quasiuni_sorted3,size=largesize,interval=8
 orderlist1_AB3<-orderlist1_AB3[1:largesize,]
 orderlist1_AB4<-createorderlist(quni1=quasiuni_sorted4,size=largesize,interval=8,dimension=4)
 orderlist1_AB4<-orderlist1_AB4[1:largesize,]
-batchsize=5
+batchsize=100
 
 n <- samplesize
 setSeed(1)
