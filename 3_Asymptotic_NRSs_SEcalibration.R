@@ -102,14 +102,14 @@ simulatedbatch_bias_Monte<-foreach(batchnumber =c((1:length(allkurtWeibull))), .
   library(NRSReview)
   set.seed(1)
   a=allkurtWeibull[batchnumber]
-
+  
   targetm<-gamma(1+1/(a/1))
   targetvar<-(gamma(1+2/(a/1))-(gamma(((1+1/(a/1)))))^2)
   targettm<-((sqrt(gamma(1+2/(a/1))-(gamma(((1+1/(a/1)))))^2))^3)*(gamma(1+3/(a/1))-3*(gamma(1+1/(a/1)))*((gamma(1+2/(a/1))))+2*((gamma(1+1/(a/1)))^3))/((sqrt(gamma(1+2/(a/1))-(gamma(((1+1/(a/1)))))^2))^(3))
   targetfm<-((sqrt(gamma(1+2/(a/1))-(gamma(((1+1/(a/1)))))^2))^4)*(gamma(1+4/(a/1))-4*(gamma(1+3/(a/1)))*((gamma(1+1/(a/1))))+6*(gamma(1+2/(a/1)))*((gamma(1+1/(a/1)))^2)-3*((gamma(1+1/(a/1)))^4))/(((gamma(1+2/(a/1))-(gamma(((1+1/(a/1)))))^2))^(2))
   kurtx<-c(kurtx=targetfm/(targetvar^(4/2)))
   skewx<-c(skewx=targettm/(targetvar^(3/2)))
-
+  
   SEbataches<-c()
   for (batch1 in c(1:batchsize)){
     x<-c(dsWeibull(uni=unibatch[,batch1], shape=a/1, scale = 1))
@@ -118,27 +118,27 @@ simulatedbatch_bias_Monte<-foreach(batchnumber =c((1:length(allkurtWeibull))), .
     x<-c()
     
     rqmoments1<-rqsmoments(x=sortedx,dtype1=1,releaseall=TRUE,standist_d=d_values,orderlist1_sorted20=orderlist1_AB2,orderlist1_sorted30=orderlist1_AB3,orderlist1_sorted40=orderlist1_AB4,orderlist1_hlsmall=orderlist1_hllarge,orderlist1_hllarge=orderlist1_hllarge,percentage=1/24,batch="auto",stepsize=1000,criterion=criterionset)
-
+    
     standardizedmomentsx<-standardizedmoments(x=sortedx)
-
+    
     sortedx<-c()
     
     all1<-unlist(c(rqmoments1,targetall,standardizedmomentsx))
-
+    
     SEbataches<-rbind(SEbataches,all1)
   }
   
   write.csv(SEbataches,paste("asymptotic_Weibull_Icalibration_raw",samplesize,round(kurtx,digits = 1),".csv", sep = ","), row.names = FALSE)
   SEbataches <- apply(SEbataches[1:batchsize,], 2, as.numeric)
   SEbatachesmean <-apply(SEbataches, 2, calculate_column_mean)
-
-  rqkurt<-sqrt(colMeans((SEbataches[1:batchsize,c(1:728)]-kurtx)^2))
   
-  rqskew<-sqrt(colMeans((SEbataches[1:batchsize,c(729:1768)]-skewx)^2))
+  rqkurt<-sqrt(colMeans((SEbataches[1:batchsize,c(1:728,1769:2496)]-kurtx)^2))
+  
+  rqskew<-sqrt(colMeans((SEbataches[1:batchsize,c(729:1768,2497:3536)]-skewx)^2))
   
   rankkurtall1<-rank(rqkurt[c(1:length(rqkurt))])
   rankskewall1<-rank(rqskew[c(1:length(rqskew))])
-
+  
   allresultsSE<-c(samplesize=samplesize,type=1,kurtx=kurtx,skewx=skewx,rankkurtall1,rankskewall1,SEbatachesmean,SErqkurt=rqkurt,SErqskew=rqskew)
 }
 
@@ -146,7 +146,7 @@ write.csv(simulatedbatch_bias_Monte,paste("asymptotic_Weibull_Icalibration_raw",
 
 simulatedbatch_bias_Monte<- read.csv(paste("asymptotic_Weibull_Icalibration_raw",largesize,".csv", sep = ","))
 
-Optimum_SE<-simulatedbatch_bias_Monte[,1:1772]
+Optimum_SE<-simulatedbatch_bias_Monte[,1:2500]
 
 write.csv(Optimum_SE,paste("asymptotic_I_Weibull.csv", sep = ","), row.names = FALSE)
 
@@ -154,27 +154,27 @@ simulatedbatch_bias_Monte_SE<-foreach(batchnumber =c((1:length(allkurtWeibull)))
   library(Rfast)
   library(matrixStats)
   library(NRSReview)
-
-
+  
+  
   a=allkurtWeibull[batchnumber]
-
+  
   targetm<-gamma(1+1/(a/1))
   targetvar<-(gamma(1+2/(a/1))-(gamma(((1+1/(a/1)))))^2)
   targettm<-((sqrt(gamma(1+2/(a/1))-(gamma(((1+1/(a/1)))))^2))^3)*(gamma(1+3/(a/1))-3*(gamma(1+1/(a/1)))*((gamma(1+2/(a/1))))+2*((gamma(1+1/(a/1)))^3))/((sqrt(gamma(1+2/(a/1))-(gamma(((1+1/(a/1)))))^2))^(3))
   targetfm<-((sqrt(gamma(1+2/(a/1))-(gamma(((1+1/(a/1)))))^2))^4)*(gamma(1+4/(a/1))-4*(gamma(1+3/(a/1)))*((gamma(1+1/(a/1))))+6*(gamma(1+2/(a/1)))*((gamma(1+1/(a/1)))^2)-3*((gamma(1+1/(a/1)))^4))/(((gamma(1+2/(a/1))-(gamma(((1+1/(a/1)))))^2))^(2))
   kurtx<-targetfm/(targetvar^(4/2))
   skewx<-targettm/(targetvar^(3/2))
-
+  
   SEbataches<- read.csv(paste("asymptotic_Weibull_Icalibration_raw",samplesize,round(kurtx,digits = 1),".csv", sep = ","))
-
+  
   se_mean_all1<-apply((SEbataches[1:batchsize,]), 2, se_mean)
   
-  rqkurt_se<-apply(((SEbataches[1:batchsize,c(1:728)])), 2, se_sd)
+  rqkurt_se<-apply(((SEbataches[1:batchsize,c(1:728,1769:2496)])), 2, se_sd)
   
-  rqskew_se<-apply((SEbataches[1:batchsize,c(729:1768)]), 2, se_sd)
+  rqskew_se<-apply((SEbataches[1:batchsize,c(729:1768,2497:3536)]), 2, se_sd)
   
   allresultsSE<-c(samplesize=samplesize,type=1,kurtx,skewx,se_mean_all1,rqkurt_se,rqskew_se)
-
+  
   allresultsSE
 }
 
@@ -184,8 +184,6 @@ asymptotic_I_Weibull<- read.csv(("asymptotic_I_Weibull.csv"))
 
 
 write.csv(asymptotic_I_Weibull,paste("asymptotic_I.csv", sep = ","), row.names = FALSE)
-
-
 
 stopCluster(cl)
 registerDoSEQ()
