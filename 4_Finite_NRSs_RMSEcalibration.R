@@ -65,7 +65,7 @@ orderlist1_AB30<-orderlist1_AB30[1:largesize,]
 orderlist1_AB40<-createorderlist(quni1=quasiuni_sorted4,size=samplesize,interval=8,dimension=4)
 orderlist1_AB40<-orderlist1_AB40[1:largesize,]
 
-batchsize=1000
+batchsize=batchsizebase
 
 n <- samplesize
 setSeed(1)
@@ -138,6 +138,10 @@ simulatedbatch_bias_Monte<-foreach(batchnumber =c((1:length(allkurtWeibull))), .
   
   rqfmall<-sqrt(colMeans((RMSEbataches[1:batchsize,c(1933:1960)]-targetfm)^2))
   
+  rqkurt_Weibull<-sqrt(colMeans((RMSEbataches[1:batchsize,c(1961:2687)]-kurtx)^2))
+  
+  rqskew_Weibull<-sqrt(colMeans((RMSEbataches[1:batchsize,c(2688:3728)]-skewx)^2))
+  
   rankkurtall1<-rank(rqkurt[c(1:length(rqkurt))])
   rankskewall1<-rank(rqskew[c(1:length(rqskew))])
   
@@ -146,7 +150,11 @@ simulatedbatch_bias_Monte<-foreach(batchnumber =c((1:length(allkurtWeibull))), .
   rankrqtmall1<-rank(rqtmall[c(1:length(rqtmall))])
   rankrqfmall1<-rank(rqfmall[c(1:length(rqfmall))])
   
-  allresultsRMSE<-c(samplesize=samplesize,type=1,kurtx=kurtx,skewx=skewx,rankkurtall1,rankskewall1,rankrqmall1,rankrqvarall1,rankrqtmall1,rankrqfmall1,RMSEbatachesmean,RMSErqkurt=rqkurt,RMSErqskew=rqskew,RMSErqmall=rqmall,RMSErqvarall=rqvarall,RMSErqtmall=rqtmall,RMSErqfmall=rqfmall)
+  rankrqkurt_Weibull1<-rank(rqkurt_Weibull[c(1:length(rqkurt_Weibull))])
+  rankrqskew_Weibull1<-rank(rqskew_Weibull[c(1:length(rqskew_Weibull))])
+  
+  
+  allresultsRMSE<-c(samplesize=samplesize,type=1,kurtx=kurtx,skewx=skewx,rankkurtall1,rankskewall1,rankrqmall1,rankrqvarall1,rankrqtmall1,rankrqfmall1,rankrqkurt_Weibull1,rankrqskew_Weibull1,RMSEbatachesmean,RMSErqkurt=rqkurt,RMSErqskew=rqskew,RMSErqmall=rqmall,RMSErqvarall=rqvarall,RMSErqtmall=rqtmall,RMSErqfmall=rqfmall,RMSErqkurt_Weibull=rqkurt_Weibull,RMSErqskew_Weibull=rqskew_Weibull)
 }
 
 
@@ -154,7 +162,7 @@ write.csv(simulatedbatch_bias_Monte,paste("finite_Weibull_Icalibration_raw",samp
 
 simulatedbatch_bias_Monte<- read.csv(paste("finite_Weibull_Icalibration_raw",samplesize,".csv", sep = ","))
 
-Optimum_RMSE<-simulatedbatch_bias_Monte[,1:1964]
+Optimum_RMSE<-simulatedbatch_bias_Monte[,1:3732]
 
 write.csv(Optimum_RMSE,paste("finite_I_Weibull.csv", sep = ","), row.names = FALSE)
 
@@ -189,7 +197,11 @@ simulatedbatch_bias_Monte_SE<-foreach(batchnumber =c((1:length(allkurtWeibull)))
   
   rqfmall_se<-apply((SEbataches[1:batchsize,c(1933:1960)]), 2, se_sd)
   
-  allresultsSE<-c(samplesize=samplesize,type=1,kurtx,skewx,se_mean_all1,rqkurt_se,rqskew_se,rqmall_se,rqvarall_se,rqtmall_se,rqfmall_se)
+  rqkurtall_se<-apply(((SEbataches[1:batchsize,c(1961:2687)])), 2, se_sd)
+  
+  rqskewall_se<-apply((SEbataches[1:batchsize,c(2688:3728)]), 2, se_sd)
+  
+  allresultsSE<-c(samplesize=samplesize,type=1,kurtx,skewx,se_mean_all1,rqkurt_se,rqskew_se,rqmall_se,rqvarall_se,rqtmall_se,rqfmall_se,rqkurtall_se,rqskewall_se)
   
   allresultsSE
 }
