@@ -152,7 +152,7 @@ simulatedbatch_bias_Monte<- read.csv(paste("asymptotic_Weibull_I2calibration_raw
 
 Optimum_RMSE<-simulatedbatch_bias_Monte[,1:1772]
 
-write.csv(Optimum_RMSE,paste("asymptotic_I_Weibull.csv", sep = ","), row.names = FALSE)
+write.csv(Optimum_RMSE,paste("asymptotic_I2_Weibull.csv", sep = ","), row.names = FALSE)
 
 simulatedbatch_bias_Monte_SE<-foreach(batchnumber =c((1:length(allkurtWeibull))), .combine = 'rbind') %dopar% {
   library(Rfast)
