@@ -159,20 +159,21 @@ simulatedbatch_asymptoticbias<-foreach(batchnumber = (1:length(allkurtWeibull)),
   sortedx<-c()
   momentssd<-c(sd=sqrt(momentsx[2]),imoments1[2359],imoments1[2360],imoments1[2361])
   
+  
   allrawmoBias<-c(
     firstbias=abs(c(Huberx,SMWM9,imoments1[1],momentsx[1],imoments1[7:78],imoments1[199:270],imoments1[2159:2196],mean_medianMAD1=moments_medianMAD1[1],mean_QE1=moments_QE1[1],mean_RMLE1=moments_RMLE1[1],MoM2=MoM2,MoM3=MoM3,MoM4=MoM4,MoM5=MoM5,MoM6=MoM6,MoRMall=MoRMall)-targetm)/sqrt(targetvar),
     secondbias=abs(c(imoments1[2],momentsx[2],imoments1[79:130],imoments1[271:322],imoments1[2233:2260],var_medianMAD1=moments_medianMAD1[2],var_QE1=moments_QE1[2],var_RMLE1=moments_RMLE1[2])-targetvar)/momentssd[2],
     thirdbias=abs(c(imoments1[3],momentsx[3],imoments1[131:170],imoments1[323:362],imoments1[2287:2308],tm_medianMAD1=moments_medianMAD1[3],tm_QE1=moments_QE1[3],tm_RMLE1=moments_RMLE1[3])-targettm)/momentssd[3],
     fourbias=abs(c(imoments1[4],momentsx[4],imoments1[171:198],imoments1[363:390],imoments1[2329:2344],fm_medianMAD1=moments_medianMAD1[4],fm_QE1=moments_QE1[4],fm_RMLE1=moments_RMLE1[4])-targetfm)/momentssd[4],
-    skewbias=abs(c(imoments1[5],momentsx[7],imoments1[391:1118])-skewx),
-    kurtbias=abs(c(imoments1[6],momentsx[8],imoments1[1119:2158])-kurtx)
+    skewbias=abs(c(imoments1[5],momentsx[7],imoments1[1119:2158])-skewx),
+    kurtbias=abs(c(imoments1[6],momentsx[8],imoments1[391:1118])-kurtx)
     )
   allrawmo1<-c(first=c(Huberx,SMWM9,imoments1[1],momentsx[1],imoments1[7:78],imoments1[199:270],imoments1[2159:2196],mean_medianMAD1=moments_medianMAD1[1],mean_QE1=moments_QE1[1],mean_RMLE1=moments_RMLE1[1],MoM2=MoM2,MoM3=MoM3,MoM4=MoM4,MoM5=MoM5,MoM6=MoM6,MoRMall=MoRMall),
                second=c(imoments1[2],momentsx[2],imoments1[79:130],imoments1[271:322],imoments1[2233:2260],var_medianMAD1=moments_medianMAD1[2],var_QE1=moments_QE1[2],var_RMLE1=moments_RMLE1[2]),
                third=c(imoments1[3],momentsx[3],imoments1[131:170],imoments1[323:362],imoments1[2287:2308],tm_medianMAD1=moments_medianMAD1[3],tm_QE1=moments_QE1[3],tm_RMLE1=moments_RMLE1[3]),
                fourth=c(imoments1[4],momentsx[4],imoments1[171:198],imoments1[363:390],imoments1[2329:2344],fm_medianMAD1=moments_medianMAD1[4],fm_QE1=moments_QE1[4],fm_RMLE1=moments_RMLE1[4]),
-               skew=(c(imoments1[5],momentsx[7],imoments1[391:1118])),
-               kurt=(c(imoments1[6],momentsx[8],imoments1[1119:2158]))
+               skew=(c(imoments1[5],momentsx[7],imoments1[1119:2158])),
+               kurt=(c(imoments1[6],momentsx[8],imoments1[391:1118]))
                )
   
   medianmoments<-c(imoments1[2166],imoments1[2240],imoments1[2294],imoments1[2335])
