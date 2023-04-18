@@ -148,10 +148,6 @@ simulatedbatch_bias_Monte<-foreach(batchnumber =c((1:length(allkurtWeibull))), .
   
   rqfm<-apply((SEbataches2[1:batchsize,c(157:180)]), 2, calculate_column_sd)
   
-  iskew1<-apply((SEbataches2[1:batchsize,c(121:156)]), 2, calculate_column_sd)
-  
-  ikurt1<-apply((SEbataches2[1:batchsize,c(157:180)]), 2, calculate_column_sd)
-  
   rankmean1<-rank(rqmean)
   rankvar1<-rank(rqvar)
   ranktm1<-rank(rqtm)
