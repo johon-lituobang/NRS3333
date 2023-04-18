@@ -152,7 +152,7 @@ simulatedbatch_bias_Monte<-foreach(batchnumber =c((1:length(allkurtWeibull))), .
   rankrqtmall1<-rank(rqtmall[c(1:length(rqtmall))])
   rankrqfmall1<-rank(rqfmall[c(1:length(rqfmall))])
   
-  allresultsRMSE<-c(samplesize=samplesize,type=1,kurtx=kurtx,skewx=skewx,rankkurtall1,rankskewall1,rankrqmall1,rankrqvarall1,rankrqtmall1,rankrqfmall1,SEbatachesmean,RMSErqkurt=rqkurt,RMSErqskew=rqskew,RMSErqmall=rqmall,RMSErqvarall=rqvarall,RMSErqtmall=rqtmall,RMSErqfmall=rqfmall)
+  allresultsRMSE<-c(samplesize=samplesize,type=1,kurtx=kurtx,skewx=skewx,rankkurtall1,rankskewall1,rankrqmall1,rankrqvarall1,rankrqtmall1,rankrqfmall1,RMSEbatachesmean,RMSErqkurt=rqkurt,RMSErqskew=rqskew,RMSErqmall=rqmall,RMSErqvarall=rqvarall,RMSErqtmall=rqtmall,RMSErqfmall=rqfmall)
 }
 
 
