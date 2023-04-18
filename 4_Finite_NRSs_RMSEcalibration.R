@@ -125,17 +125,18 @@ simulatedbatch_bias_Monte<-foreach(batchnumber =c((1:length(allkurtWeibull))), .
   RMSEbataches <- apply(RMSEbataches[1:batchsize,], 2, as.numeric)
   RMSEbatachesmean <-apply(RMSEbataches, 2, calculate_column_mean)
   
+  
   rqkurt<-sqrt(colMeans((RMSEbataches[1:batchsize,c(1:728)]-kurtx)^2))
   
   rqskew<-sqrt(colMeans((RMSEbataches[1:batchsize,c(729:1768)]-skewx)^2))
   
-  rqmall<-sqrt(colMeans((RMSEbataches[1:batchsize,c(1769:1866)]-targetm)^2))
+  rqmall<-sqrt(colMeans((RMSEbataches[1:batchsize,c(1769:1840)]-targetm)^2))
   
-  rqvarall<-sqrt(colMeans((RMSEbataches[1:batchsize,c(1867:1918)]-targetvar)^2))
+  rqvarall<-sqrt(colMeans((RMSEbataches[1:batchsize,c(1841:1892)]-targetvar)^2))
   
-  rqtmall<-sqrt(colMeans((RMSEbataches[1:batchsize,c(1919:1958)]-targettm)^2))
+  rqtmall<-sqrt(colMeans((RMSEbataches[1:batchsize,c(1893:1932)]-targettm)^2))
   
-  rqfmall<-sqrt(colMeans((RMSEbataches[1:batchsize,c(1959:1986)]-targetfm)^2))
+  rqfmall<-sqrt(colMeans((RMSEbataches[1:batchsize,c(1933:1960)]-targetfm)^2))
   
   rankkurtall1<-rank(rqkurt[c(1:length(rqkurt))])
   rankskewall1<-rank(rqskew[c(1:length(rqskew))])
@@ -153,7 +154,7 @@ write.csv(simulatedbatch_bias_Monte,paste("finite_Weibull_Icalibration_raw",samp
 
 simulatedbatch_bias_Monte<- read.csv(paste("finite_Weibull_Icalibration_raw",samplesize,".csv", sep = ","))
 
-Optimum_RMSE<-simulatedbatch_bias_Monte[,1:1990]
+Optimum_RMSE<-simulatedbatch_bias_Monte[,1:1964]
 
 write.csv(Optimum_RMSE,paste("finite_I_Weibull.csv", sep = ","), row.names = FALSE)
 
@@ -180,13 +181,13 @@ simulatedbatch_bias_Monte_SE<-foreach(batchnumber =c((1:length(allkurtWeibull)))
   
   rqskew_se<-apply((SEbataches[1:batchsize,c(729:1768)]), 2, se_sd)
   
-  rqmall_se<-apply(((SEbataches[1:batchsize,c(1769:1866)])), 2, se_sd)
+  rqmall_se<-apply(((SEbataches[1:batchsize,c(1769:1840)])), 2, se_sd)
   
-  rqvarall_se<-apply((SEbataches[1:batchsize,c(1867:1918)]), 2, se_sd)
+  rqvarall_se<-apply((SEbataches[1:batchsize,c(1841:1892)]), 2, se_sd)
   
-  rqtmall_se<-apply(((SEbataches[1:batchsize,c(1919:1958)])), 2, se_sd)
+  rqtmall_se<-apply(((SEbataches[1:batchsize,c(1893:1932)])), 2, se_sd)
   
-  rqfmall_se<-apply((SEbataches[1:batchsize,c(1959:1986)]), 2, se_sd)
+  rqfmall_se<-apply((SEbataches[1:batchsize,c(1933:1960)]), 2, se_sd)
   
   allresultsSE<-c(samplesize=samplesize,type=1,kurtx,skewx,se_mean_all1,rqkurt_se,rqskew_se,rqmall_se,rqvarall_se,rqtmall_se,rqfmall_se)
   
