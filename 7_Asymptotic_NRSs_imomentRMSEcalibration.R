@@ -128,7 +128,7 @@ simulatedbatch_bias_Monte<-foreach(batchnumber =c((1:length(allkurtWeibull))), .
   
   rqvar<-apply((SEbataches3[1:batchsize,c(75:126,267:318)]), 2, calculate_column_sd)
   
-  rqtm<-apply((SEbataches3[1:batchsize,c(127:166,318:358)]), 2, calculate_column_sd)
+  rqtm<-apply((SEbataches3[1:batchsize,c(127:166,319:358)]), 2, calculate_column_sd)
   
   rqfm<-apply((SEbataches3[1:batchsize,c(167:194,359:386)]), 2, calculate_column_sd)
   
@@ -170,7 +170,7 @@ simulatedbatch_bias_Monte_SE<-foreach(batchnumber =c((1:length(allkurtWeibull)))
   
   rqvar_se<-apply((SEbataches[1:batchsize,c(75:126,267:318)]), 2, se_sd)
   
-  rqtm_se<-apply((SEbataches[1:batchsize,c(127:166,318:358)]), 2, se_sd)
+  rqtm_se<-apply((SEbataches[1:batchsize,c(127:166,319:358)]), 2, se_sd)
   
   rqfm_se<-apply((SEbataches[1:batchsize,c(167:194,359:386)]), 2, se_sd)
   
