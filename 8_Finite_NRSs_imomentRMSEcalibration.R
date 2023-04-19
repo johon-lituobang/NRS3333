@@ -121,13 +121,13 @@ simulatedbatch_bias_Monte<-foreach(batchnumber =c((1:length(allkurtWeibull))), .
   
   SEbatachesmean <-apply(SEbataches3, 2, calculate_column_mean)
   
-  rqmean<-apply(((SEbataches3[1:batchsize,3:74])), 2, calculate_column_sd)
+  rqmean<-apply(((SEbataches3[1:batchsize,c(3:74,195:266)])), 2, calculate_column_sd)
   
-  rqvar<-apply((SEbataches3[1:batchsize,c(75:126)]), 2, calculate_column_sd)
+  rqvar<-apply((SEbataches3[1:batchsize,c(75:126,267:318)]), 2, calculate_column_sd)
   
-  rqtm<-apply((SEbataches3[1:batchsize,c(127:166)]), 2, calculate_column_sd)
+  rqtm<-apply((SEbataches3[1:batchsize,c(127:166,318:358)]), 2, calculate_column_sd)
   
-  rqfm<-apply((SEbataches3[1:batchsize,c(167:194)]), 2, calculate_column_sd)
+  rqfm<-apply((SEbataches3[1:batchsize,c(167:194,359:386)]), 2, calculate_column_sd)
   
   rankmean1<-rank(rqmean)
   rankvar1<-rank(rqvar)
@@ -140,7 +140,7 @@ simulatedbatch_bias_Monte<-foreach(batchnumber =c((1:length(allkurtWeibull))), .
 
 write.csv(simulatedbatch_bias_Monte,paste("finite_Weibull_Imomentscalibration_raw",samplesize,".csv", sep = ","), row.names = FALSE)
 
-Optimum_SE<-simulatedbatch_bias_Monte[,1:196]
+Optimum_SE<-simulatedbatch_bias_Monte[,1:388]
 
 write.csv(Optimum_SE,paste("finite_Imoments_Weibull.csv", sep = ","), row.names = FALSE)
 
@@ -163,13 +163,13 @@ simulatedbatch_bias_Monte_SE<-foreach(batchnumber =c((1:length(allkurtWeibull)))
   se_mean_all1<-apply((SEbataches[1:batchsize,]), 2, se_mean)
   
   
-  rqmean_se<-apply(((SEbataches[1:batchsize,3:74])), 2, se_sd)
+  rqmean_se<-apply(((SEbataches[1:batchsize,c(3:74,195:266)])), 2, se_sd)
   
-  rqvar_se<-apply((SEbataches[1:batchsize,c(75:126)]), 2, se_sd)
+  rqvar_se<-apply((SEbataches[1:batchsize,c(75:126,267:318)]), 2, se_sd)
   
-  rqtm_se<-apply((SEbataches[1:batchsize,c(127:166)]), 2, se_sd)
+  rqtm_se<-apply((SEbataches[1:batchsize,c(127:166,318:358)]), 2, se_sd)
   
-  rqfm_se<-apply((SEbataches[1:batchsize,c(167:194)]), 2, se_sd)
+  rqfm_se<-apply((SEbataches[1:batchsize,c(167:194,359:386)]), 2, se_sd)
   
   allresultsSE<-c(samplesize=samplesize,type=1,kurtx,skewx,se_mean_all1,rqmean_se,rqvar_se,rqtm_se,rqfm_se)
   
