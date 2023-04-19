@@ -125,9 +125,9 @@ simulatedbatch_bias_Monte<-foreach(batchnumber =c((1:length(allkurtWeibull))), .
   RMSEbataches <- apply(RMSEbataches[1:batchsize,], 2, as.numeric)
   RMSEbatachesmean <-apply(RMSEbataches, 2, calculate_column_mean)
   
-  rqkurt<-sqrt(colMeans((RMSEbataches[1:batchsize,c(1:728,1961:2687)]-kurtx)^2))
+  rqkurt<-sqrt(colMeans((RMSEbataches[1:batchsize,c(1:728,1961:2688)]-kurtx)^2))
   
-  rqskew<-sqrt(colMeans((RMSEbataches[1:batchsize,c(729:1768,2688:3728)]-skewx)^2))
+  rqskew<-sqrt(colMeans((RMSEbataches[1:batchsize,c(729:1768,2689:3728)]-skewx)^2))
   
   rankkurtall1<-rank(rqkurt)
   rankskewall1<-rank(rqskew)
@@ -163,9 +163,9 @@ simulatedbatch_bias_Monte_SE<-foreach(batchnumber =c((1:length(allkurtWeibull)))
   
   se_mean_all1<-apply((SEbataches[1:batchsize,]), 2, se_mean)
   
-  rqkurt_se<-apply(((SEbataches[1:batchsize,c(1:728,1961:2687)])), 2, se_sd)
+  rqkurt_se<-apply(((SEbataches[1:batchsize,c(1:728,1961:2688)])), 2, se_sd)
   
-  rqskew_se<-apply((SEbataches[1:batchsize,c(729:1768,2688:3728)]), 2, se_sd)
+  rqskew_se<-apply((SEbataches[1:batchsize,c(729:1768,2689:3728)]), 2, se_sd)
   
   allresultsSE<-c(samplesize=samplesize,type=1,kurtx,skewx,se_mean_all1,rqkurt_se,rqskew_se)
   
