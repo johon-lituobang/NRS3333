@@ -134,7 +134,7 @@ simulatedbatch_bias_Monte<-foreach(batchnumber =c((1:length(allkurtWeibull))), .
   ranktm1<-rank(rqtm)
   rankfm1<-rank(rqfm)
   
-  allresultsSE<-c(samplesize=samplesize,type=1,kurtx,skewx,rankmean1,rankvar1,ranktm1,rankfm1,SEbatachesmean,SErqmean=rqmean,SErqvar=rqvar,SErqtm=rqtm,SErqfm=rqfm)
+  allresultsSE<-c(samplesize=samplesize,type=1,kurtx,skewx,rankmean1,rankvar1,ranktm1,rankfm1,SEbatachesmean,RMSErqmean=rqmean,RMSErqvar=rqvar,RMSErqtm=rqtm,RMSErqfm=rqfm)
 }
 
 
