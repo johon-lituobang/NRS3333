@@ -88,7 +88,6 @@ orderlist1_hlsmall<-orderlist1_hlsmall[1:largesize,]
 orderlist1_hllarge<-createorderlist(quni1=quasiuni_M[,1:6],size=largesize,interval=8,dimension=6)
 orderlist1_hllarge<-orderlist1_hllarge[1:largesize,]
 
-
 simulatedbatch_bias_Monte<-foreach(batchnumber =c((1:length(allkurtWeibull))), .combine = 'rbind') %dopar% {
   library(Rfast)
   library(matrixStats)
