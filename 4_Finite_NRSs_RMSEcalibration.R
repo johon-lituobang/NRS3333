@@ -65,7 +65,7 @@ orderlist1_AB30<-orderlist1_AB30[1:largesize,]
 orderlist1_AB40<-createorderlist(quni1=quasiuni_sorted4,size=samplesize,interval=8,dimension=4)
 orderlist1_AB40<-orderlist1_AB40[1:largesize,]
 
-batchsize=1000
+batchsize=batchsizebase
 
 n <- samplesize
 setSeed(1)
@@ -78,6 +78,7 @@ d_values<- read.csv(("d_values.csv"))
 #Then, start the Monte Simulation
 
 setSeed(1)
+
 morder=6
 quasiuni_M<-sobol(n=(largesize*3*morder), dim = morder, init = TRUE, scrambling = 0, seed = NULL, normal = FALSE,
                                 mixed = FALSE, method = "C", start = 1)
@@ -86,6 +87,7 @@ orderlist1_hlsmall<-createorderlist(quni1=quasiuni_M[,1:6],size=samplesize,inter
 orderlist1_hlsmall<-orderlist1_hlsmall[1:largesize,]
 orderlist1_hllarge<-createorderlist(quni1=quasiuni_M[,1:6],size=largesize,interval=8,dimension=6)
 orderlist1_hllarge<-orderlist1_hllarge[1:largesize,]
+
 
 simulatedbatch_bias_Monte<-foreach(batchnumber =c((1:length(allkurtWeibull))), .combine = 'rbind') %dopar% {
   library(Rfast)
@@ -108,13 +110,13 @@ simulatedbatch_bias_Monte<-foreach(batchnumber =c((1:length(allkurtWeibull))), .
     targetall<-c(targetm=targetm,targetvar=targetvar,targettm=targettm,targetfm=targetfm)
     x<-c()
     
-    rqmoments1<-rqsmoments(x=sortedx,dtype1=1,releaseall=TRUE,standist_d=d_values,orderlist1_sorted20=orderlist1_AB20,orderlist1_sorted30=orderlist1_AB30,orderlist1_sorted40=orderlist1_AB40,orderlist1_hlsmall=orderlist1_hlsmall,orderlist1_hllarge=orderlist1_hllarge,percentage=1/24,batch="auto",stepsize=1000,criterion=criterionset)
+    rqsmoments1<-rqsmoments(x=sortedx,start_kurt=kurtx,start_skew=skewx,dtype1=1,releaseall=TRUE,standist_d=d_values,orderlist1_sorted20=orderlist1_AB2,orderlist1_sorted30=orderlist1_AB3,orderlist1_sorted40=orderlist1_AB4,orderlist1_hlsmall=orderlist1_hllarge,orderlist1_hllarge=orderlist1_hllarge,percentage=1/24,batch="auto",stepsize=1000,criterion=criterionset)
     
     standardizedmomentsx<-standardizedmoments(x=sortedx)
     
     sortedx<-c()
     
-    all1<-t(c(rqmoments1,targetall,standardizedmomentsx))
+    all1<-unlist(c(rqsmoments1,targetall,standardizedmomentsx))
     
     RMSEbataches<-rbind(RMSEbataches,all1)
   }
@@ -123,15 +125,16 @@ simulatedbatch_bias_Monte<-foreach(batchnumber =c((1:length(allkurtWeibull))), .
   RMSEbataches <- apply(RMSEbataches[1:batchsize,], 2, as.numeric)
   RMSEbatachesmean <-apply(RMSEbataches, 2, calculate_column_mean)
   
-  rqkurt<-sqrt(colMeans((RMSEbataches[1:batchsize,c(1:728,1769:2496)]-RMSEbatachesmean[3866])^2))
+  rqkurt<-sqrt(colMeans((RMSEbataches[1:batchsize,c(1:728,1769:2496)]-kurtx)^2))
   
-  rqskew<-sqrt(colMeans((RMSEbataches[1:batchsize,c(729:1768,2497:3536)]-RMSEbatachesmean[3867])^2))
+  rqskew<-sqrt(colMeans((RMSEbataches[1:batchsize,c(729:1768,2497:3536)]-skewx)^2))
   
-  rankkurtall1<-rank(rqkurt[c(1:length(rqkurt))])
-  rankskewall1<-rank(rqskew[c(1:length(rqskew))])
+  rankkurtall1<-rank(rqkurt)
+  rankskewall1<-rank(rqskew)
   
-  allresultsSE<-c(samplesize=samplesize,type=1,kurtx,skewx,rankkurtall1,rankskewall1,RMSEbatachesmean,RMSErqkurt=rqkurt,RMSErqskew=rqskew)
+  allresultsRMSE<-c(samplesize=samplesize,type=1,kurtx=kurtx,skewx=skewx,rankkurtall1,rankskewall1,RMSEbatachesmean,RMSErqkurt=rqkurt,RMSErqskew=rqskew)
 }
+
 
 write.csv(simulatedbatch_bias_Monte,paste("finite_Weibull_Icalibration_raw",samplesize,".csv", sep = ","), row.names = FALSE)
 
@@ -168,6 +171,7 @@ simulatedbatch_bias_Monte_SE<-foreach(batchnumber =c((1:length(allkurtWeibull)))
   
   allresultsSE
 }
+
 
 write.csv(simulatedbatch_bias_Monte_SE,paste("finite_Weibull_Icalibration_raw_error",samplesize,".csv", sep = ","), row.names = FALSE)
 
