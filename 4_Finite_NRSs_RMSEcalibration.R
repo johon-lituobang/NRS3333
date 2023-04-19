@@ -125,7 +125,6 @@ simulatedbatch_bias_Monte<-foreach(batchnumber =c((1:length(allkurtWeibull))), .
   RMSEbataches <- apply(RMSEbataches[1:batchsize,], 2, as.numeric)
   RMSEbatachesmean <-apply(RMSEbataches, 2, calculate_column_mean)
   
-  
   rqkurt<-sqrt(colMeans((RMSEbataches[1:batchsize,c(1:728)]-kurtx)^2))
   
   rqskew<-sqrt(colMeans((RMSEbataches[1:batchsize,c(729:1768)]-skewx)^2))
@@ -146,19 +145,19 @@ simulatedbatch_bias_Monte<-foreach(batchnumber =c((1:length(allkurtWeibull))), .
   
   rqskew_exp<-sqrt(colMeans((RMSEbataches[1:batchsize,c(4457:5496)]-skewx)^2))
   
-  rankkurtall1<-rank(rqkurt[c(1:length(rqkurt))])
-  rankskewall1<-rank(rqskew[c(1:length(rqskew))])
+  rankkurtall1<-rank(rqkurt)
+  rankskewall1<-rank(rqskew)
   
-  rankrqmall1<-rank(rqmall[c(1:length(rqmall))])
-  rankrqvarall1<-rank(rqvarall[c(1:length(rqvarall))])
-  rankrqtmall1<-rank(rqtmall[c(1:length(rqtmall))])
-  rankrqfmall1<-rank(rqfmall[c(1:length(rqfmall))])
+  rankrqmall1<-rank(rqmall)
+  rankrqvarall1<-rank(rqvarall)
+  rankrqtmall1<-rank(rqtmall)
+  rankrqfmall1<-rank(rqfmall)
   
-  rankrqkurt_Weibull1<-rank(c(rqkurt_Weibull,rqkurt_exp))
-  rankrqskew_Weibull1<-rank(c(rqskew_Weibull,rqskew_exp))
+  rankrqkurt1<-rank(c(rqkurt_Weibull,rqkurt_exp))
+  rankrqskew1<-rank(c(rqskew_Weibull,rqskew_exp))
   
   
-  allresultsRMSE<-c(samplesize=samplesize,type=1,kurtx=kurtx,skewx=skewx,rankkurtall1,rankskewall1,rankrqmall1,rankrqvarall1,rankrqtmall1,rankrqfmall1,rankrqkurt_Weibull1,rankrqskew_Weibull1,RMSEbatachesmean,RMSErqkurt=rqkurt,RMSErqskew=rqskew,RMSErqmall=rqmall,RMSErqvarall=rqvarall,RMSErqtmall=rqtmall,RMSErqfmall=rqfmall,RMSErqkurt_Weibull=rqkurt_Weibull,RMSErqskew_Weibull=rqskew_Weibull)
+  allresultsRMSE<-c(samplesize=samplesize,type=1,kurtx=kurtx,skewx=skewx,rankkurtall1,rankskewall1,rankrqmall1,rankrqvarall1,rankrqtmall1,rankrqfmall1,rankrqkurt1,rankrqskew1,RMSEbatachesmean,RMSErqkurt=rqkurt,RMSErqskew=rqskew,RMSErqmall=rqmall,RMSErqvarall=rqvarall,RMSErqtmall=rqtmall,RMSErqfmall=rqfmall,RMSErqkurt_Weibull=rqkurt_Weibull,RMSErqskew_Weibull=rqskew_Weibull,RMSErqkurt_exp=rqkurt_exp,RMSErqskew_exp=rqskew_exp)
 }
 
 
