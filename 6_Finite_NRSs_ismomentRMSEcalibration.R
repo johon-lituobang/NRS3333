@@ -79,6 +79,7 @@ d_values<- read.csv(("d_values.csv"))
 I_values<-read.csv(("I_values.csv"))
 #Then, start the Monte Simulation
 
+
 simulatedbatch_bias_Monte<-foreach(batchnumber =c((1:length(allkurtWeibull))), .combine = 'rbind') %dopar% {
   library(Rfast)
   library(matrixStats)
