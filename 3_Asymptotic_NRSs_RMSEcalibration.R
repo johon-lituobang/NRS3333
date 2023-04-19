@@ -117,7 +117,7 @@ simulatedbatch_bias_Monte<-foreach(batchnumber =c((1:length(allkurtWeibull))), .
     targetall<-c(targetm=targetm,targetvar=targetvar,targettm=targettm,targetfm=targetfm)
     x<-c()
     
-    rqsmoments1<-rqsmoments(x=sortedx,start_kurt=kurtx,start_skew=skewx,dtype1=1,releaseall=TRUE,standist_d=d_values,orderlist1_sorted20=orderlist1_AB2,orderlist1_sorted30=orderlist1_AB3,orderlist1_sorted40=orderlist1_AB4,orderlist1_hlsmall=orderlist1_hllarge,orderlist1_hllarge=orderlist1_hllarge,percentage=1/24,batch="auto",stepsize=1000,criterion=criterionset)
+    rqsmoments1<-rqmoments(x=sortedx,start_kurt=kurtx,start_skew=skewx,dtype1=1,releaseall=TRUE,standist_d=d_values,orderlist1_sorted20=orderlist1_AB2,orderlist1_sorted30=orderlist1_AB3,orderlist1_sorted40=orderlist1_AB4,orderlist1_hlsmall=orderlist1_hllarge,orderlist1_hllarge=orderlist1_hllarge,percentage=1/24,batch="auto",stepsize=1000,criterion=criterionset)
 
     standardizedmomentsx<-standardizedmoments(x=sortedx)
 
