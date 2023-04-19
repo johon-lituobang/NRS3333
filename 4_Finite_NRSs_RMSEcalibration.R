@@ -137,9 +137,9 @@ simulatedbatch_bias_Monte<-foreach(batchnumber =c((1:length(allkurtWeibull))), .
   
   rqfmall<-sqrt(colMeans((RMSEbataches[1:batchsize,c(1933:1960)]-targetfm)^2))
   
-  rqkurt_Weibull<-sqrt(colMeans((RMSEbataches[1:batchsize,c(1961:2687)]-kurtx)^2))
+  rqkurt_Weibull<-sqrt(colMeans((RMSEbataches[1:batchsize,c(1961:2688)]-kurtx)^2))
   
-  rqskew_Weibull<-sqrt(colMeans((RMSEbataches[1:batchsize,c(2688:3728)]-skewx)^2))
+  rqskew_Weibull<-sqrt(colMeans((RMSEbataches[1:batchsize,c(2689:3728)]-skewx)^2))
   
   rqkurt_exp<-sqrt(colMeans((RMSEbataches[1:batchsize,c(3729:4456)]-kurtx)^2))
   
@@ -200,9 +200,9 @@ simulatedbatch_bias_Monte_SE<-foreach(batchnumber =c((1:length(allkurtWeibull)))
   
   rqfmall_se<-apply((SEbataches[1:batchsize,c(1933:1960)]), 2, se_sd)
   
-  rqkurtall_se<-apply(((SEbataches[1:batchsize,c(1961:2687)])), 2, se_sd)
+  rqkurtall_se<-apply(((SEbataches[1:batchsize,c(1961:2688)])), 2, se_sd)
   
-  rqskewall_se<-apply((SEbataches[1:batchsize,c(2688:3728)]), 2, se_sd)
+  rqskewall_se<-apply((SEbataches[1:batchsize,c(2689:3728)]), 2, se_sd)
   
   rqkurt_exp_se<-apply((SEbataches[1:batchsize,c(3759:4456)]), 2, se_sd)
   
