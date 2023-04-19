@@ -122,19 +122,21 @@ simulatedbatch_bias_Monte<-foreach(batchnumber =c((1:length(allkurtWeibull))), .
   
   SEbatachesmean <-apply(SEbataches2, 2, calculate_column_mean)
   
-  rqmean<-apply(((SEbataches2[1:batchsize,1:72])), 2, calculate_column_sd)
+  # rqmean<-apply(((SEbataches2[1:batchsize,1:72])), 2, calculate_column_sd)
+  # 
+  # rqvar<-apply((SEbataches2[1:batchsize,c(73:124)]), 2, calculate_column_sd)
+  # 
+  # rqtm<-apply((SEbataches2[1:batchsize,c(125:164)]), 2, calculate_column_sd)
+  # 
+  # rqfm<-apply((SEbataches2[1:batchsize,c(165:192)]), 2, calculate_column_sd)
+  ikurt1<-apply((SEbataches2[1:batchsize,c(165:192)]), 2, calculate_column_sd)
+  iskew1<-apply((SEbataches2[1:batchsize,c(165:192)]), 2, calculate_column_sd)
   
-  rqvar<-apply((SEbataches2[1:batchsize,c(73:124)]), 2, calculate_column_sd)
-  
-  rqtm<-apply((SEbataches2[1:batchsize,c(125:164)]), 2, calculate_column_sd)
-  
-  rqfm<-apply((SEbataches2[1:batchsize,c(165:192)]), 2, calculate_column_sd)
-  
-  rankmean1<-rank(rqmean)
-  rankvar1<-rank(rqvar)
-  ranktm1<-rank(rqtm)
-  rankfm1<-rank(rqfm)
-  
+  # rankmean1<-rank(rqmean)
+  # rankvar1<-rank(rqvar)
+  # ranktm1<-rank(rqtm)
+  # rankfm1<-rank(rqfm)
+  # 
   allresultsSE<-c(samplesize=samplesize,type=1,kurtx,skewx,rankmean1,rankvar1,ranktm1,rankfm1,SEbatachesmean,SErqmean=rqmean,SErqvar=rqvar,SErqtm=rqtm,SErqfm=rqfm)
 }
 
