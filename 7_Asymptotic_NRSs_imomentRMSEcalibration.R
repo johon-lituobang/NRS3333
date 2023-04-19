@@ -172,7 +172,7 @@ simulatedbatch_bias_Monte_SE<-foreach(batchnumber =c((1:length(allkurtWeibull)))
   
   rqtm_se<-apply((SEbataches[1:batchsize,c(127:166,319:358,511:550,703:742)]), 2, se_sd)
   
-  rqfm_se<-apply((SEbataches[1:batchsize,c(167:194,359:386,551:578,743:70)]), 2, se_sd)
+  rqfm_se<-apply((SEbataches[1:batchsize,c(167:194,359:386,551:578,743:770)]), 2, se_sd)
   
   allresultsSE<-c(samplesize=samplesize,type=1,kurtx,skewx,se_mean_all1,rqmean_se,rqvar_se,rqtm_se,rqfm_se)
   
