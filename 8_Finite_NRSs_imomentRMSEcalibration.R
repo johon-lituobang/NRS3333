@@ -140,7 +140,7 @@ simulatedbatch_bias_Monte<-foreach(batchnumber =c((1:length(allkurtWeibull))), .
 
 write.csv(simulatedbatch_bias_Monte,paste("finite_Weibull_Imomentscalibration_raw",samplesize,".csv", sep = ","), row.names = FALSE)
 
-Optimum_SE<-simulatedbatch_bias_Monte[,1:389]
+Optimum_SE<-simulatedbatch_bias_Monte[,1:1418]
 
 write.csv(Optimum_SE,paste("finite_Imoments_Weibull.csv", sep = ","), row.names = FALSE)
 
