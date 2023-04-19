@@ -119,14 +119,14 @@ simulatedbatch_bias_Monte<-foreach(batchnumber =c((1:length(allkurtWeibull))), .
   
   SEbatachesmean <-apply(SEbataches2, 2, calculate_column_mean)
   
-  ikurt2<-apply(((SEbataches2[1:batchsize,c(1,3)])), 2, calculate_column_sd)
+  ikurt2<-sqrt(colMeans((SEbataches2[1:batchsize,c(1,3)]-kurtx)^2))
   
-  iskew2<-apply((SEbataches2[1:batchsize,c(2,4)]), 2, calculate_column_sd)
+  iskew2<-sqrt(colMeans((SEbataches2[1:batchsize,c(2,4)]-skewx)^2))
   
   rankikurt2<-rank(ikurt2)
   rankiskew2<-rank(iskew2)
   
-  allresultsSE<-c(samplesize=samplesize,type=1,kurtx,skewx,rankikurt2,rankiskew2,SEbatachesmean,SEikurt2=ikurt2,SEiskew2=iskew2)
+  allresultsSE<-c(samplesize=samplesize,type=1,kurtx,skewx,rankikurt2,rankiskew2,SEbatachesmean,RMSEikurt2=ikurt2,RMSEiskew2=iskew2)
 }
 
 write.csv(simulatedbatch_bias_Monte,paste("finite_Weibull_Ismomentscalibration_raw",samplesize,".csv", sep = ","), row.names = FALSE)
