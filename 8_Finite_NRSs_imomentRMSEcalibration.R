@@ -121,13 +121,13 @@ simulatedbatch_bias_Monte<-foreach(batchnumber =c((1:length(allkurtWeibull))), .
   
   SEbatachesmean <-apply(SEbataches3, 2, calculate_column_mean)
   
-  rqmean<-apply(((SEbataches3[1:batchsize,c(3:74,195:266,387:458,579:650,771:842,963:1034,1155:1226,1347:1418,1539:1610)])), 2, calculate_column_sd)
+  rqmean<-sqrt(colMeans((SEbataches3[1:batchsize,c(3:74,195:266,387:458,579:650,771:842,963:1034,1155:1226,1347:1418,1539:1610)]-targetm)^2))
   
-  rqvar<-apply((SEbataches3[1:batchsize,c(75:126,267:318,459:510,651:702,843:894,1035:1086,1227:1278,1419:1470,1611:1662)]), 2, calculate_column_sd)
+  rqvar<-sqrt(colMeans((SEbataches3[1:batchsize,c(75:126,267:318,459:510,651:702,843:894,1035:1086,1227:1278,1419:1470,1611:1662)]-targetvar)^2))
   
-  rqtm<-apply((SEbataches3[1:batchsize,c(127:166,319:358,511:550,703:742,895:934,1087:1126,1279:1318,1471:1510,1663:1702)]), 2, calculate_column_sd)
+  rqtm<-sqrt(colMeans((SEbataches3[1:batchsize,c(127:166,319:358,511:550,703:742,895:934,1087:1126,1279:1318,1471:1510,1663:1702)]-targettm)^2))
   
-  rqfm<-apply((SEbataches3[1:batchsize,c(167:194,359:386,551:578,743:770,935:962,1127:1154,1319:1346,1511:1538,1703:1730)]), 2, calculate_column_sd)
+  rqfm<-sqrt(colMeans((SEbataches3[1:batchsize,c(167:194,359:386,551:578,743:770,935:962,1127:1154,1319:1346,1511:1538,1703:1730)]-targetfm)^2))
   
   rankmean1<-rank(rqmean)
   rankvar1<-rank(rqvar)
