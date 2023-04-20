@@ -96,13 +96,13 @@ simulatedbatch_bias_Monte<-foreach(batchnumber =c((1:length(allkurtWeibull))), .
   targetfm<-((sqrt(gamma(1+2/(a/1))-(gamma(((1+1/(a/1)))))^2))^4)*(gamma(1+4/(a/1))-4*(gamma(1+3/(a/1)))*((gamma(1+1/(a/1))))+6*(gamma(1+2/(a/1)))*((gamma(1+1/(a/1)))^2)-3*((gamma(1+1/(a/1)))^4))/(((gamma(1+2/(a/1))-(gamma(((1+1/(a/1)))))^2))^(2))
   kurtx<-c(kurtx=targetfm/(targetvar^(4/2)))
   skewx<-c(skewx=targettm/(targetvar^(3/2)))
-  SEbataches<- read.csv(paste("asymptotic_Weibull_Icalibration_raw",samplesize,round(kurtx,digits = 1),".csv", sep = ","))
-  SEbataches2<- read.csv(paste("asymptotic_Weibull_Ismomentscalibration_raw",samplesize,round(kurtx,digits = 1),".csv", sep = ","))
+  RMSEbataches<- read.csv(paste("asymptotic_Weibull_Icalibration_raw",samplesize,round(kurtx,digits = 1),".csv", sep = ","))
+  RMSEbataches2<- read.csv(paste("asymptotic_Weibull_Ismomentscalibration_raw",samplesize,round(kurtx,digits = 1),".csv", sep = ","))
   
-  SEbataches3<-c()
+  RMSEbataches3<-c()
   for (batch1 in c(1:batchsize)){
-    iall11<-SEbataches[batch1,]
-    iall12<-SEbataches2[batch1,]
+    iall11<-RMSEbataches[batch1,]
+    iall12<-RMSEbataches2[batch1,]
     
     x<-c(dsWeibull(uni=unibatch[,batch1], shape=a/1, scale = 1))
     sortedx<-Sort(x,descending=FALSE,partial=NULL,stable=FALSE,na.last=NULL)
@@ -117,20 +117,20 @@ simulatedbatch_bias_Monte<-foreach(batchnumber =c((1:length(allkurtWeibull))), .
     
     all1<-(c(rqmomentselect1,targetall,standardizedmomentsx))
     
-    SEbataches3<-rbind(SEbataches3,all1)
+    RMSEbataches3<-rbind(RMSEbataches3,all1)
   }
   
-  write.csv(SEbataches3,paste("asymptotic_Weibull_Imomentscalibration_raw",samplesize,round(kurtx,digits = 1),".csv", sep = ","), row.names = FALSE)
+  write.csv(RMSEbataches3,paste("asymptotic_Weibull_Imomentscalibration_raw",samplesize,round(kurtx,digits = 1),".csv", sep = ","), row.names = FALSE)
   
-  SEbatachesmean <-apply(SEbataches3, 2, calculate_column_mean)
+  SEbatachesmean <-apply(RMSEbataches3, 2, calculate_column_mean)
   
-  rqmean<-sqrt(colMeans((SEbataches3[1:batchsize,c(3:74,195:266,387:458,579:650,771:842,963:1034,1155:1226,1347:1418,1539:1610)]-targetm)^2))
+  rqmean<-sqrt(colMeans((RMSEbataches3[1:batchsize,c(3:74,195:266,387:458,579:650,771:842,963:1034,1155:1226,1347:1418,1539:1610)]-targetm)^2))
   
-  rqvar<-sqrt(colMeans((SEbataches3[1:batchsize,c(75:126,267:318,459:510,651:702,843:894,1035:1086,1227:1278,1419:1470,1611:1662)]-targetvar)^2))
+  rqvar<-sqrt(colMeans((RMSEbataches3[1:batchsize,c(75:126,267:318,459:510,651:702,843:894,1035:1086,1227:1278,1419:1470,1611:1662)]-targetvar)^2))
   
-  rqtm<-sqrt(colMeans((SEbataches3[1:batchsize,c(127:166,319:358,511:550,703:742,895:934,1087:1126,1279:1318,1471:1510,1663:1702)]-targettm)^2))
+  rqtm<-sqrt(colMeans((RMSEbataches3[1:batchsize,c(127:166,319:358,511:550,703:742,895:934,1087:1126,1279:1318,1471:1510,1663:1702)]-targettm)^2))
   
-  rqfm<-sqrt(colMeans((SEbataches3[1:batchsize,c(167:194,359:386,551:578,743:770,935:962,1127:1154,1319:1346,1511:1538,1703:1730)]-targetfm)^2))
+  rqfm<-sqrt(colMeans((RMSEbataches3[1:batchsize,c(167:194,359:386,551:578,743:770,935:962,1127:1154,1319:1346,1511:1538,1703:1730)]-targetfm)^2))
   
   
   rankmean1<-rank(rqmean)
