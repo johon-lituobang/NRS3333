@@ -132,7 +132,6 @@ simulatedbatch_bias_Monte<-foreach(batchnumber =c((1:length(allkurtWeibull))), .
   
   rqfm<-sqrt(colMeans((RMSEbataches3[1:batchsize,c(167:194,359:386,551:578,743:770,935:962,1127:1154,1319:1346,1511:1538,1703:1730,1895:1922)]-targetfm)^2))
   
-  
   rankmean1<-rank(rqmean)
   rankvar1<-rank(rqvar)
   ranktm1<-rank(rqtm)
@@ -144,7 +143,7 @@ simulatedbatch_bias_Monte<-foreach(batchnumber =c((1:length(allkurtWeibull))), .
 
 write.csv(simulatedbatch_bias_Monte,paste("asymptotic_Weibull_Imomentscalibration_raw",largesize,".csv", sep = ","), row.names = FALSE)
 
-Optimum_RMSE<-simulatedbatch_bias_Monte[,1:1732]
+Optimum_RMSE<-simulatedbatch_bias_Monte[,1:1924]
 
 write.csv(Optimum_RMSE,paste("asymptotic_Imoments_Weibull.csv", sep = ","), row.names = FALSE)
 
@@ -167,13 +166,13 @@ simulatedbatch_bias_Monte_SE<-foreach(batchnumber =c((1:length(allkurtWeibull)))
 
   se_mean_all1<-apply((SEbataches[1:batchsize,]), 2, se_mean)
   
-  rqmean_se<-apply(((SEbataches[1:batchsize,c(3:74,195:266,387:458,579:650,771:842,963:1034,1155:1226,1347:1418,1539:1610)])), 2, se_sd)
+  rqmean_se<-apply(((SEbataches[1:batchsize,c(3:74,195:266,387:458,579:650,771:842,963:1034,1155:1226,1347:1418,1539:1610,1731:1802)])), 2, se_sd)
   
-  rqvar_se<-apply((SEbataches[1:batchsize,c(75:126,267:318,459:510,651:702,843:894,1035:1086,1227:1278,1419:1470,1611:1662)]), 2, se_sd)
+  rqvar_se<-apply((SEbataches[1:batchsize,c(75:126,267:318,459:510,651:702,843:894,1035:1086,1227:1278,1419:1470,1611:1662,1803:1854)]), 2, se_sd)
   
-  rqtm_se<-apply((SEbataches[1:batchsize,c(127:166,319:358,511:550,703:742,895:934,1087:1126,1279:1318,1471:1510,1663:1702)]), 2, se_sd)
+  rqtm_se<-apply((SEbataches[1:batchsize,c(127:166,319:358,511:550,703:742,895:934,1087:1126,1279:1318,1471:1510,1663:1702,1855:1894)]), 2, se_sd)
   
-  rqfm_se<-apply((SEbataches[1:batchsize,c(167:194,359:386,551:578,743:770,935:962,1127:1154,1319:1346,1511:1538,1703:1730)]), 2, se_sd)
+  rqfm_se<-apply((SEbataches[1:batchsize,c(167:194,359:386,551:578,743:770,935:962,1127:1154,1319:1346,1511:1538,1703:1730,1895:1922)]), 2, se_sd)
   
   allresultsSE<-c(samplesize=samplesize,type=1,kurtx,skewx,se_mean_all1,rqmean_se,rqvar_se,rqtm_se,rqfm_se)
   
