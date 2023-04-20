@@ -583,12 +583,12 @@ simulatedbatch_bias_Monte<-foreach(batchnumber =c((1:100)), .combine = 'rbind') 
   skewx<-c(skewx=targettm/(targetvar^(3/2)))
   
   #bootsize for bootstrap approximation of the distributions of the kernal of U-statistics.
-  n <- round(batchnumber*2048*9*3/100)
+  n <- round(batchnumber*13824*2*3/100)
   (n%%10)==0
   # maximum order of moments
   morder <- 4
   #large sample size (approximating asymptotic)
-  largesize<-round(batchnumber*2048*9/100)
+  largesize<-round(batchnumber*13824*2/100)
   
   #generate quasirandom numbers based on the Sobol sequence
   quasiunisobol<-sobol(n=n, dim = morder, init = TRUE, scrambling = 0, seed = NULL, normal = FALSE,
@@ -600,7 +600,7 @@ simulatedbatch_bias_Monte<-foreach(batchnumber =c((1:100)), .combine = 'rbind') 
   quasiuni_sorted3 <- na.omit(rowSort(quasiuni[,1:3], descend = FALSE, stable = FALSE, parallel = TRUE))
   quasiuni_sorted4 <- na.omit(rowSort(quasiuni, descend = FALSE, stable = FALSE, parallel = TRUE))
   
-  samplesize=2048*2
+  samplesize=576*9
   
   orderlist1_AB20<-createorderlist(quni1=quasiuni_sorted2,size=samplesize,interval=16,dimension=2)
   orderlist1_AB20<-orderlist1_AB20[1:largesize,]
@@ -804,7 +804,7 @@ simulatedbatch_bias_Monte_SE<-foreach(batchnumber =c((1:100)), .combine = 'rbind
   library(Rfast)
   library(matrixStats)
   library(NRSReview)
-  largesize<-round(batchnumber*2048*9/100)
+  largesize<-round(batchnumber*13824*2/100)
   a=allkurtWeibull[60]
   
   targetm<-gamma(1+1/(a/1))
@@ -1329,12 +1329,12 @@ simulatedbatch_bias_Monte<-foreach(batchnumber =c((1:100)), .combine = 'rbind') 
   skewx<-targettm/(targetvar^(3/2))
   
   #bootsize for bootstrap approximation of the distributions of the kernal of U-statistics.
-  n <- round(batchnumber*2048*9*3/100)
+  n <- round(batchnumber*13824*2*3/100)
   (n%%10)==0
   # maximum order of moments
   morder <- 4
   #large sample size (approximating asymptotic)
-  largesize<-round(batchnumber*2048*9/100)
+  largesize<-round(batchnumber*13824*2/100)
   
   #generate quasirandom numbers based on the Sobol sequence
   quasiunisobol<-sobol(n=n, dim = morder, init = TRUE, scrambling = 0, seed = NULL, normal = FALSE,
@@ -1348,7 +1348,7 @@ simulatedbatch_bias_Monte<-foreach(batchnumber =c((1:100)), .combine = 'rbind') 
   
   
   
-  samplesize=2048*2
+  samplesize=576*9
   
   orderlist1_AB20<-createorderlist(quni1=quasiuni_sorted2,size=samplesize,interval=16,dimension=2)
   orderlist1_AB20<-orderlist1_AB20[1:largesize,]
@@ -1552,7 +1552,7 @@ simulatedbatch_bias_Monte_SE<-foreach(batchnumber =c((1:100)), .combine = 'rbind
   library(Rfast)
   library(matrixStats)
   library(NRSReview)
-  largesize<-round(batchnumber*2048*9/100)
+  largesize<-round(batchnumber*13824*2/100)
   a=allkurtgamma[15]
   
   targetm<-a
@@ -2083,12 +2083,12 @@ simulatedbatch_bias_Monte<-foreach(batchnumber =c((1:100)), .combine = 'rbind') 
   
   
   #bootsize for bootstrap approximation of the distributions of the kernal of U-statistics.
-  n <- round(batchnumber*2048*9*3/100)
+  n <- round(batchnumber*13824*2*3/100)
   (n%%10)==0
   # maximum order of moments
   morder <- 4
   #large sample size (approximating asymptotic)
-  largesize<-round(batchnumber*2048*9/100)
+  largesize<-round(batchnumber*13824*2/100)
   
   #generate quasirandom numbers based on the Sobol sequence
   quasiunisobol<-sobol(n=n, dim = morder, init = TRUE, scrambling = 0, seed = NULL, normal = FALSE,
@@ -2102,7 +2102,7 @@ simulatedbatch_bias_Monte<-foreach(batchnumber =c((1:100)), .combine = 'rbind') 
   
   
   
-  samplesize=2048*2
+  samplesize=576*9
   
   orderlist1_AB20<-createorderlist(quni1=quasiuni_sorted2,size=samplesize,interval=16,dimension=2)
   orderlist1_AB20<-orderlist1_AB20[1:largesize,]
@@ -2305,7 +2305,7 @@ simulatedbatch_bias_Monte_SE<-foreach(batchnumber =c((1:100)), .combine = 'rbind
   library(Rfast)
   library(matrixStats)
   library(NRSReview)
-  largesize<-round(batchnumber*2048*9/100)
+  largesize<-round(batchnumber*13824*2/100)
   a=allkurtPareto[88]
   
   targetm<-a/(a-1)
@@ -2836,12 +2836,12 @@ simulatedbatch_bias_Monte<-foreach(batchnumber =c((1:100)), .combine = 'rbind') 
   
   
   #bootsize for bootstrap approximation of the distributions of the kernal of U-statistics.
-  n <- round(batchnumber*2048*9*3/100)
+  n <- round(batchnumber*13824*2*3/100)
   (n%%10)==0
   # maximum order of moments
   morder <- 4
   #large sample size (approximating asymptotic)
-  largesize<-round(batchnumber*2048*9/100)
+  largesize<-round(batchnumber*13824*2/100)
   
   #generate quasirandom numbers based on the Sobol sequence
   quasiunisobol<-sobol(n=n, dim = morder, init = TRUE, scrambling = 0, seed = NULL, normal = FALSE,
@@ -2855,7 +2855,7 @@ simulatedbatch_bias_Monte<-foreach(batchnumber =c((1:100)), .combine = 'rbind') 
   
   
   
-  samplesize=2048*2
+  samplesize=576*9
   
   orderlist1_AB20<-createorderlist(quni1=quasiuni_sorted2,size=samplesize,interval=16,dimension=2)
   orderlist1_AB20<-orderlist1_AB20[1:largesize,]
@@ -3057,7 +3057,7 @@ simulatedbatch_bias_Monte_SE<-foreach(batchnumber =c((1:100)), .combine = 'rbind
   library(Rfast)
   library(matrixStats)
   library(NRSReview)
-  largesize<-round(batchnumber*2048*9/100)
+  largesize<-round(batchnumber*13824*2/100)
   
   a=allkurtlognorm[59]
   targetm<-exp((a^2)/2)
@@ -3585,12 +3585,12 @@ simulatedbatch_bias_Monte<-foreach(batchnumber =c((1:100)), .combine = 'rbind') 
   
   
   #bootsize for bootstrap approximation of the distributions of the kernal of U-statistics.
-  n <- round(batchnumber*2048*9*3/100)
+  n <- round(batchnumber*13824*2*3/100)
   (n%%10)==0
   # maximum order of moments
   morder <- 4
   #large sample size (approximating asymptotic)
-  largesize<-round(batchnumber*2048*9/100)
+  largesize<-round(batchnumber*13824*2/100)
   
   #generate quasirandom numbers based on the Sobol sequence
   quasiunisobol<-sobol(n=n, dim = morder, init = TRUE, scrambling = 0, seed = NULL, normal = FALSE,
@@ -3604,7 +3604,7 @@ simulatedbatch_bias_Monte<-foreach(batchnumber =c((1:100)), .combine = 'rbind') 
   
   
   
-  samplesize=2048*2
+  samplesize=576*9
   
   orderlist1_AB20<-createorderlist(quni1=quasiuni_sorted2,size=samplesize,interval=16,dimension=2)
   orderlist1_AB20<-orderlist1_AB20[1:largesize,]
@@ -3806,7 +3806,7 @@ simulatedbatch_bias_Monte_SE<-foreach(batchnumber =c((1:100)), .combine = 'rbind
   library(Rfast)
   library(matrixStats)
   library(NRSReview)
-  largesize<-round(batchnumber*2048*9/100)
+  largesize<-round(batchnumber*13824*2/100)
   a=allkurtgnorm[1]
   targetm<-0
   targetvar<-gamma(3/a)/((gamma(1/a)))
