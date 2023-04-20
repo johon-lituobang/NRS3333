@@ -131,9 +131,9 @@ simulatedbatch_bias_Monte<-foreach(batchnumber =c((1:length(allkurtWeibull))), .
 
 write.csv(simulatedbatch_bias_Monte,paste("finite_Weibull_Ismomentscalibration_raw",samplesize,".csv", sep = ","), row.names = FALSE)
 
-Optimum_SE<-simulatedbatch_bias_Monte[,1:8]
+Optimum_RMSE<-simulatedbatch_bias_Monte[,1:8]
 
-write.csv(Optimum_SE,paste("finite_Ismoments_Weibull.csv", sep = ","), row.names = FALSE)
+write.csv(Optimum_RMSE,paste("finite_Ismoments_Weibull.csv", sep = ","), row.names = FALSE)
 
 simulatedbatch_bias_Monte_SE<-foreach(batchnumber =c((1:length(allkurtWeibull))), .combine = 'rbind') %dopar% {
   library(Rfast)
