@@ -658,7 +658,7 @@ simulatedbatch_bias_Monte<-foreach(batchnumber =c((1:100)), .combine = 'rbind') 
     MoM5<-median_of_means(sortedx,korder=5)
     MoM6<-median_of_means(sortedx,korder=6)
     
-    MoRMall<-mHLM_all(x=sortedx,max_dim=6,orderlists=orderlist1_AB6_randomall[,(seq(from=1, to=6*batchsizebase,by=6)[batch1]):(seq(from=6, to=6*batchsizebase,by=6)[batch1])],boot=TRUE,quasi=FALSE,largesize=largesize1)
+    MoRMall<-mHLM_all(x=sortedx,max_dim=6,orderlists=orderlist1_AB6_randomall[,(seq(from=1, to=6*batchsizebase,by=6)[batch1]):(seq(from=6, to=6*batchsizebase,by=6)[batch1])],boot=TRUE,quasi=FALSE,largesize=largesize)
     
     MoRMall<-unlist(MoRMall)
     sortedx<-c()
@@ -1406,7 +1406,7 @@ simulatedbatch_bias_Monte<-foreach(batchnumber =c((1:100)), .combine = 'rbind') 
     MoM5<-median_of_means(sortedx,korder=5)
     MoM6<-median_of_means(sortedx,korder=6)
     
-    MoRMall<-mHLM_all(x=sortedx,max_dim=6,orderlists=orderlist1_AB6_randomall[,(seq(from=1, to=6*batchsizebase,by=6)[batch1]):(seq(from=6, to=6*batchsizebase,by=6)[batch1])],boot=TRUE,quasi=FALSE,largesize=largesize1)
+    MoRMall<-mHLM_all(x=sortedx,max_dim=6,orderlists=orderlist1_AB6_randomall[,(seq(from=1, to=6*batchsizebase,by=6)[batch1]):(seq(from=6, to=6*batchsizebase,by=6)[batch1])],boot=TRUE,quasi=FALSE,largesize=largesize)
     
     MoRMall<-unlist(MoRMall)
     sortedx<-c()
@@ -2158,7 +2158,7 @@ simulatedbatch_bias_Monte<-foreach(batchnumber =c((1:100)), .combine = 'rbind') 
     MoM5<-median_of_means(sortedx,korder=5)
     MoM6<-median_of_means(sortedx,korder=6)
     
-    MoRMall<-mHLM_all(x=sortedx,max_dim=6,orderlists=orderlist1_AB6_randomall[,(seq(from=1, to=6*batchsizebase,by=6)[batch1]):(seq(from=6, to=6*batchsizebase,by=6)[batch1])],boot=TRUE,quasi=FALSE,largesize=largesize1)
+    MoRMall<-mHLM_all(x=sortedx,max_dim=6,orderlists=orderlist1_AB6_randomall[,(seq(from=1, to=6*batchsizebase,by=6)[batch1]):(seq(from=6, to=6*batchsizebase,by=6)[batch1])],boot=TRUE,quasi=FALSE,largesize=largesize)
     
     MoRMall<-unlist(MoRMall)
     sortedx<-c()
@@ -2911,7 +2911,7 @@ simulatedbatch_bias_Monte<-foreach(batchnumber =c((1:100)), .combine = 'rbind') 
     MoM5<-median_of_means(sortedx,korder=5)
     MoM6<-median_of_means(sortedx,korder=6)
     
-    MoRMall<-mHLM_all(x=sortedx,max_dim=6,orderlists=orderlist1_AB6_randomall[,(seq(from=1, to=6*batchsizebase,by=6)[batch1]):(seq(from=6, to=6*batchsizebase,by=6)[batch1])],boot=TRUE,quasi=FALSE,largesize=largesize1)
+    MoRMall<-mHLM_all(x=sortedx,max_dim=6,orderlists=orderlist1_AB6_randomall[,(seq(from=1, to=6*batchsizebase,by=6)[batch1]):(seq(from=6, to=6*batchsizebase,by=6)[batch1])],boot=TRUE,quasi=FALSE,largesize=largesize)
     
     MoRMall<-unlist(MoRMall)
     sortedx<-c()
@@ -3660,7 +3660,7 @@ simulatedbatch_bias_Monte<-foreach(batchnumber =c((1:100)), .combine = 'rbind') 
     MoM5<-median_of_means(sortedx,korder=5)
     MoM6<-median_of_means(sortedx,korder=6)
     
-    MoRMall<-mHLM_all(x=sortedx,max_dim=6,orderlists=orderlist1_AB6_randomall[,(seq(from=1, to=6*batchsizebase,by=6)[batch1]):(seq(from=6, to=6*batchsizebase,by=6)[batch1])],boot=TRUE,quasi=FALSE,largesize=largesize1)
+    MoRMall<-mHLM_all(x=sortedx,max_dim=6,orderlists=orderlist1_AB6_randomall[,(seq(from=1, to=6*batchsizebase,by=6)[batch1]):(seq(from=6, to=6*batchsizebase,by=6)[batch1])],boot=TRUE,quasi=FALSE,largesize=largesize)
     
     MoRMall<-unlist(MoRMall)
     sortedx<-c()
