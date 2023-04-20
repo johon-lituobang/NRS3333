@@ -56,7 +56,7 @@ kurtWeibull<- read.csv(("kurtWeibull_28260.csv"))
 allkurtWeibull<-unlist(kurtWeibull)
 
 samplesize=576*9
-batchsizebase=5
+batchsizebase=1000
 
 orderlist1_AB20<-createorderlist(quni1=quasiuni_sorted2,size=samplesize,interval=8,dimension=2)
 orderlist1_AB20<-orderlist1_AB20[1:largesize,]
@@ -78,8 +78,7 @@ d_values<- read.csv(("d_values.csv"))
 I_values<-read.csv(("I_values.csv"))
 Ismoments_values<-read.csv(("Ismoments_values.csv"))
 #Then, start the Monte Simulation
-batch1=1
-batchnumber=1
+
 simulatedbatch_bias_Monte<-foreach(batchnumber =c((1:length(allkurtWeibull))), .combine = 'rbind') %dopar% {
   library(Rfast)
   library(matrixStats)
