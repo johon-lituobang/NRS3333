@@ -419,7 +419,7 @@ simulatedbatch_ABSE<-foreach(batchnumber =c((1:length(allkurtWeibull))), .combin
   
   skew_SE1<-skewsd_unscaled1
   
-  skew_SEbatachesskewprocess<-(t(t(SEbataches[1:batchsize,5915:6959])/ratioskew1))
+  skew_SEbatachesskewprocess<-(t(t(SEbataches[1:batchsize,5915:6959])/ratio_skew1))
   skewsd1<-apply(skew_SEbatachesskewprocess, 2, unbiasedsd)
   skew_SSE1<-skewsd1
   
@@ -429,7 +429,7 @@ simulatedbatch_ABSE<-foreach(batchnumber =c((1:length(allkurtWeibull))), .combin
   
   kurt_SE1<-kurtsd_unscaled1
   
-  kurt_SEbatacheskurtprocess<-(t(t(SEbataches[1:batchsize,5612:7692])/ratiokurt1))
+  kurt_SEbatacheskurtprocess<-(t(t(SEbataches[1:batchsize,5612:7692])/ratio_kurt1))
   kurtsd1<-apply(kurt_SEbatacheskurtprocess, 2, unbiasedsd)
   kurt_SSE1<-kurtsd1
   
@@ -441,10 +441,10 @@ simulatedbatch_ABSE<-foreach(batchnumber =c((1:length(allkurtWeibull))), .combin
                   tmsd_unscaled1=tmsd_unscaled1,SEbatachesmean[1],fmsd_unscaled1=fmsd_unscaled1,SEbatachesmean[1],skew_SE1=skew_SE1,SEbatachesmean[1],kurt_SE1=kurt_SE1
   )
   allSSE<-c(SEbatachesmean[1],mean_SSE1=mean_SSE1,SEbatachesmean[1],var_SSE1=var_SSE1,SEbatachesmean[1],
-            tm_SSE1=tm_SSE1,SEbatachesmean[1],fm_SSE1=fm_SSE1,SEbatachesmean[1],skew_SSE1,SEbatachesmean[1],kurt_SSE1
+            tm_SSE1=tm_SSE1,SEbatachesmean[1],fm_SSE1=fm_SSE1,SEbatachesmean[1],skew_SSE1=skew_SSE1,SEbatachesmean[1],kurt_SSE1=kurt_SSE1
   )
   allSSE_unstand<-c(SEbatachesmean[1],meansd1=meansd1,SEbatachesmean[1],varsd1=varsd1,SEbatachesmean[1],
-                    tmsd1=tmsd1,SEbatachesmean[1],fmsd1=fmsd1,SEbatachesmean[1],skew_SSE1,SEbatachesmean[1],kurt_SSE1
+                    tmsd1=tmsd1,SEbatachesmean[1],fmsd1=fmsd1,SEbatachesmean[1],skew_SSE1=skew_SSE1,SEbatachesmean[1],kurt_SSE1=kurt_SSE1
   )
   
   allErrors<-c(samplesize=samplesize,kurt=SEbatachesmean[1],skew=SEbatachesmean[2],RMSE1_mean=RMSE1_mean,RMSE1_var=RMSE1_var,RMSE1_tm=RMSE1_tm,RMSE1_fm=RMSE1_fm,AB1_mean=AB1_mean,AB1_var=AB1_var,AB1_tm=AB1_tm,AB1_fm=AB1_fm,allSE=allSE,allSSE=allSSE,allSE_unstan=allSE_unstan,allSSE_unstand=allSSE_unstand,SEbatachesmean=SEbatachesmean)
