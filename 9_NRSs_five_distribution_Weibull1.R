@@ -205,7 +205,7 @@ quasiuni_sorted4 <- na.omit(rowSort(quasiuni, descend = FALSE, stable = FALSE, p
 
 largesize1<-13824*2
 samplesize=576*9
-batchsizebase=10
+batchsizebase=1000
 orderlist1_AB20<-createorderlist(quni1=quasiuni_sorted2,size=samplesize,interval=8,dimension=2)
 orderlist1_AB20<-orderlist1_AB20[1:largesize1,]
 orderlist1_AB30<-createorderlist(quni1=quasiuni_sorted3,size=samplesize,interval=8,dimension=3)
