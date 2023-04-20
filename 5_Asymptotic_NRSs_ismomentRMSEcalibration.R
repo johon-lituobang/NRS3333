@@ -95,11 +95,11 @@ simulatedbatch_bias_Monte<-foreach(batchnumber =c((1:length(allkurtWeibull))), .
   targetfm<-((sqrt(gamma(1+2/(a/1))-(gamma(((1+1/(a/1)))))^2))^4)*(gamma(1+4/(a/1))-4*(gamma(1+3/(a/1)))*((gamma(1+1/(a/1))))+6*(gamma(1+2/(a/1)))*((gamma(1+1/(a/1)))^2)-3*((gamma(1+1/(a/1)))^4))/(((gamma(1+2/(a/1))-(gamma(((1+1/(a/1)))))^2))^(2))
   kurtx<-c(kurtx=targetfm/(targetvar^(4/2)))
   skewx<-c(skewx=targettm/(targetvar^(3/2)))
-  SEbataches<- read.csv(paste("asymptotic_Weibull_Icalibration_raw",samplesize,round(kurtx,digits = 1),".csv", sep = ","))
+  RMSEbataches<- read.csv(paste("asymptotic_Weibull_Icalibration_raw",samplesize,round(kurtx,digits = 1),".csv", sep = ","))
   
-  SEbataches2<-c()
+  RMSEbataches2<-c()
   for (batch1 in c(1:batchsize)){
-    iall11<-SEbataches[batch1,]
+    iall11<-RMSEbataches[batch1,]
     
     x<-c(dsWeibull(uni=unibatch[,batch1], shape=a/1, scale = 1))
     sortedx<-Sort(x,descending=FALSE,partial=NULL,stable=FALSE,na.last=NULL)
@@ -114,16 +114,16 @@ simulatedbatch_bias_Monte<-foreach(batchnumber =c((1:length(allkurtWeibull))), .
     
     all1<-(c(rqmomentselect1,targetall,standardizedmomentsx))
     
-    SEbataches2<-rbind(SEbataches2,all1)
+    RMSEbataches2<-rbind(RMSEbataches2,all1)
   }
   
-  write.csv(SEbataches2,paste("asymptotic_Weibull_Ismomentscalibration_raw",samplesize,round(kurtx,digits = 1),".csv", sep = ","), row.names = FALSE)
+  write.csv(RMSEbataches2,paste("asymptotic_Weibull_Ismomentscalibration_raw",samplesize,round(kurtx,digits = 1),".csv", sep = ","), row.names = FALSE)
   
-  SEbatachesmean <-apply(SEbataches2, 2, calculate_column_mean)
+  SEbatachesmean <-apply(RMSEbataches2, 2, calculate_column_mean)
   
-  ikurt2<-sqrt(colMeans((SEbataches2[1:batchsize,c(1,3)]-kurtx)^2))
+  ikurt2<-sqrt(colMeans((RMSEbataches2[1:batchsize,c(1,3)]-kurtx)^2))
   
-  iskew2<-sqrt(colMeans((SEbataches2[1:batchsize,c(2,4)]-skewx)^2))
+  iskew2<-sqrt(colMeans((RMSEbataches2[1:batchsize,c(2,4)]-skewx)^2))
   
   rankikurt2<-rank(ikurt2)
   rankiskew2<-rank(iskew2)
