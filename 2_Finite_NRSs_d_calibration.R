@@ -28,11 +28,11 @@ registerDoParallel(cl) # Register the parallel backend
 
 
 #bootsize for bootstrap approximation of the distributions of the kernal of U-statistics.
-n <- 32768*3
+n <- 13824*2*3
 (n%%10)==0
 # maximum order of moments
 morder <- 4
-largesize<-32768
+largesize<-13824*2
 #generate quasirandom numbers based on the Sobol sequence
 quasiunisobol<-sobol(n=n, dim = morder, init = TRUE, scrambling = 0, seed = NULL, normal = FALSE,
                      mixed = FALSE, method = "C", start = 1)
@@ -47,7 +47,7 @@ quasiuni_sorted4 <- na.omit(rowSort(quasiuni, descend = FALSE, stable = FALSE, p
 
 #the function, createorderlist, can transform the Sobol sequence into non-repeated integer sequences.
 
-samplesize=1024*5
+samplesize=576*9
 
 #the samplesize is the maximum value of this integer sequence
 orderlist1_AB20<-createorderlist(quni1=quasiuni_sorted2,size=samplesize,interval=8,dimension=2)
