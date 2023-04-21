@@ -422,13 +422,13 @@ simulatedbatch_ABSE<-foreach(batchnumber =c((1:length(allkurtWeibull))), .combin
   skewsd1<-apply(skew_SEbatachesskewprocess, 2, unbiasedsd)
   skew_SSE1<-skewsd1
   
-  ratio_kurt1<-SEbatachesmean[5612:7692]/SEbatachesmean[7692]
+  ratio_kurt1<-SEbatachesmean[6960:7692]/SEbatachesmean[7692]
   
-  kurtsd_unscaled1<-apply((SEbataches[1:batchsize,5612:7692]), 2, unbiasedsd)
+  kurtsd_unscaled1<-apply((SEbataches[1:batchsize,6960:7692]), 2, unbiasedsd)
   
   kurt_SE1<-kurtsd_unscaled1
   
-  kurt_SEbatacheskurtprocess<-(t(t(SEbataches[1:batchsize,5612:7692])/ratio_kurt1))
+  kurt_SEbatacheskurtprocess<-(t(t(SEbataches[1:batchsize,6960:7692])/ratio_kurt1))
   kurtsd1<-apply(kurt_SEbatacheskurtprocess, 2, unbiasedsd)
   kurt_SSE1<-kurtsd1
   
@@ -532,13 +532,13 @@ simulatedbatch_ABSE_SE<-foreach(batchnumber =c((1:length(allkurtWeibull))), .com
   skewsd1<-apply(skew_SEbatachesskewprocess, 2, se_mean)
   skew_SSE1<-skewsd1
   
-  ratio_kurt1<-SEbatachesmean[5612:7692]/SEbatachesmean[7692]
+  ratio_kurt1<-SEbatachesmean[6960:7692]/SEbatachesmean[7692]
   
-  kurtsd_unscaled1<-apply((SEbataches[1:batchsize,5612:7692]), 2, se_mean)
+  kurtsd_unscaled1<-apply((SEbataches[1:batchsize,6960:7692]), 2, se_mean)
   
   kurt_SE1<-kurtsd_unscaled1
   
-  kurt_SEbatacheskurtprocess<-(t(t(SEbataches[1:batchsize,5612:7692])/ratio_kurt1))
+  kurt_SEbatacheskurtprocess<-(t(t(SEbataches[1:batchsize,6960:7692])/ratio_kurt1))
   kurtsd1<-apply(kurt_SEbatacheskurtprocess, 2, se_mean)
   kurt_SSE1<-kurtsd1
   
@@ -767,13 +767,13 @@ simulatedbatch_bias_Monte<-foreach(batchnumber =c((1:100)), .combine = 'rbind') 
   skewsd1<-apply(skew_SEbatachesskewprocess, 2, unbiasedsd)
   skew_SSE1<-skewsd1
   
-  ratio_kurt1<-SEbatachesmean[5612:7692]/SEbatachesmean[7692]
+  ratio_kurt1<-SEbatachesmean[6960:7692]/SEbatachesmean[7692]
   
-  kurtsd_unscaled1<-apply((SEbataches[1:batchsize,5612:7692]), 2, unbiasedsd)
+  kurtsd_unscaled1<-apply((SEbataches[1:batchsize,6960:7692]), 2, unbiasedsd)
   
   kurt_SE1<-kurtsd_unscaled1
   
-  kurt_SEbatacheskurtprocess<-(t(t(SEbataches[1:batchsize,5612:7692])/ratio_kurt1))
+  kurt_SEbatacheskurtprocess<-(t(t(SEbataches[1:batchsize,6960:7692])/ratio_kurt1))
   kurtsd1<-apply(kurt_SEbatacheskurtprocess, 2, unbiasedsd)
   kurt_SSE1<-kurtsd1
   
@@ -870,13 +870,13 @@ simulatedbatch_bias_Monte_SE<-foreach(batchnumber =c((1:100)), .combine = 'rbind
   skewsd1<-apply(skew_SEbatachesskewprocess, 2, se_mean)
   skew_SSE1<-skewsd1
   
-  ratio_kurt1<-SEbatachesmean[5612:7692]/SEbatachesmean[7692]
+  ratio_kurt1<-SEbatachesmean[6960:7692]/SEbatachesmean[7692]
   
-  kurtsd_unscaled1<-apply((SEbataches[1:batchsize,5612:7692]), 2, se_mean)
+  kurtsd_unscaled1<-apply((SEbataches[1:batchsize,6960:7692]), 2, se_mean)
   
   kurt_SE1<-kurtsd_unscaled1
   
-  kurt_SEbatacheskurtprocess<-(t(t(SEbataches[1:batchsize,5612:7692])/ratio_kurt1))
+  kurt_SEbatacheskurtprocess<-(t(t(SEbataches[1:batchsize,6960:7692])/ratio_kurt1))
   kurtsd1<-apply(kurt_SEbatacheskurtprocess, 2, se_mean)
   kurt_SSE1<-kurtsd1
   
@@ -1168,13 +1168,13 @@ simulatedbatch_ABSE<-foreach(batchnumber =c((1:length(allkurtgamma))), .combine 
   skewsd1<-apply(skew_SEbatachesskewprocess, 2, unbiasedsd)
   skew_SSE1<-skewsd1
   
-  ratio_kurt1<-SEbatachesmean[5612:7692]/SEbatachesmean[7692]
+  ratio_kurt1<-SEbatachesmean[6960:7692]/SEbatachesmean[7692]
   
-  kurtsd_unscaled1<-apply((SEbataches[1:batchsize,5612:7692]), 2, unbiasedsd)
+  kurtsd_unscaled1<-apply((SEbataches[1:batchsize,6960:7692]), 2, unbiasedsd)
   
   kurt_SE1<-kurtsd_unscaled1
   
-  kurt_SEbatacheskurtprocess<-(t(t(SEbataches[1:batchsize,5612:7692])/ratio_kurt1))
+  kurt_SEbatacheskurtprocess<-(t(t(SEbataches[1:batchsize,6960:7692])/ratio_kurt1))
   kurtsd1<-apply(kurt_SEbatacheskurtprocess, 2, unbiasedsd)
   kurt_SSE1<-kurtsd1
   
@@ -1277,13 +1277,13 @@ simulatedbatch_ABSE_SE<-foreach(batchnumber =c((1:length(allkurtgamma))), .combi
   skewsd1<-apply(skew_SEbatachesskewprocess, 2, se_mean)
   skew_SSE1<-skewsd1
   
-  ratio_kurt1<-SEbatachesmean[5612:7692]/SEbatachesmean[7692]
+  ratio_kurt1<-SEbatachesmean[6960:7692]/SEbatachesmean[7692]
   
-  kurtsd_unscaled1<-apply((SEbataches[1:batchsize,5612:7692]), 2, se_mean)
+  kurtsd_unscaled1<-apply((SEbataches[1:batchsize,6960:7692]), 2, se_mean)
   
   kurt_SE1<-kurtsd_unscaled1
   
-  kurt_SEbatacheskurtprocess<-(t(t(SEbataches[1:batchsize,5612:7692])/ratio_kurt1))
+  kurt_SEbatacheskurtprocess<-(t(t(SEbataches[1:batchsize,6960:7692])/ratio_kurt1))
   kurtsd1<-apply(kurt_SEbatacheskurtprocess, 2, se_mean)
   kurt_SSE1<-kurtsd1
   
@@ -1515,13 +1515,13 @@ simulatedbatch_bias_Monte<-foreach(batchnumber =c((1:100)), .combine = 'rbind') 
   skewsd1<-apply(skew_SEbatachesskewprocess, 2, unbiasedsd)
   skew_SSE1<-skewsd1
   
-  ratio_kurt1<-SEbatachesmean[5612:7692]/SEbatachesmean[7692]
+  ratio_kurt1<-SEbatachesmean[6960:7692]/SEbatachesmean[7692]
   
-  kurtsd_unscaled1<-apply((SEbataches[1:batchsize,5612:7692]), 2, unbiasedsd)
+  kurtsd_unscaled1<-apply((SEbataches[1:batchsize,6960:7692]), 2, unbiasedsd)
   
   kurt_SE1<-kurtsd_unscaled1
   
-  kurt_SEbatacheskurtprocess<-(t(t(SEbataches[1:batchsize,5612:7692])/ratio_kurt1))
+  kurt_SEbatacheskurtprocess<-(t(t(SEbataches[1:batchsize,6960:7692])/ratio_kurt1))
   kurtsd1<-apply(kurt_SEbatacheskurtprocess, 2, unbiasedsd)
   kurt_SSE1<-kurtsd1
   
@@ -1618,13 +1618,13 @@ simulatedbatch_bias_Monte_SE<-foreach(batchnumber =c((1:100)), .combine = 'rbind
   skewsd1<-apply(skew_SEbatachesskewprocess, 2, se_mean)
   skew_SSE1<-skewsd1
   
-  ratio_kurt1<-SEbatachesmean[5612:7692]/SEbatachesmean[7692]
+  ratio_kurt1<-SEbatachesmean[6960:7692]/SEbatachesmean[7692]
   
-  kurtsd_unscaled1<-apply((SEbataches[1:batchsize,5612:7692]), 2, se_mean)
+  kurtsd_unscaled1<-apply((SEbataches[1:batchsize,6960:7692]), 2, se_mean)
   
   kurt_SE1<-kurtsd_unscaled1
   
-  kurt_SEbatacheskurtprocess<-(t(t(SEbataches[1:batchsize,5612:7692])/ratio_kurt1))
+  kurt_SEbatacheskurtprocess<-(t(t(SEbataches[1:batchsize,6960:7692])/ratio_kurt1))
   kurtsd1<-apply(kurt_SEbatacheskurtprocess, 2, se_mean)
   kurt_SSE1<-kurtsd1
   
@@ -1917,13 +1917,13 @@ simulatedbatch_ABSE<-foreach(batchnumber =c((1:length(allkurtPareto))), .combine
   skewsd1<-apply(skew_SEbatachesskewprocess, 2, unbiasedsd)
   skew_SSE1<-skewsd1
   
-  ratio_kurt1<-SEbatachesmean[5612:7692]/SEbatachesmean[7692]
+  ratio_kurt1<-SEbatachesmean[6960:7692]/SEbatachesmean[7692]
   
-  kurtsd_unscaled1<-apply((SEbataches[1:batchsize,5612:7692]), 2, unbiasedsd)
+  kurtsd_unscaled1<-apply((SEbataches[1:batchsize,6960:7692]), 2, unbiasedsd)
   
   kurt_SE1<-kurtsd_unscaled1
   
-  kurt_SEbatacheskurtprocess<-(t(t(SEbataches[1:batchsize,5612:7692])/ratio_kurt1))
+  kurt_SEbatacheskurtprocess<-(t(t(SEbataches[1:batchsize,6960:7692])/ratio_kurt1))
   kurtsd1<-apply(kurt_SEbatacheskurtprocess, 2, unbiasedsd)
   kurt_SSE1<-kurtsd1
   
@@ -2028,13 +2028,13 @@ simulatedbatch_ABSE_SE<-foreach(batchnumber =c((1:length(allkurtPareto))), .comb
   skewsd1<-apply(skew_SEbatachesskewprocess, 2, se_mean)
   skew_SSE1<-skewsd1
   
-  ratio_kurt1<-SEbatachesmean[5612:7692]/SEbatachesmean[7692]
+  ratio_kurt1<-SEbatachesmean[6960:7692]/SEbatachesmean[7692]
   
-  kurtsd_unscaled1<-apply((SEbataches[1:batchsize,5612:7692]), 2, se_mean)
+  kurtsd_unscaled1<-apply((SEbataches[1:batchsize,6960:7692]), 2, se_mean)
   
   kurt_SE1<-kurtsd_unscaled1
   
-  kurt_SEbatacheskurtprocess<-(t(t(SEbataches[1:batchsize,5612:7692])/ratio_kurt1))
+  kurt_SEbatacheskurtprocess<-(t(t(SEbataches[1:batchsize,6960:7692])/ratio_kurt1))
   kurtsd1<-apply(kurt_SEbatacheskurtprocess, 2, se_mean)
   kurt_SSE1<-kurtsd1
   
@@ -2267,13 +2267,13 @@ simulatedbatch_bias_Monte<-foreach(batchnumber =c((1:100)), .combine = 'rbind') 
   skewsd1<-apply(skew_SEbatachesskewprocess, 2, unbiasedsd)
   skew_SSE1<-skewsd1
   
-  ratio_kurt1<-SEbatachesmean[5612:7692]/SEbatachesmean[7692]
+  ratio_kurt1<-SEbatachesmean[6960:7692]/SEbatachesmean[7692]
   
-  kurtsd_unscaled1<-apply((SEbataches[1:batchsize,5612:7692]), 2, unbiasedsd)
+  kurtsd_unscaled1<-apply((SEbataches[1:batchsize,6960:7692]), 2, unbiasedsd)
   
   kurt_SE1<-kurtsd_unscaled1
   
-  kurt_SEbatacheskurtprocess<-(t(t(SEbataches[1:batchsize,5612:7692])/ratio_kurt1))
+  kurt_SEbatacheskurtprocess<-(t(t(SEbataches[1:batchsize,6960:7692])/ratio_kurt1))
   kurtsd1<-apply(kurt_SEbatacheskurtprocess, 2, unbiasedsd)
   kurt_SSE1<-kurtsd1
   
@@ -2371,13 +2371,13 @@ simulatedbatch_bias_Monte_SE<-foreach(batchnumber =c((1:100)), .combine = 'rbind
   skewsd1<-apply(skew_SEbatachesskewprocess, 2, se_mean)
   skew_SSE1<-skewsd1
   
-  ratio_kurt1<-SEbatachesmean[5612:7692]/SEbatachesmean[7692]
+  ratio_kurt1<-SEbatachesmean[6960:7692]/SEbatachesmean[7692]
   
-  kurtsd_unscaled1<-apply((SEbataches[1:batchsize,5612:7692]), 2, se_mean)
+  kurtsd_unscaled1<-apply((SEbataches[1:batchsize,6960:7692]), 2, se_mean)
   
   kurt_SE1<-kurtsd_unscaled1
   
-  kurt_SEbatacheskurtprocess<-(t(t(SEbataches[1:batchsize,5612:7692])/ratio_kurt1))
+  kurt_SEbatacheskurtprocess<-(t(t(SEbataches[1:batchsize,6960:7692])/ratio_kurt1))
   kurtsd1<-apply(kurt_SEbatacheskurtprocess, 2, se_mean)
   kurt_SSE1<-kurtsd1
   
@@ -2669,13 +2669,13 @@ simulatedbatch_ABSE<-foreach(batchnumber =c((1:length(allkurtlognorm))), .combin
   skewsd1<-apply(skew_SEbatachesskewprocess, 2, unbiasedsd)
   skew_SSE1<-skewsd1
   
-  ratio_kurt1<-SEbatachesmean[5612:7692]/SEbatachesmean[7692]
+  ratio_kurt1<-SEbatachesmean[6960:7692]/SEbatachesmean[7692]
   
-  kurtsd_unscaled1<-apply((SEbataches[1:batchsize,5612:7692]), 2, unbiasedsd)
+  kurtsd_unscaled1<-apply((SEbataches[1:batchsize,6960:7692]), 2, unbiasedsd)
   
   kurt_SE1<-kurtsd_unscaled1
   
-  kurt_SEbatacheskurtprocess<-(t(t(SEbataches[1:batchsize,5612:7692])/ratio_kurt1))
+  kurt_SEbatacheskurtprocess<-(t(t(SEbataches[1:batchsize,6960:7692])/ratio_kurt1))
   kurtsd1<-apply(kurt_SEbatacheskurtprocess, 2, unbiasedsd)
   kurt_SSE1<-kurtsd1
   
@@ -2779,13 +2779,13 @@ simulatedbatch_ABSE_SE<-foreach(batchnumber =c((1:length(allkurtlognorm))), .com
   skewsd1<-apply(skew_SEbatachesskewprocess, 2, se_mean)
   skew_SSE1<-skewsd1
   
-  ratio_kurt1<-SEbatachesmean[5612:7692]/SEbatachesmean[7692]
+  ratio_kurt1<-SEbatachesmean[6960:7692]/SEbatachesmean[7692]
   
-  kurtsd_unscaled1<-apply((SEbataches[1:batchsize,5612:7692]), 2, se_mean)
+  kurtsd_unscaled1<-apply((SEbataches[1:batchsize,6960:7692]), 2, se_mean)
   
   kurt_SE1<-kurtsd_unscaled1
   
-  kurt_SEbatacheskurtprocess<-(t(t(SEbataches[1:batchsize,5612:7692])/ratio_kurt1))
+  kurt_SEbatacheskurtprocess<-(t(t(SEbataches[1:batchsize,6960:7692])/ratio_kurt1))
   kurtsd1<-apply(kurt_SEbatacheskurtprocess, 2, se_mean)
   kurt_SSE1<-kurtsd1
   
@@ -3020,13 +3020,13 @@ simulatedbatch_bias_Monte<-foreach(batchnumber =c((1:100)), .combine = 'rbind') 
   skewsd1<-apply(skew_SEbatachesskewprocess, 2, unbiasedsd)
   skew_SSE1<-skewsd1
   
-  ratio_kurt1<-SEbatachesmean[5612:7692]/SEbatachesmean[7692]
+  ratio_kurt1<-SEbatachesmean[6960:7692]/SEbatachesmean[7692]
   
-  kurtsd_unscaled1<-apply((SEbataches[1:batchsize,5612:7692]), 2, unbiasedsd)
+  kurtsd_unscaled1<-apply((SEbataches[1:batchsize,6960:7692]), 2, unbiasedsd)
   
   kurt_SE1<-kurtsd_unscaled1
   
-  kurt_SEbatacheskurtprocess<-(t(t(SEbataches[1:batchsize,5612:7692])/ratio_kurt1))
+  kurt_SEbatacheskurtprocess<-(t(t(SEbataches[1:batchsize,6960:7692])/ratio_kurt1))
   kurtsd1<-apply(kurt_SEbatacheskurtprocess, 2, unbiasedsd)
   kurt_SSE1<-kurtsd1
   
@@ -3123,13 +3123,13 @@ simulatedbatch_bias_Monte_SE<-foreach(batchnumber =c((1:100)), .combine = 'rbind
   skewsd1<-apply(skew_SEbatachesskewprocess, 2, se_mean)
   skew_SSE1<-skewsd1
   
-  ratio_kurt1<-SEbatachesmean[5612:7692]/SEbatachesmean[7692]
+  ratio_kurt1<-SEbatachesmean[6960:7692]/SEbatachesmean[7692]
   
-  kurtsd_unscaled1<-apply((SEbataches[1:batchsize,5612:7692]), 2, se_mean)
+  kurtsd_unscaled1<-apply((SEbataches[1:batchsize,6960:7692]), 2, se_mean)
   
   kurt_SE1<-kurtsd_unscaled1
   
-  kurt_SEbatacheskurtprocess<-(t(t(SEbataches[1:batchsize,5612:7692])/ratio_kurt1))
+  kurt_SEbatacheskurtprocess<-(t(t(SEbataches[1:batchsize,6960:7692])/ratio_kurt1))
   kurtsd1<-apply(kurt_SEbatacheskurtprocess, 2, se_mean)
   kurt_SSE1<-kurtsd1
   
@@ -3421,13 +3421,13 @@ simulatedbatch_ABSE<-foreach(batchnumber =c((1:length(allkurtgnorm))), .combine 
   skewsd1<-apply(skew_SEbatachesskewprocess, 2, unbiasedsd)
   skew_SSE1<-skewsd1
   
-  ratio_kurt1<-SEbatachesmean[5612:7692]/SEbatachesmean[7692]
+  ratio_kurt1<-SEbatachesmean[6960:7692]/SEbatachesmean[7692]
   
-  kurtsd_unscaled1<-apply((SEbataches[1:batchsize,5612:7692]), 2, unbiasedsd)
+  kurtsd_unscaled1<-apply((SEbataches[1:batchsize,6960:7692]), 2, unbiasedsd)
   
   kurt_SE1<-kurtsd_unscaled1
   
-  kurt_SEbatacheskurtprocess<-(t(t(SEbataches[1:batchsize,5612:7692])/ratio_kurt1))
+  kurt_SEbatacheskurtprocess<-(t(t(SEbataches[1:batchsize,6960:7692])/ratio_kurt1))
   kurtsd1<-apply(kurt_SEbatacheskurtprocess, 2, unbiasedsd)
   kurt_SSE1<-kurtsd1
   
@@ -3530,13 +3530,13 @@ simulatedbatch_ABSE_SE<-foreach(batchnumber =c((1:length(allkurtgnorm))), .combi
   skewsd1<-apply(skew_SEbatachesskewprocess, 2, se_mean)
   skew_SSE1<-skewsd1
   
-  ratio_kurt1<-SEbatachesmean[5612:7692]/SEbatachesmean[7692]
+  ratio_kurt1<-SEbatachesmean[6960:7692]/SEbatachesmean[7692]
   
-  kurtsd_unscaled1<-apply((SEbataches[1:batchsize,5612:7692]), 2, se_mean)
+  kurtsd_unscaled1<-apply((SEbataches[1:batchsize,6960:7692]), 2, se_mean)
   
   kurt_SE1<-kurtsd_unscaled1
   
-  kurt_SEbatacheskurtprocess<-(t(t(SEbataches[1:batchsize,5612:7692])/ratio_kurt1))
+  kurt_SEbatacheskurtprocess<-(t(t(SEbataches[1:batchsize,6960:7692])/ratio_kurt1))
   kurtsd1<-apply(kurt_SEbatacheskurtprocess, 2, se_mean)
   kurt_SSE1<-kurtsd1
   
@@ -3769,13 +3769,13 @@ simulatedbatch_bias_Monte<-foreach(batchnumber =c((1:100)), .combine = 'rbind') 
   skewsd1<-apply(skew_SEbatachesskewprocess, 2, unbiasedsd)
   skew_SSE1<-skewsd1
   
-  ratio_kurt1<-SEbatachesmean[5612:7692]/SEbatachesmean[7692]
+  ratio_kurt1<-SEbatachesmean[6960:7692]/SEbatachesmean[7692]
   
-  kurtsd_unscaled1<-apply((SEbataches[1:batchsize,5612:7692]), 2, unbiasedsd)
+  kurtsd_unscaled1<-apply((SEbataches[1:batchsize,6960:7692]), 2, unbiasedsd)
   
   kurt_SE1<-kurtsd_unscaled1
   
-  kurt_SEbatacheskurtprocess<-(t(t(SEbataches[1:batchsize,5612:7692])/ratio_kurt1))
+  kurt_SEbatacheskurtprocess<-(t(t(SEbataches[1:batchsize,6960:7692])/ratio_kurt1))
   kurtsd1<-apply(kurt_SEbatacheskurtprocess, 2, unbiasedsd)
   kurt_SSE1<-kurtsd1
   
@@ -3871,13 +3871,13 @@ simulatedbatch_bias_Monte_SE<-foreach(batchnumber =c((1:100)), .combine = 'rbind
   skewsd1<-apply(skew_SEbatachesskewprocess, 2, se_mean)
   skew_SSE1<-skewsd1
   
-  ratio_kurt1<-SEbatachesmean[5612:7692]/SEbatachesmean[7692]
+  ratio_kurt1<-SEbatachesmean[6960:7692]/SEbatachesmean[7692]
   
-  kurtsd_unscaled1<-apply((SEbataches[1:batchsize,5612:7692]), 2, se_mean)
+  kurtsd_unscaled1<-apply((SEbataches[1:batchsize,6960:7692]), 2, se_mean)
   
   kurt_SE1<-kurtsd_unscaled1
   
-  kurt_SEbatacheskurtprocess<-(t(t(SEbataches[1:batchsize,5612:7692])/ratio_kurt1))
+  kurt_SEbatacheskurtprocess<-(t(t(SEbataches[1:batchsize,6960:7692])/ratio_kurt1))
   kurtsd1<-apply(kurt_SEbatacheskurtprocess, 2, se_mean)
   kurt_SSE1<-kurtsd1
   
