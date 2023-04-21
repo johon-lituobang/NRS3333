@@ -26,12 +26,12 @@ cl <- makeCluster(numCores) # Create a cluster with the number of cores
 registerDoParallel(cl) # Register the parallel backend
 
 #bootsize for bootstrap approximation of the distributions of the kernal of U-statistics.
-n <- 331776*3*8
+n <- 1048576*3*2
 (n%%10)==0
 # maximum order of moments
 morder <- 4
 #large sample size (approximating asymptotic)
-largesize<-331776*8
+largesize<-1048576*2
 
 #generate quasirandom numbers based on the Sobol sequence
 quasiunisobol<-sobol(n=n, dim = morder, init = TRUE, scrambling = 0, seed = NULL, normal = FALSE,
@@ -60,12 +60,12 @@ quasiuni_sorted2<-c()
 quasiuni_sorted3<-c()
 quasiuni_sorted4<-c()
 
-asymptotic_n <- 331776*3*8
+asymptotic_n <- 1048576*3*2
 (asymptotic_n%%10)==0
 # maximum order of moments
 morder <- 6
 #large sample size (asymptotic bias)
-largesize<-331776*8
+largesize<-1048576*2
 
 #generate quasirandom numbers based on the Sobol sequence
 quasiunisobol_asymptotic<-sobol(n=asymptotic_n, dim = morder, init = TRUE, scrambling = 0, seed = NULL, normal = FALSE,
@@ -106,7 +106,7 @@ simulatedbatchWeibull_bias<-foreach(batchnumber = (1:length(allkurtWeibull)), .c
 
 write.csv(simulatedbatchWeibull_bias,paste("asymptotic_Weibull_dcalibration_raw",largesize,".csv", sep = ","), row.names = FALSE)
 
-asymptotic_d_Weibull<-simulatedbatchWeibull_bias[,c(1,2,seq(from=3, to=386, by=2))]
+asymptotic_d_Weibull<-simulatedbatchWeibull_bias[,c(1,2,seq(from=3, to=450, by=2))]
 
 write.csv(asymptotic_d_Weibull,paste("asymptotic_d_Weibull.csv", sep = ","), row.names = FALSE)
 
