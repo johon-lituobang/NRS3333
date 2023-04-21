@@ -608,7 +608,6 @@ simulatedbatch_bias_Monte<-foreach(batchnumber =c((1:100)), .combine = 'rbind') 
   orderlist1_AB40<-createorderlist(quni1=quasiuni_sorted4,size=samplesize,interval=16,dimension=4)
   orderlist1_AB40<-orderlist1_AB40[1:largesize,]
   
-  setSeed(1)
   morder=6
   quasiuni_M<-sobol(n=(largesize*3*morder), dim = morder, init = TRUE, scrambling = 0, seed = NULL, normal = FALSE,
                     mixed = FALSE, method = "C", start = 1)
@@ -618,16 +617,6 @@ simulatedbatch_bias_Monte<-foreach(batchnumber =c((1:100)), .combine = 'rbind') 
   orderlist1_hlsmall<-orderlist1_hlsmall[1:largesize,]
   orderlist1_hllarge<-createorderlist(quni1=quasiuni_M[,1:6],size=largesize,interval=8,dimension=6)
   orderlist1_hllarge<-orderlist1_hllarge[1:largesize,]
-  
-  # orderlist1_AB2<-createorderlist(quni1=quasiuni_sorted2,size=largesize,interval=16,dimension=2)
-  # orderlist1_AB2<-orderlist1_AB2[1:largesize,]
-  # orderlist1_AB3<-createorderlist(quni1=quasiuni_sorted3,size=largesize,interval=16,dimension=3)
-  # orderlist1_AB3<-orderlist1_AB3[1:largesize,]
-  # orderlist1_AB4<-createorderlist(quni1=quasiuni_sorted4,size=largesize,interval=16,dimension=4)
-  # orderlist1_AB4<-orderlist1_AB4[1:largesize,]
-  # 
-  
-  
   
   SEbataches<-c()
   for (batch1 in c(1:batchsize)){
@@ -1370,12 +1359,15 @@ simulatedbatch_bias_Monte<-foreach(batchnumber =c((1:100)), .combine = 'rbind') 
   orderlist1_AB40<-createorderlist(quni1=quasiuni_sorted4,size=samplesize,interval=16,dimension=4)
   orderlist1_AB40<-orderlist1_AB40[1:largesize,]
   
-  orderlist1_AB2<-createorderlist(quni1=quasiuni_sorted2,size=largesize,interval=16,dimension=2)
-  orderlist1_AB2<-orderlist1_AB2[1:largesize,]
-  orderlist1_AB3<-createorderlist(quni1=quasiuni_sorted3,size=largesize,interval=16,dimension=3)
-  orderlist1_AB3<-orderlist1_AB3[1:largesize,]
-  orderlist1_AB4<-createorderlist(quni1=quasiuni_sorted4,size=largesize,interval=16,dimension=4)
-  orderlist1_AB4<-orderlist1_AB4[1:largesize,]
+  morder=6
+  quasiuni_M<-sobol(n=(largesize*3*morder), dim = morder, init = TRUE, scrambling = 0, seed = NULL, normal = FALSE,
+                    mixed = FALSE, method = "C", start = 1)
+  
+  samplesize=576*9
+  orderlist1_hlsmall<-createorderlist(quni1=quasiuni_M[,1:6],size=samplesize,interval=8,dimension=6)
+  orderlist1_hlsmall<-orderlist1_hlsmall[1:largesize,]
+  orderlist1_hllarge<-createorderlist(quni1=quasiuni_M[,1:6],size=largesize,interval=8,dimension=6)
+  orderlist1_hllarge<-orderlist1_hllarge[1:largesize,]
   
   SEbataches<-c()
   for (batch1 in c(1:batchsize)){
@@ -2124,12 +2116,15 @@ simulatedbatch_bias_Monte<-foreach(batchnumber =c((1:100)), .combine = 'rbind') 
   orderlist1_AB40<-createorderlist(quni1=quasiuni_sorted4,size=samplesize,interval=16,dimension=4)
   orderlist1_AB40<-orderlist1_AB40[1:largesize,]
   
-  orderlist1_AB2<-createorderlist(quni1=quasiuni_sorted2,size=largesize,interval=16,dimension=2)
-  orderlist1_AB2<-orderlist1_AB2[1:largesize,]
-  orderlist1_AB3<-createorderlist(quni1=quasiuni_sorted3,size=largesize,interval=16,dimension=3)
-  orderlist1_AB3<-orderlist1_AB3[1:largesize,]
-  orderlist1_AB4<-createorderlist(quni1=quasiuni_sorted4,size=largesize,interval=16,dimension=4)
-  orderlist1_AB4<-orderlist1_AB4[1:largesize,]
+  morder=6
+  quasiuni_M<-sobol(n=(largesize*3*morder), dim = morder, init = TRUE, scrambling = 0, seed = NULL, normal = FALSE,
+                    mixed = FALSE, method = "C", start = 1)
+  
+  samplesize=576*9
+  orderlist1_hlsmall<-createorderlist(quni1=quasiuni_M[,1:6],size=samplesize,interval=8,dimension=6)
+  orderlist1_hlsmall<-orderlist1_hlsmall[1:largesize,]
+  orderlist1_hllarge<-createorderlist(quni1=quasiuni_M[,1:6],size=largesize,interval=8,dimension=6)
+  orderlist1_hllarge<-orderlist1_hllarge[1:largesize,]
   
   SEbataches<-c()
   for (batch1 in c(1:batchsize)){
@@ -2877,12 +2872,15 @@ simulatedbatch_bias_Monte<-foreach(batchnumber =c((1:100)), .combine = 'rbind') 
   orderlist1_AB40<-createorderlist(quni1=quasiuni_sorted4,size=samplesize,interval=16,dimension=4)
   orderlist1_AB40<-orderlist1_AB40[1:largesize,]
   
-  orderlist1_AB2<-createorderlist(quni1=quasiuni_sorted2,size=largesize,interval=16,dimension=2)
-  orderlist1_AB2<-orderlist1_AB2[1:largesize,]
-  orderlist1_AB3<-createorderlist(quni1=quasiuni_sorted3,size=largesize,interval=16,dimension=3)
-  orderlist1_AB3<-orderlist1_AB3[1:largesize,]
-  orderlist1_AB4<-createorderlist(quni1=quasiuni_sorted4,size=largesize,interval=16,dimension=4)
-  orderlist1_AB4<-orderlist1_AB4[1:largesize,]
+  morder=6
+  quasiuni_M<-sobol(n=(largesize*3*morder), dim = morder, init = TRUE, scrambling = 0, seed = NULL, normal = FALSE,
+                    mixed = FALSE, method = "C", start = 1)
+  
+  samplesize=576*9
+  orderlist1_hlsmall<-createorderlist(quni1=quasiuni_M[,1:6],size=samplesize,interval=8,dimension=6)
+  orderlist1_hlsmall<-orderlist1_hlsmall[1:largesize,]
+  orderlist1_hllarge<-createorderlist(quni1=quasiuni_M[,1:6],size=largesize,interval=8,dimension=6)
+  orderlist1_hllarge<-orderlist1_hllarge[1:largesize,]
   
   SEbataches<-c()
   for (batch1 in c(1:batchsize)){
@@ -3626,12 +3624,15 @@ simulatedbatch_bias_Monte<-foreach(batchnumber =c((1:100)), .combine = 'rbind') 
   orderlist1_AB40<-createorderlist(quni1=quasiuni_sorted4,size=samplesize,interval=16,dimension=4)
   orderlist1_AB40<-orderlist1_AB40[1:largesize,]
   
-  orderlist1_AB2<-createorderlist(quni1=quasiuni_sorted2,size=largesize,interval=16,dimension=2)
-  orderlist1_AB2<-orderlist1_AB2[1:largesize,]
-  orderlist1_AB3<-createorderlist(quni1=quasiuni_sorted3,size=largesize,interval=16,dimension=3)
-  orderlist1_AB3<-orderlist1_AB3[1:largesize,]
-  orderlist1_AB4<-createorderlist(quni1=quasiuni_sorted4,size=largesize,interval=16,dimension=4)
-  orderlist1_AB4<-orderlist1_AB4[1:largesize,]
+  morder=6
+  quasiuni_M<-sobol(n=(largesize*3*morder), dim = morder, init = TRUE, scrambling = 0, seed = NULL, normal = FALSE,
+                    mixed = FALSE, method = "C", start = 1)
+  
+  samplesize=576*9
+  orderlist1_hlsmall<-createorderlist(quni1=quasiuni_M[,1:6],size=samplesize,interval=8,dimension=6)
+  orderlist1_hlsmall<-orderlist1_hlsmall[1:largesize,]
+  orderlist1_hllarge<-createorderlist(quni1=quasiuni_M[,1:6],size=largesize,interval=8,dimension=6)
+  orderlist1_hllarge<-orderlist1_hllarge[1:largesize,]
   
   SEbataches<-c()
   for (batch1 in c(1:batchsize)){
