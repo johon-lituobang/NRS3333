@@ -96,7 +96,7 @@ Imoments_values<- read.csv(("Imoments_values.csv"))
 #set the stop criterion
 criterionset=1e-10
 
-kurtWeibull<- read.csv(("kurtWeibull_31150.csv"))
+kurtWeibull<- read.csv(("kurtWeibull_31100.csv"))
 allkurtWeibull<-unlist(kurtWeibull)
 
 
@@ -909,7 +909,7 @@ write.csv(simulatedbatch_bias_Monte_SE,paste("finite_Weibull_bootstrapsize_raw_e
 
 
 
-kurtgamma<- read.csv(("kurtgamma_31150.csv"))
+kurtgamma<- read.csv(("kurtgamma_31100.csv"))
 allkurtgamma<-unlist(kurtgamma)
 
 simulatedbatch_asymptoticbias<-foreach(batchnumber = (1:length(allkurtgamma)), .combine = 'rbind') %dopar% {
@@ -2417,7 +2417,7 @@ write.csv(simulatedbatch_bias_Monte_SE,paste("finite_Pareto_bootstrapsize_raw_er
 
 
 
-kurtlognorm<- read.csv(("kurtlognorm_31150.csv"))
+kurtlognorm<- read.csv(("kurtlognorm_31100.csv"))
 allkurtlognorm<-unlist(kurtlognorm)
 
 
@@ -3171,7 +3171,7 @@ write.csv(simulatedbatch_bias_Monte_SE,paste("finite_lognormal_bootstrapsize_raw
 
 
 
-kurtgnorm<- read.csv(("kurtgnorm_31150.csv"))
+kurtgnorm<- read.csv(("kurtgnorm_31100.csv"))
 allkurtgnorm<-unlist(kurtgnorm)
 
 
