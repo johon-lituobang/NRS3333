@@ -109,7 +109,7 @@ simulatedbatch_bias_Monte<-foreach(batchnumber =c((1:length(allkurtlognorm))), .
     targetall<-c(targetm=targetm,targetvar=targetvar,targettm=targettm,targetfm=targetfm)
     x<-c()
       
-    rqmomentselect1<-rqmoments3(x=sortedx,iall1=iall11,ismoments1=iall12,dtype1=1,releaseall=TRUE,standist_d=d_values,standist_Ismoments=Ismoments_values,orderlist1_sorted20=orderlist1_AB2,orderlist1_sorted30=orderlist1_AB3,orderlist1_sorted40=orderlist1_AB4,percentage=1/24,batch="auto",stepsize=1000,criterion=1e-10,boot=TRUE)
+    rqmomentselect1<-rqmoments3(x=sortedx,iall1=iall11,ismoments1=iall12,dtype1=1,Itype1=4,releaseall=TRUE,standist_d=d_values,standist_Ismoments=Ismoments_values,orderlist1_sorted20=orderlist1_AB2,orderlist1_sorted30=orderlist1_AB3,orderlist1_sorted40=orderlist1_AB4,percentage=1/24,batch="auto",stepsize=1000,criterion=1e-10,boot=TRUE)
     
     standardizedmomentsx<-standardizedmoments(x=sortedx)
     
@@ -137,7 +137,7 @@ simulatedbatch_bias_Monte<-foreach(batchnumber =c((1:length(allkurtlognorm))), .
   ranktm1<-rank(rqtm)
   rankfm1<-rank(rqfm)
   
-  allresultsSE<-c(samplesize=samplesize,type=1,kurtx,skewx,rankmean1,rankvar1,ranktm1,rankfm1,RMSEbatachesmean,RMSErqmean=rqmean,RMSErqvar=rqvar,RMSErqtm=rqtm,RMSErqfm=rqfm)
+  allresultsSE<-c(samplesize=samplesize,type=4,kurtx,skewx,rankmean1,rankvar1,ranktm1,rankfm1,RMSEbatachesmean,RMSErqmean=rqmean,RMSErqvar=rqvar,RMSErqtm=rqtm,RMSErqfm=rqfm)
 }
   
 
@@ -175,7 +175,7 @@ simulatedbatch_bias_Monte_SE<-foreach(batchnumber =c((1:length(allkurtlognorm)))
   
   rqfm_se<-apply((SEbataches[1:batchsize,c(167:194,359:386,551:578,743:770,935:962,1127:1154,1319:1346,1511:1538,1703:1730,1895:1922)]), 2, se_sd)
   
-  allresultsSE<-c(samplesize=samplesize,type=1,kurtx,skewx,se_mean_all1,rqmean_se,rqvar_se,rqtm_se,rqfm_se)
+  allresultsSE<-c(samplesize=samplesize,type=4,kurtx,skewx,se_mean_all1,rqmean_se,rqvar_se,rqtm_se,rqfm_se)
   
   allresultsSE
 }
