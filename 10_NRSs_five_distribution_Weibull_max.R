@@ -165,7 +165,7 @@ simulatedbatch_asymptoticbias<-foreach(batchnumber = (1:length(allkurtWeibull)),
   momentssd<-c(sd=sqrt(momentsx[2]),imoments1[3899],imoments1[3900],imoments1[3901])
 
   allrawmoBias<-c(
-    firstbias=abs(c(Huberx,SMWM9,imoments1[1],momentsx[1],imoments1[(1779):(2498)],imoments1[3699:3736],mean_medianMAD1=moments_medianMAD1[1],mean_QE1=moments_QE1[1],mean_RMLE1=moments_RMLE1[1],MoM2=MoM2,MoM3=MoM3,MoM4=MoM4,MoM5=MoM5,MoM6=MoM6,MoRMall=MoRMall)-imoments1[3699])/sqrt(targetvar),
+    firstbias=abs(c(Huberx,SMWM9,imoments1[1],momentsx[1],imoments1[(1779):(2498)],imoments1[3699:3736],mean_medianMAD1=moments_medianMAD1[1],mean_QE1=moments_QE1[1],mean_RMLE1=moments_RMLE1[1],MoM2=MoM2,MoM3=MoM3,MoM4=MoM4,MoM5=MoM5,MoM6=MoM6,MoRMall=MoRMall)-imoments1[3699])/momentssd[1],
     secondbias=abs(c(imoments1[2],momentsx[2],imoments1[2499:3018],imoments1[3773:3800],var_medianMAD1=moments_medianMAD1[2],var_QE1=moments_QE1[2],var_RMLE1=moments_RMLE1[2])-imoments1[3773])/momentssd[2],
     thirdbias=abs(c(imoments1[3],momentsx[3],imoments1[3019:3418],imoments1[3827:3848],tm_medianMAD1=moments_medianMAD1[3],tm_QE1=moments_QE1[3],tm_RMLE1=moments_RMLE1[3])-imoments1[3827])/momentssd[3],
     fourbias=abs(c(imoments1[4],momentsx[4],imoments1[3419:3698],imoments1[3869:3884],fm_medianMAD1=moments_medianMAD1[4],fm_QE1=moments_QE1[4],fm_RMLE1=moments_RMLE1[4])-imoments1[3869])/momentssd[4],
@@ -183,7 +183,7 @@ simulatedbatch_asymptoticbias<-foreach(batchnumber = (1:length(allkurtWeibull)),
   
   
   medianmoments<-c(imoments1[3706],imoments1[3780],imoments1[3834],imoments1[3875])
-  standardizedm<-c(imoments1[3706]/sqrt(targetvar),imoments1[3780]/momentssd[2],imoments1[3834]/momentssd[3],imoments1[3875]/momentssd[4])
+  standardizedm<-c(imoments1[3706]/momentssd[1],imoments1[3780]/momentssd[2],imoments1[3834]/momentssd[3],imoments1[3875]/momentssd[4])
   all1<-(c(kurtx=kurtx,skewx=skewx,momentsx,allrawmoBias,momentssd,medianmoments,standardizedm=standardizedm,allrawmo1,Huberx,SMWM9,imoments1,targetall))
 }
 
@@ -258,7 +258,7 @@ simulatedbatch_asymptoticbias<-foreach(batchnumber = (1:length(allkurtgamma)), .
   momentssd<-c(sd=sqrt(momentsx[2]),imoments1[3899],imoments1[3900],imoments1[3901])
   
   allrawmoBias<-c(
-    firstbias=abs(c(Huberx,SMWM9,imoments1[1],momentsx[1],imoments1[(1779):(2498)],imoments1[3699:3736],mean_medianMAD1=moments_medianMAD1[1],mean_QE1=moments_QE1[1],mean_RMLE1=moments_RMLE1[1],MoM2=MoM2,MoM3=MoM3,MoM4=MoM4,MoM5=MoM5,MoM6=MoM6,MoRMall=MoRMall)-imoments1[3699])/sqrt(targetvar),
+    firstbias=abs(c(Huberx,SMWM9,imoments1[1],momentsx[1],imoments1[(1779):(2498)],imoments1[3699:3736],mean_medianMAD1=moments_medianMAD1[1],mean_QE1=moments_QE1[1],mean_RMLE1=moments_RMLE1[1],MoM2=MoM2,MoM3=MoM3,MoM4=MoM4,MoM5=MoM5,MoM6=MoM6,MoRMall=MoRMall)-imoments1[3699])/momentssd[1],
     secondbias=abs(c(imoments1[2],momentsx[2],imoments1[2499:3018],imoments1[3773:3800],var_medianMAD1=moments_medianMAD1[2],var_QE1=moments_QE1[2],var_RMLE1=moments_RMLE1[2])-imoments1[3773])/momentssd[2],
     thirdbias=abs(c(imoments1[3],momentsx[3],imoments1[3019:3418],imoments1[3827:3848],tm_medianMAD1=moments_medianMAD1[3],tm_QE1=moments_QE1[3],tm_RMLE1=moments_RMLE1[3])-imoments1[3827])/momentssd[3],
     fourbias=abs(c(imoments1[4],momentsx[4],imoments1[3419:3698],imoments1[3869:3884],fm_medianMAD1=moments_medianMAD1[4],fm_QE1=moments_QE1[4],fm_RMLE1=moments_RMLE1[4])-imoments1[3869])/momentssd[4],
@@ -276,7 +276,7 @@ simulatedbatch_asymptoticbias<-foreach(batchnumber = (1:length(allkurtgamma)), .
   
   
   medianmoments<-c(imoments1[3706],imoments1[3780],imoments1[3834],imoments1[3875])
-  standardizedm<-c(imoments1[3706]/sqrt(targetvar),imoments1[3780]/momentssd[2],imoments1[3834]/momentssd[3],imoments1[3875]/momentssd[4])
+  standardizedm<-c(imoments1[3706]/momentssd[1],imoments1[3780]/momentssd[2],imoments1[3834]/momentssd[3],imoments1[3875]/momentssd[4])
   all1<-(c(kurtx=kurtx,skewx=skewx,momentsx,allrawmoBias,momentssd,medianmoments,standardizedm=standardizedm,allrawmo1,Huberx,SMWM9,imoments1,targetall))
 }
 
@@ -353,7 +353,7 @@ simulatedbatch_asymptoticbias<-foreach(batchnumber = (1:length(allkurtPareto)), 
   momentssd<-c(sd=sqrt(momentsx[2]),imoments1[3899],imoments1[3900],imoments1[3901])
   
   allrawmoBias<-c(
-    firstbias=abs(c(Huberx,SMWM9,imoments1[1],momentsx[1],imoments1[(1779):(2498)],imoments1[3699:3736],mean_medianMAD1=moments_medianMAD1[1],mean_QE1=moments_QE1[1],mean_RMLE1=moments_RMLE1[1],MoM2=MoM2,MoM3=MoM3,MoM4=MoM4,MoM5=MoM5,MoM6=MoM6,MoRMall=MoRMall)-imoments1[3699])/sqrt(targetvar),
+    firstbias=abs(c(Huberx,SMWM9,imoments1[1],momentsx[1],imoments1[(1779):(2498)],imoments1[3699:3736],mean_medianMAD1=moments_medianMAD1[1],mean_QE1=moments_QE1[1],mean_RMLE1=moments_RMLE1[1],MoM2=MoM2,MoM3=MoM3,MoM4=MoM4,MoM5=MoM5,MoM6=MoM6,MoRMall=MoRMall)-imoments1[3699])/momentssd[1],
     secondbias=abs(c(imoments1[2],momentsx[2],imoments1[2499:3018],imoments1[3773:3800],var_medianMAD1=moments_medianMAD1[2],var_QE1=moments_QE1[2],var_RMLE1=moments_RMLE1[2])-imoments1[3773])/momentssd[2],
     thirdbias=abs(c(imoments1[3],momentsx[3],imoments1[3019:3418],imoments1[3827:3848],tm_medianMAD1=moments_medianMAD1[3],tm_QE1=moments_QE1[3],tm_RMLE1=moments_RMLE1[3])-imoments1[3827])/momentssd[3],
     fourbias=abs(c(imoments1[4],momentsx[4],imoments1[3419:3698],imoments1[3869:3884],fm_medianMAD1=moments_medianMAD1[4],fm_QE1=moments_QE1[4],fm_RMLE1=moments_RMLE1[4])-imoments1[3869])/momentssd[4],
@@ -371,7 +371,7 @@ simulatedbatch_asymptoticbias<-foreach(batchnumber = (1:length(allkurtPareto)), 
   
   
   medianmoments<-c(imoments1[3706],imoments1[3780],imoments1[3834],imoments1[3875])
-  standardizedm<-c(imoments1[3706]/sqrt(targetvar),imoments1[3780]/momentssd[2],imoments1[3834]/momentssd[3],imoments1[3875]/momentssd[4])
+  standardizedm<-c(imoments1[3706]/momentssd[1],imoments1[3780]/momentssd[2],imoments1[3834]/momentssd[3],imoments1[3875]/momentssd[4])
   all1<-(c(kurtx=kurtx,skewx=skewx,momentsx,allrawmoBias,momentssd,medianmoments,standardizedm=standardizedm,allrawmo1,Huberx,SMWM9,imoments1,targetall))
 }
 
@@ -448,7 +448,7 @@ simulatedbatch_asymptoticbias<-foreach(batchnumber = (1:length(allkurtlognorm)),
   momentssd<-c(sd=sqrt(momentsx[2]),imoments1[3899],imoments1[3900],imoments1[3901])
   
   allrawmoBias<-c(
-    firstbias=abs(c(Huberx,SMWM9,imoments1[1],momentsx[1],imoments1[(1779):(2498)],imoments1[3699:3736],mean_medianMAD1=moments_medianMAD1[1],mean_QE1=moments_QE1[1],mean_RMLE1=moments_RMLE1[1],MoM2=MoM2,MoM3=MoM3,MoM4=MoM4,MoM5=MoM5,MoM6=MoM6,MoRMall=MoRMall)-imoments1[3699])/sqrt(targetvar),
+    firstbias=abs(c(Huberx,SMWM9,imoments1[1],momentsx[1],imoments1[(1779):(2498)],imoments1[3699:3736],mean_medianMAD1=moments_medianMAD1[1],mean_QE1=moments_QE1[1],mean_RMLE1=moments_RMLE1[1],MoM2=MoM2,MoM3=MoM3,MoM4=MoM4,MoM5=MoM5,MoM6=MoM6,MoRMall=MoRMall)-imoments1[3699])/momentssd[1],
     secondbias=abs(c(imoments1[2],momentsx[2],imoments1[2499:3018],imoments1[3773:3800],var_medianMAD1=moments_medianMAD1[2],var_QE1=moments_QE1[2],var_RMLE1=moments_RMLE1[2])-imoments1[3773])/momentssd[2],
     thirdbias=abs(c(imoments1[3],momentsx[3],imoments1[3019:3418],imoments1[3827:3848],tm_medianMAD1=moments_medianMAD1[3],tm_QE1=moments_QE1[3],tm_RMLE1=moments_RMLE1[3])-imoments1[3827])/momentssd[3],
     fourbias=abs(c(imoments1[4],momentsx[4],imoments1[3419:3698],imoments1[3869:3884],fm_medianMAD1=moments_medianMAD1[4],fm_QE1=moments_QE1[4],fm_RMLE1=moments_RMLE1[4])-imoments1[3869])/momentssd[4],
@@ -466,7 +466,7 @@ simulatedbatch_asymptoticbias<-foreach(batchnumber = (1:length(allkurtlognorm)),
   
   
   medianmoments<-c(imoments1[3706],imoments1[3780],imoments1[3834],imoments1[3875])
-  standardizedm<-c(imoments1[3706]/sqrt(targetvar),imoments1[3780]/momentssd[2],imoments1[3834]/momentssd[3],imoments1[3875]/momentssd[4])
+  standardizedm<-c(imoments1[3706]/momentssd[1],imoments1[3780]/momentssd[2],imoments1[3834]/momentssd[3],imoments1[3875]/momentssd[4])
   all1<-(c(kurtx=kurtx,skewx=skewx,momentsx,allrawmoBias,momentssd,medianmoments,standardizedm=standardizedm,allrawmo1,Huberx,SMWM9,imoments1,targetall))
 }
 
@@ -544,7 +544,7 @@ simulatedbatch_asymptoticbias<-foreach(batchnumber = (1:length(allkurtgnorm)), .
   momentssd<-c(sd=sqrt(momentsx[2]),imoments1[3899],imoments1[3900],imoments1[3901])
   
   allrawmoBias<-c(
-    firstbias=abs(c(Huberx,SMWM9,imoments1[1],momentsx[1],imoments1[(1779):(2498)],imoments1[3699:3736],mean_medianMAD1=moments_medianMAD1[1],mean_QE1=moments_QE1[1],mean_RMLE1=moments_RMLE1[1],MoM2=MoM2,MoM3=MoM3,MoM4=MoM4,MoM5=MoM5,MoM6=MoM6,MoRMall=MoRMall)-imoments1[3699])/sqrt(targetvar),
+    firstbias=abs(c(Huberx,SMWM9,imoments1[1],momentsx[1],imoments1[(1779):(2498)],imoments1[3699:3736],mean_medianMAD1=moments_medianMAD1[1],mean_QE1=moments_QE1[1],mean_RMLE1=moments_RMLE1[1],MoM2=MoM2,MoM3=MoM3,MoM4=MoM4,MoM5=MoM5,MoM6=MoM6,MoRMall=MoRMall)-imoments1[3699])/momentssd[1],
     secondbias=abs(c(imoments1[2],momentsx[2],imoments1[2499:3018],imoments1[3773:3800],var_medianMAD1=moments_medianMAD1[2],var_QE1=moments_QE1[2],var_RMLE1=moments_RMLE1[2])-imoments1[3773])/momentssd[2],
     thirdbias=abs(c(imoments1[3],momentsx[3],imoments1[3019:3418],imoments1[3827:3848],tm_medianMAD1=moments_medianMAD1[3],tm_QE1=moments_QE1[3],tm_RMLE1=moments_RMLE1[3])-imoments1[3827])/momentssd[3],
     fourbias=abs(c(imoments1[4],momentsx[4],imoments1[3419:3698],imoments1[3869:3884],fm_medianMAD1=moments_medianMAD1[4],fm_QE1=moments_QE1[4],fm_RMLE1=moments_RMLE1[4])-imoments1[3869])/momentssd[4],
@@ -561,7 +561,7 @@ simulatedbatch_asymptoticbias<-foreach(batchnumber = (1:length(allkurtgnorm)), .
   )
   
   medianmoments<-c(imoments1[3706],imoments1[3780],imoments1[3834],imoments1[3875])
-  standardizedm<-c(imoments1[3706]/sqrt(targetvar),imoments1[3780]/momentssd[2],imoments1[3834]/momentssd[3],imoments1[3875]/momentssd[4])
+  standardizedm<-c(imoments1[3706]/momentssd[1],imoments1[3780]/momentssd[2],imoments1[3834]/momentssd[3],imoments1[3875]/momentssd[4])
   all1<-(c(kurtx=kurtx,skewx=skewx,momentsx,allrawmoBias,momentssd,medianmoments,standardizedm=standardizedm,allrawmo1,Huberx,SMWM9,imoments1,targetall))
 }
 write.csv(simulatedbatch_asymptoticbias,paste("asymptotic_gnorm_raw_Process_max",largesize,".csv", sep = ","), row.names = FALSE)
