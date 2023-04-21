@@ -51,9 +51,6 @@ quasiuni_sorted4 <- na.omit(rowSort(quasiuni, descend = FALSE, stable = FALSE, p
 #set the stop criterion
 criterionset=1e-10
 
-kurtlognorm<- read.csv(("kurtlognorm_31180.csv"))
-allkurtlognorm<-unlist(kurtlognorm)
-
 samplesize=331776*8
 batchsizebase=100
 
@@ -96,12 +93,15 @@ orderlist1_hllarge<-orderlist1_hllarge[1:largesize,]
 #Then, start the Monte Simulation
 
 
-simulatedbatch_bias_Monte<-foreach(batchnumber =c((1:length(allkurtlognorm))), .combine = 'rbind') %dopar% {
+kurtWeibull<- read.csv(("kurtWeibull_31180.csv"))
+allkurtWeibull<-unlist(kurtWeibull)
+
+simulatedbatch_bias_Monte<-foreach(batchnumber =c((1:length(allkurtWeibull))), .combine = 'rbind') %dopar% {
   library(Rfast)
   library(matrixStats)
   library(NRSReview)
   set.seed(1)
-  a=allkurtlognorm[batchnumber]
+  a=allkurtWeibull[batchnumber]
 
   targetm<-exp((a^2)/2)
   targetvar<-(exp((a/1)^2)*(-1+exp((a/1)^2)))
@@ -128,7 +128,7 @@ simulatedbatch_bias_Monte<-foreach(batchnumber =c((1:length(allkurtlognorm))), .
     RMSEbataches<-rbind(RMSEbataches,all1)
   }
   
-  write.csv(RMSEbataches,paste("asymptotic_lognorm_Icalibration_raw",samplesize,round(kurtx,digits = 1),".csv", sep = ","), row.names = FALSE)
+  write.csv(RMSEbataches,paste("asymptotic_Weibull_Icalibration_raw",samplesize,round(kurtx,digits = 1),".csv", sep = ","), row.names = FALSE)
   RMSEbataches <- apply(RMSEbataches[1:batchsize,], 2, as.numeric)
   RMSEbatachesmean <-apply(RMSEbataches, 2, calculate_column_mean)
   
@@ -143,21 +143,21 @@ simulatedbatch_bias_Monte<-foreach(batchnumber =c((1:length(allkurtlognorm))), .
 }
 
 
-write.csv(simulatedbatch_bias_Monte,paste("asymptotic_lognorm_Icalibration_raw",largesize,".csv", sep = ","), row.names = FALSE)
+write.csv(simulatedbatch_bias_Monte,paste("asymptotic_Weibull_Icalibration_raw",largesize,".csv", sep = ","), row.names = FALSE)
 
-simulatedbatch_bias_Monte<- read.csv(paste("asymptotic_lognorm_Icalibration_raw",largesize,".csv", sep = ","))
+simulatedbatch_bias_Monte<- read.csv(paste("asymptotic_Weibull_Icalibration_raw",largesize,".csv", sep = ","))
 
 Optimum_RMSE<-simulatedbatch_bias_Monte[,1:3540]
 
-write.csv(Optimum_RMSE,paste("asymptotic_I_lognorm.csv", sep = ","), row.names = FALSE)
+write.csv(Optimum_RMSE,paste("asymptotic_I_Weibull.csv", sep = ","), row.names = FALSE)
 
-simulatedbatch_bias_Monte_SE<-foreach(batchnumber =c((1:length(allkurtlognorm))), .combine = 'rbind') %dopar% {
+simulatedbatch_bias_Monte_SE<-foreach(batchnumber =c((1:length(allkurtWeibull))), .combine = 'rbind') %dopar% {
   library(Rfast)
   library(matrixStats)
   library(NRSReview)
 
 
-  a=allkurtlognorm[batchnumber]
+  a=allkurtWeibull[batchnumber]
   
   targetm<-exp((a^2)/2)
   targetvar<-(exp((a/1)^2)*(-1+exp((a/1)^2)))
@@ -167,7 +167,7 @@ simulatedbatch_bias_Monte_SE<-foreach(batchnumber =c((1:length(allkurtlognorm)))
   skewx<-targettm/(targetvar^(3/2))
   
 
-  SEbataches<- read.csv(paste("asymptotic_lognorm_Icalibration_raw",samplesize,round(kurtx,digits = 1),".csv", sep = ","))
+  SEbataches<- read.csv(paste("asymptotic_Weibull_Icalibration_raw",samplesize,round(kurtx,digits = 1),".csv", sep = ","))
 
   se_mean_all1<-apply((SEbataches[1:batchsize,]), 2, se_mean)
   
@@ -180,12 +180,106 @@ simulatedbatch_bias_Monte_SE<-foreach(batchnumber =c((1:length(allkurtlognorm)))
   allresultsSE
 }
 
-write.csv(simulatedbatch_bias_Monte_SE,paste("asymptotic_lognorm_Icalibration_raw_error",largesize,".csv", sep = ","), row.names = FALSE)
+write.csv(simulatedbatch_bias_Monte_SE,paste("asymptotic_Weibull_Icalibration_raw_error",largesize,".csv", sep = ","), row.names = FALSE)
 
-asymptotic_I_lognorm<- read.csv(("asymptotic_I_lognorm.csv"))
+asymptotic_I_Weibull<- read.csv(("asymptotic_I_Weibull.csv"))
+
+kurtgnorm<- read.csv(("kurtgnorm_31180.csv"))
+allkurtgnorm<-unlist(kurtgnorm)
+
+simulatedbatch_bias_Monte<-foreach(batchnumber =c((1:length(allkurtgnorm))), .combine = 'rbind') %dopar% {
+  library(Rfast)
+  library(matrixStats)
+  library(NRSReview)
+  set.seed(1)
+  a=allkurtgnorm[batchnumber]
+  
+  targetm<-exp((a^2)/2)
+  targetvar<-(exp((a/1)^2)*(-1+exp((a/1)^2)))
+  targettm<-sqrt(exp((a/1)^2)-1)*((2+exp((a/1)^2)))*((sqrt(exp((a/1)^2)*(-1+exp((a/1)^2))))^3)
+  targetfm<-((-3+exp(4*((a/1)^2))+2*exp(3*((a/1)^2))+3*exp(2*((a/1)^2))))*((sqrt(exp((a/1)^2)*(-1+exp((a/1)^2))))^4)
+  kurtx<-targetfm/(targetvar^(4/2))
+  skewx<-targettm/(targetvar^(3/2))
+  
+  RMSEbataches<-c()
+  for (batch1 in c(1:batchsize)){
+    x<-c(dslnorm(uni=unibatch[,batch1], meanlog =0, sdlog  = a/1))
+    sortedx<-Sort(x,descending=FALSE,partial=NULL,stable=FALSE,na.last=NULL)
+    targetall<-c(targetm=targetm,targetvar=targetvar,targettm=targettm,targetfm=targetfm)
+    x<-c()
+    
+    rqmoments1<-rqmoments(x=sortedx,start_kurt=kurtx,start_skew=skewx,dtype1=1,releaseall=TRUE,standist_d=d_values,orderlist1_sorted20=orderlist1_AB2,orderlist1_sorted30=orderlist1_AB3,orderlist1_sorted40=orderlist1_AB4,orderlist1_hlsmall=orderlist1_hllarge,orderlist1_hllarge=orderlist1_hllarge,percentage=1/24,batch="auto",stepsize=1000,criterion=criterionset)
+    
+    standardizedmomentsx<-standardizedmoments(x=sortedx)
+    
+    sortedx<-c()
+    
+    all1<-unlist(c(rqmoments1,targetall,standardizedmomentsx))
+    
+    RMSEbataches<-rbind(RMSEbataches,all1)
+  }
+  
+  write.csv(RMSEbataches,paste("asymptotic_gnorm_Icalibration_raw",samplesize,round(kurtx,digits = 1),".csv", sep = ","), row.names = FALSE)
+  RMSEbataches <- apply(RMSEbataches[1:batchsize,], 2, as.numeric)
+  RMSEbatachesmean <-apply(RMSEbataches, 2, calculate_column_mean)
+  
+  rqkurt<-sqrt(colMeans((RMSEbataches[1:batchsize,c(1:728,1961:2688)]-kurtx)^2))
+  
+  rqskew<-sqrt(colMeans((RMSEbataches[1:batchsize,c(729:1768,2689:3728)]-skewx)^2))
+  
+  rankkurtall1<-rank(rqkurt)
+  rankskewall1<-rank(rqskew)
+  
+  allresultsRMSE<-c(samplesize=samplesize,type=5,kurtx=kurtx,skewx=skewx,rankkurtall1,rankskewall1,RMSEbatachesmean,RMSErqkurt=rqkurt,RMSErqskew=rqskew)
+}
 
 
-write.csv(asymptotic_I_lognorm,paste("asymptotic_I.csv", sep = ","), row.names = FALSE)
+write.csv(simulatedbatch_bias_Monte,paste("asymptotic_gnorm_Icalibration_raw",largesize,".csv", sep = ","), row.names = FALSE)
+
+simulatedbatch_bias_Monte<- read.csv(paste("asymptotic_gnorm_Icalibration_raw",largesize,".csv", sep = ","))
+
+Optimum_RMSE<-simulatedbatch_bias_Monte[,1:3540]
+
+write.csv(Optimum_RMSE,paste("asymptotic_I_gnorm.csv", sep = ","), row.names = FALSE)
+
+simulatedbatch_bias_Monte_SE<-foreach(batchnumber =c((1:length(allkurtgnorm))), .combine = 'rbind') %dopar% {
+  library(Rfast)
+  library(matrixStats)
+  library(NRSReview)
+  
+  
+  a=allkurtgnorm[batchnumber]
+  
+  targetm<-exp((a^2)/2)
+  targetvar<-(exp((a/1)^2)*(-1+exp((a/1)^2)))
+  targettm<-sqrt(exp((a/1)^2)-1)*((2+exp((a/1)^2)))*((sqrt(exp((a/1)^2)*(-1+exp((a/1)^2))))^3)
+  targetfm<-((-3+exp(4*((a/1)^2))+2*exp(3*((a/1)^2))+3*exp(2*((a/1)^2))))*((sqrt(exp((a/1)^2)*(-1+exp((a/1)^2))))^4)
+  kurtx<-targetfm/(targetvar^(4/2))
+  skewx<-targettm/(targetvar^(3/2))
+  
+  
+  SEbataches<- read.csv(paste("asymptotic_gnorm_Icalibration_raw",samplesize,round(kurtx,digits = 1),".csv", sep = ","))
+  
+  se_mean_all1<-apply((SEbataches[1:batchsize,]), 2, se_mean)
+  
+  rqkurt_se<-apply(((SEbataches[1:batchsize,c(1:728,1961:2688)])), 2, se_sd)
+  
+  rqskew_se<-apply((SEbataches[1:batchsize,c(729:1768,2689:3728)]), 2, se_sd)
+  
+  allresultsSE<-c(samplesize=samplesize,type=5,kurtx,skewx,se_mean_all1,rqkurt_se,rqskew_se)
+  
+  allresultsSE
+}
+
+write.csv(simulatedbatch_bias_Monte_SE,paste("asymptotic_gnorm_Icalibration_raw_error",largesize,".csv", sep = ","), row.names = FALSE)
+
+asymptotic_I_gnorm<- read.csv(("asymptotic_I_gnorm.csv"))
+names(asymptotic_I_Weibull)<-NULL
+names(asymptotic_I_gnorm)<-NULL
+asymptotic_I_Weibull<-rbind(asymptotic_I_Weibull,asymptotic_I_gnorm)
+asymptotic_I_gnorm<- read.csv(("asymptotic_I_gnorm.csv"))
+names(asymptotic_I_Weibull)<-names(asymptotic_I_gnorm)
+write.csv(asymptotic_I_Weibull,paste("asymptotic_I.csv", sep = ","), row.names = FALSE)
 
 stopCluster(cl)
 registerDoSEQ()
