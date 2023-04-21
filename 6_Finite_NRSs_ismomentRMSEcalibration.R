@@ -104,7 +104,7 @@ simulatedbatch_bias_Monte<-foreach(batchnumber =c((1:length(allkurtlognorm))), .
     targetall<-c(targetm=targetm,targetvar=targetvar,targettm=targettm,targetfm=targetfm)
     x<-c()
     
-    rqmomentselect1<-rqmoments2(x=sortedx,iall1=iall11,dtype1=1,releaseall=TRUE,standist_d=d_values,standist_I=I_values,orderlist1_sorted20=orderlist1_AB20,orderlist1_sorted30=orderlist1_AB30,orderlist1_sorted40=orderlist1_AB40,percentage=1/24,batch="auto",stepsize=1000,criterion=1e-10,boot=TRUE)
+    rqmomentselect1<-rqmoments2(x=sortedx,iall1=iall11,dtype1=1,Itype1=4,releaseall=TRUE,standist_d=d_values,standist_I=I_values,orderlist1_sorted20=orderlist1_AB20,orderlist1_sorted30=orderlist1_AB30,orderlist1_sorted40=orderlist1_AB40,percentage=1/24,batch="auto",stepsize=1000,criterion=1e-10,boot=TRUE)
     
     standardizedmomentsx<-standardizedmoments(x=sortedx)
     
@@ -126,7 +126,7 @@ simulatedbatch_bias_Monte<-foreach(batchnumber =c((1:length(allkurtlognorm))), .
   rankikurt2<-rank(ikurt2)
   rankiskew2<-rank(iskew2)
   
-  allresultsSE<-c(samplesize=samplesize,type=1,kurtx,skewx,rankikurt2,rankiskew2,RMSEbatachesmean,RMSEikurt2=ikurt2,RMSEiskew2=iskew2)
+  allresultsSE<-c(samplesize=samplesize,type=4,kurtx,skewx,rankikurt2,rankiskew2,RMSEbatachesmean,RMSEikurt2=ikurt2,RMSEiskew2=iskew2)
 }
 
 write.csv(simulatedbatch_bias_Monte,paste("finite_lognorm_Ismomentscalibration_raw",samplesize,".csv", sep = ","), row.names = FALSE)
@@ -158,7 +158,7 @@ simulatedbatch_bias_Monte_SE<-foreach(batchnumber =c((1:length(allkurtlognorm)))
   
   iskew2_se<-apply((SEbataches[1:batchsize,c(2,4)]), 2, se_sd)
   
-  allresultsSE<-c(samplesize=samplesize,type=1,kurtx,skewx,se_mean_all1,ikurt2_se,iskew2_se)
+  allresultsSE<-c(samplesize=samplesize,type=4,kurtx,skewx,se_mean_all1,ikurt2_se,iskew2_se)
   
   allresultsSE
 }
