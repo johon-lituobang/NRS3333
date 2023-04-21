@@ -123,7 +123,7 @@ simulatedbatch_asymptoticbias<-foreach(batchnumber = (1:length(allkurtWeibull)),
   Huberx<-Huber_estimator(x=sortedx, tol = 1e-10)
   SMWM9<-SWA9(x=sortedx,interval=9,batch="auto",sorted=TRUE)
   
-  imoments1<-imoments(x=sortedx,dtype1=1,releaseall=TRUE,standist_d=d_values,standist_I=I_values,standist_Ismoments=Ismoments_values,standist_Imoments=Imoments_values,orderlist1_sorted20=orderlist1_AB2_asymptotic,orderlist1_sorted30=orderlist1_AB3_asymptotic,orderlist1_sorted40=orderlist1_AB4_asymptotic,orderlist1_hlsmall=orderlist1_hllarge_asymptotic,orderlist1_hllarge=orderlist1_hllarge_asymptotic,percentage=1/24,batch="auto",stepsize=1000,criterion=1e-10,boot=TRUE)
+  imoments1<-imoments(x=sortedx,dtype1=1,Itype1=4,releaseall=TRUE,standist_d=d_values,standist_I=I_values,standist_Ismoments=Ismoments_values,standist_Imoments=Imoments_values,orderlist1_sorted20=orderlist1_AB2_asymptotic,orderlist1_sorted30=orderlist1_AB3_asymptotic,orderlist1_sorted40=orderlist1_AB4_asymptotic,orderlist1_hlsmall=orderlist1_hllarge_asymptotic,orderlist1_hllarge=orderlist1_hllarge_asymptotic,percentage=1/24,batch="auto",stepsize=1000,criterion=1e-10,boot=TRUE)
   imoments1<-unlist(imoments1)
   momentsx<-standardizedmoments(x=sortedx,releaseall = TRUE)
   
@@ -282,7 +282,7 @@ simulatedbatch_ABSE<-foreach(batchnumber =c((1:length(allkurtWeibull))), .combin
     
     Huberx<-Huber_estimator(x=sortedx, tol = 1e-10)
     SMWM9<-SWA9(x=sortedx,interval=9,batch=1,sorted=TRUE)
-    imoments1<-imoments(x=sortedx,dtype1=1,releaseall=TRUE,standist_d=d_values,standist_I=I_values,standist_Ismoments=Ismoments_values,standist_Imoments=Imoments_values,orderlist1_sorted20=orderlist1_AB20,orderlist1_sorted30=orderlist1_AB30,orderlist1_sorted40=orderlist1_AB40,orderlist1_hlsmall=orderlist1_hlsmall,orderlist1_hllarge=orderlist1_hllarge,percentage=1/24,batch="auto",stepsize=1000,criterion=1e-10,boot=TRUE)
+    imoments1<-imoments(x=sortedx,dtype1=1,Itype1=4,releaseall=TRUE,standist_d=d_values,standist_I=I_values,standist_Ismoments=Ismoments_values,standist_Imoments=Imoments_values,orderlist1_sorted20=orderlist1_AB20,orderlist1_sorted30=orderlist1_AB30,orderlist1_sorted40=orderlist1_AB40,orderlist1_hlsmall=orderlist1_hlsmall,orderlist1_hllarge=orderlist1_hllarge,percentage=1/24,batch="auto",stepsize=1000,criterion=1e-10,boot=TRUE)
     imoments1<-unlist(imoments1)
     momentsx<-standardizedmoments(x=sortedx,releaseall = TRUE)
     
@@ -629,7 +629,7 @@ simulatedbatch_bias_Monte<-foreach(batchnumber =c((1:100)), .combine = 'rbind') 
     
     Huberx<-Huber_estimator(x=sortedx, tol = 1e-10)
     SMWM9<-SWA9(x=sortedx,interval=9,batch=1,sorted=TRUE)
-    imoments1<-imoments(x=sortedx,dtype1=1,releaseall=TRUE,standist_d=d_values,standist_I=I_values,standist_Ismoments=Ismoments_values,standist_Imoments=Imoments_values,orderlist1_sorted20=orderlist1_AB20,orderlist1_sorted30=orderlist1_AB30,orderlist1_sorted40=orderlist1_AB40,orderlist1_hlsmall=orderlist1_hlsmall,orderlist1_hllarge=orderlist1_hllarge,percentage=1/24,batch="auto",stepsize=1000,criterion=1e-10,boot=TRUE)
+    imoments1<-imoments(x=sortedx,dtype1=1,Itype1=4,releaseall=TRUE,standist_d=d_values,standist_I=I_values,standist_Ismoments=Ismoments_values,standist_Imoments=Imoments_values,orderlist1_sorted20=orderlist1_AB20,orderlist1_sorted30=orderlist1_AB30,orderlist1_sorted40=orderlist1_AB40,orderlist1_hlsmall=orderlist1_hlsmall,orderlist1_hllarge=orderlist1_hllarge,percentage=1/24,batch="auto",stepsize=1000,criterion=1e-10,boot=TRUE)
     imoments1<-unlist(imoments1)
     momentsx<-standardizedmoments(x=sortedx,releaseall = TRUE)
     
@@ -937,7 +937,7 @@ simulatedbatch_asymptoticbias<-foreach(batchnumber = (1:length(allkurtgamma)), .
   Huberx<-Huber_estimator(x=sortedx, tol = 1e-10)
   SMWM9<-SWA9(x=sortedx,interval=9,batch="auto",sorted=TRUE)
   
-  imoments1<-imoments(x=sortedx,dtype1=1,releaseall=TRUE,standist_d=d_values,standist_I=I_values,standist_Ismoments=Ismoments_values,standist_Imoments=Imoments_values,orderlist1_sorted20=orderlist1_AB2_asymptotic,orderlist1_sorted30=orderlist1_AB3_asymptotic,orderlist1_sorted40=orderlist1_AB4_asymptotic,orderlist1_hlsmall=orderlist1_hllarge_asymptotic,orderlist1_hllarge=orderlist1_hllarge_asymptotic,percentage=1/24,batch="auto",stepsize=1000,criterion=1e-10,boot=TRUE)
+  imoments1<-imoments(x=sortedx,dtype1=1,Itype1=4,releaseall=TRUE,standist_d=d_values,standist_I=I_values,standist_Ismoments=Ismoments_values,standist_Imoments=Imoments_values,orderlist1_sorted20=orderlist1_AB2_asymptotic,orderlist1_sorted30=orderlist1_AB3_asymptotic,orderlist1_sorted40=orderlist1_AB4_asymptotic,orderlist1_hlsmall=orderlist1_hllarge_asymptotic,orderlist1_hllarge=orderlist1_hllarge_asymptotic,percentage=1/24,batch="auto",stepsize=1000,criterion=1e-10,boot=TRUE)
   imoments1<-unlist(imoments1)
   momentsx<-standardizedmoments(x=sortedx,releaseall = TRUE)
   
@@ -1029,7 +1029,7 @@ simulatedbatch_ABSE<-foreach(batchnumber =c((1:length(allkurtgamma))), .combine 
     
     Huberx<-Huber_estimator(x=sortedx, tol = 1e-10)
     SMWM9<-SWA9(x=sortedx,interval=9,batch=1,sorted=TRUE)
-    imoments1<-imoments(x=sortedx,dtype1=1,releaseall=TRUE,standist_d=d_values,standist_I=I_values,standist_Ismoments=Ismoments_values,standist_Imoments=Imoments_values,orderlist1_sorted20=orderlist1_AB20,orderlist1_sorted30=orderlist1_AB30,orderlist1_sorted40=orderlist1_AB40,orderlist1_hlsmall=orderlist1_hlsmall,orderlist1_hllarge=orderlist1_hllarge,percentage=1/24,batch="auto",stepsize=1000,criterion=1e-10,boot=TRUE)
+    imoments1<-imoments(x=sortedx,dtype1=1,Itype1=4,releaseall=TRUE,standist_d=d_values,standist_I=I_values,standist_Ismoments=Ismoments_values,standist_Imoments=Imoments_values,orderlist1_sorted20=orderlist1_AB20,orderlist1_sorted30=orderlist1_AB30,orderlist1_sorted40=orderlist1_AB40,orderlist1_hlsmall=orderlist1_hlsmall,orderlist1_hllarge=orderlist1_hllarge,percentage=1/24,batch="auto",stepsize=1000,criterion=1e-10,boot=TRUE)
     imoments1<-unlist(imoments1)
     momentsx<-standardizedmoments(x=sortedx,releaseall = TRUE)
     
@@ -1380,7 +1380,7 @@ simulatedbatch_bias_Monte<-foreach(batchnumber =c((1:100)), .combine = 'rbind') 
     
     Huberx<-Huber_estimator(x=sortedx, tol = 1e-10)
     SMWM9<-SWA9(x=sortedx,interval=9,batch=1,sorted=TRUE)
-    imoments1<-imoments(x=sortedx,dtype1=1,releaseall=TRUE,standist_d=d_values,standist_I=I_values,standist_Ismoments=Ismoments_values,standist_Imoments=Imoments_values,orderlist1_sorted20=orderlist1_AB20,orderlist1_sorted30=orderlist1_AB30,orderlist1_sorted40=orderlist1_AB40,orderlist1_hlsmall=orderlist1_hlsmall,orderlist1_hllarge=orderlist1_hllarge,percentage=1/24,batch="auto",stepsize=1000,criterion=1e-10,boot=TRUE)
+    imoments1<-imoments(x=sortedx,dtype1=1,Itype1=4,releaseall=TRUE,standist_d=d_values,standist_I=I_values,standist_Ismoments=Ismoments_values,standist_Imoments=Imoments_values,orderlist1_sorted20=orderlist1_AB20,orderlist1_sorted30=orderlist1_AB30,orderlist1_sorted40=orderlist1_AB40,orderlist1_hlsmall=orderlist1_hlsmall,orderlist1_hllarge=orderlist1_hllarge,percentage=1/24,batch="auto",stepsize=1000,criterion=1e-10,boot=TRUE)
     imoments1<-unlist(imoments1)
     momentsx<-standardizedmoments(x=sortedx,releaseall = TRUE)
     
@@ -1689,7 +1689,7 @@ simulatedbatch_asymptoticbias<-foreach(batchnumber = (1:length(allkurtPareto)), 
   Huberx<-Huber_estimator(x=sortedx, tol = 1e-10)
   SMWM9<-SWA9(x=sortedx,interval=9,batch="auto",sorted=TRUE)
   
-  imoments1<-imoments(x=sortedx,dtype1=1,releaseall=TRUE,standist_d=d_values,standist_I=I_values,standist_Ismoments=Ismoments_values,standist_Imoments=Imoments_values,orderlist1_sorted20=orderlist1_AB2_asymptotic,orderlist1_sorted30=orderlist1_AB3_asymptotic,orderlist1_sorted40=orderlist1_AB4_asymptotic,orderlist1_hlsmall=orderlist1_hllarge_asymptotic,orderlist1_hllarge=orderlist1_hllarge_asymptotic,percentage=1/24,batch="auto",stepsize=1000,criterion=1e-10,boot=TRUE)
+  imoments1<-imoments(x=sortedx,dtype1=1,Itype1=4,releaseall=TRUE,standist_d=d_values,standist_I=I_values,standist_Ismoments=Ismoments_values,standist_Imoments=Imoments_values,orderlist1_sorted20=orderlist1_AB2_asymptotic,orderlist1_sorted30=orderlist1_AB3_asymptotic,orderlist1_sorted40=orderlist1_AB4_asymptotic,orderlist1_hlsmall=orderlist1_hllarge_asymptotic,orderlist1_hllarge=orderlist1_hllarge_asymptotic,percentage=1/24,batch="auto",stepsize=1000,criterion=1e-10,boot=TRUE)
   imoments1<-unlist(imoments1)
   momentsx<-standardizedmoments(x=sortedx,releaseall = TRUE)
   
@@ -1781,7 +1781,7 @@ simulatedbatch_ABSE<-foreach(batchnumber =c((1:length(allkurtPareto))), .combine
     
     Huberx<-Huber_estimator(x=sortedx, tol = 1e-10)
     SMWM9<-SWA9(x=sortedx,interval=9,batch=1,sorted=TRUE)
-    imoments1<-imoments(x=sortedx,dtype1=1,releaseall=TRUE,standist_d=d_values,standist_I=I_values,standist_Ismoments=Ismoments_values,standist_Imoments=Imoments_values,orderlist1_sorted20=orderlist1_AB20,orderlist1_sorted30=orderlist1_AB30,orderlist1_sorted40=orderlist1_AB40,orderlist1_hlsmall=orderlist1_hlsmall,orderlist1_hllarge=orderlist1_hllarge,percentage=1/24,batch="auto",stepsize=1000,criterion=1e-10,boot=TRUE)
+    imoments1<-imoments(x=sortedx,dtype1=1,Itype1=4,releaseall=TRUE,standist_d=d_values,standist_I=I_values,standist_Ismoments=Ismoments_values,standist_Imoments=Imoments_values,orderlist1_sorted20=orderlist1_AB20,orderlist1_sorted30=orderlist1_AB30,orderlist1_sorted40=orderlist1_AB40,orderlist1_hlsmall=orderlist1_hlsmall,orderlist1_hllarge=orderlist1_hllarge,percentage=1/24,batch="auto",stepsize=1000,criterion=1e-10,boot=TRUE)
     imoments1<-unlist(imoments1)
     momentsx<-standardizedmoments(x=sortedx,releaseall = TRUE)
     
@@ -2135,7 +2135,7 @@ simulatedbatch_bias_Monte<-foreach(batchnumber =c((1:100)), .combine = 'rbind') 
     
     Huberx<-Huber_estimator(x=sortedx, tol = 1e-10)
     SMWM9<-SWA9(x=sortedx,interval=9,batch=1,sorted=TRUE)
-    imoments1<-imoments(x=sortedx,dtype1=1,releaseall=TRUE,standist_d=d_values,standist_I=I_values,standist_Ismoments=Ismoments_values,standist_Imoments=Imoments_values,orderlist1_sorted20=orderlist1_AB20,orderlist1_sorted30=orderlist1_AB30,orderlist1_sorted40=orderlist1_AB40,orderlist1_hlsmall=orderlist1_hlsmall,orderlist1_hllarge=orderlist1_hllarge,percentage=1/24,batch="auto",stepsize=1000,criterion=1e-10,boot=TRUE)
+    imoments1<-imoments(x=sortedx,dtype1=1,Itype1=4,releaseall=TRUE,standist_d=d_values,standist_I=I_values,standist_Ismoments=Ismoments_values,standist_Imoments=Imoments_values,orderlist1_sorted20=orderlist1_AB20,orderlist1_sorted30=orderlist1_AB30,orderlist1_sorted40=orderlist1_AB40,orderlist1_hlsmall=orderlist1_hlsmall,orderlist1_hllarge=orderlist1_hllarge,percentage=1/24,batch="auto",stepsize=1000,criterion=1e-10,boot=TRUE)
     imoments1<-unlist(imoments1)
     momentsx<-standardizedmoments(x=sortedx,releaseall = TRUE)
     
@@ -2445,7 +2445,7 @@ simulatedbatch_asymptoticbias<-foreach(batchnumber = (1:length(allkurtlognorm)),
   Huberx<-Huber_estimator(x=sortedx, tol = 1e-10)
   SMWM9<-SWA9(x=sortedx,interval=9,batch="auto",sorted=TRUE)
   
-  imoments1<-imoments(x=sortedx,dtype1=1,releaseall=TRUE,standist_d=d_values,standist_I=I_values,standist_Ismoments=Ismoments_values,standist_Imoments=Imoments_values,orderlist1_sorted20=orderlist1_AB2_asymptotic,orderlist1_sorted30=orderlist1_AB3_asymptotic,orderlist1_sorted40=orderlist1_AB4_asymptotic,orderlist1_hlsmall=orderlist1_hllarge_asymptotic,orderlist1_hllarge=orderlist1_hllarge_asymptotic,percentage=1/24,batch="auto",stepsize=1000,criterion=1e-10,boot=TRUE)
+  imoments1<-imoments(x=sortedx,dtype1=1,Itype1=4,releaseall=TRUE,standist_d=d_values,standist_I=I_values,standist_Ismoments=Ismoments_values,standist_Imoments=Imoments_values,orderlist1_sorted20=orderlist1_AB2_asymptotic,orderlist1_sorted30=orderlist1_AB3_asymptotic,orderlist1_sorted40=orderlist1_AB4_asymptotic,orderlist1_hlsmall=orderlist1_hllarge_asymptotic,orderlist1_hllarge=orderlist1_hllarge_asymptotic,percentage=1/24,batch="auto",stepsize=1000,criterion=1e-10,boot=TRUE)
   imoments1<-unlist(imoments1)
   momentsx<-standardizedmoments(x=sortedx,releaseall = TRUE)
   
@@ -2536,7 +2536,7 @@ simulatedbatch_ABSE<-foreach(batchnumber =c((1:length(allkurtlognorm))), .combin
     
     Huberx<-Huber_estimator(x=sortedx, tol = 1e-10)
     SMWM9<-SWA9(x=sortedx,interval=9,batch=1,sorted=TRUE)
-    imoments1<-imoments(x=sortedx,dtype1=1,releaseall=TRUE,standist_d=d_values,standist_I=I_values,standist_Ismoments=Ismoments_values,standist_Imoments=Imoments_values,orderlist1_sorted20=orderlist1_AB20,orderlist1_sorted30=orderlist1_AB30,orderlist1_sorted40=orderlist1_AB40,orderlist1_hlsmall=orderlist1_hlsmall,orderlist1_hllarge=orderlist1_hllarge,percentage=1/24,batch="auto",stepsize=1000,criterion=1e-10,boot=TRUE)
+    imoments1<-imoments(x=sortedx,dtype1=1,Itype1=4,releaseall=TRUE,standist_d=d_values,standist_I=I_values,standist_Ismoments=Ismoments_values,standist_Imoments=Imoments_values,orderlist1_sorted20=orderlist1_AB20,orderlist1_sorted30=orderlist1_AB30,orderlist1_sorted40=orderlist1_AB40,orderlist1_hlsmall=orderlist1_hlsmall,orderlist1_hllarge=orderlist1_hllarge,percentage=1/24,batch="auto",stepsize=1000,criterion=1e-10,boot=TRUE)
     imoments1<-unlist(imoments1)
     momentsx<-standardizedmoments(x=sortedx,releaseall = TRUE)
     
@@ -2891,7 +2891,7 @@ simulatedbatch_bias_Monte<-foreach(batchnumber =c((1:100)), .combine = 'rbind') 
     
     Huberx<-Huber_estimator(x=sortedx, tol = 1e-10)
     SMWM9<-SWA9(x=sortedx,interval=9,batch=1,sorted=TRUE)
-    imoments1<-imoments(x=sortedx,dtype1=1,releaseall=TRUE,standist_d=d_values,standist_I=I_values,standist_Ismoments=Ismoments_values,standist_Imoments=Imoments_values,orderlist1_sorted20=orderlist1_AB20,orderlist1_sorted30=orderlist1_AB30,orderlist1_sorted40=orderlist1_AB40,orderlist1_hlsmall=orderlist1_hlsmall,orderlist1_hllarge=orderlist1_hllarge,percentage=1/24,batch="auto",stepsize=1000,criterion=1e-10,boot=TRUE)
+    imoments1<-imoments(x=sortedx,dtype1=1,Itype1=4,releaseall=TRUE,standist_d=d_values,standist_I=I_values,standist_Ismoments=Ismoments_values,standist_Imoments=Imoments_values,orderlist1_sorted20=orderlist1_AB20,orderlist1_sorted30=orderlist1_AB30,orderlist1_sorted40=orderlist1_AB40,orderlist1_hlsmall=orderlist1_hlsmall,orderlist1_hllarge=orderlist1_hllarge,percentage=1/24,batch="auto",stepsize=1000,criterion=1e-10,boot=TRUE)
     imoments1<-unlist(imoments1)
     momentsx<-standardizedmoments(x=sortedx,releaseall = TRUE)
     
@@ -3200,7 +3200,7 @@ simulatedbatch_asymptoticbias<-foreach(batchnumber = (1:length(allkurtgnorm)), .
   Huberx<-Huber_estimator(x=sortedx, tol = 1e-10)
   SMWM9<-SWA9(x=sortedx,interval=9,batch="auto",sorted=TRUE)
   
-  imoments1<-imoments(x=sortedx,dtype1=1,releaseall=TRUE,standist_d=d_values,standist_I=I_values,standist_Ismoments=Ismoments_values,standist_Imoments=Imoments_values,orderlist1_sorted20=orderlist1_AB2_asymptotic,orderlist1_sorted30=orderlist1_AB3_asymptotic,orderlist1_sorted40=orderlist1_AB4_asymptotic,orderlist1_hlsmall=orderlist1_hllarge_asymptotic,orderlist1_hllarge=orderlist1_hllarge_asymptotic,percentage=1/24,batch="auto",stepsize=1000,criterion=1e-10,boot=TRUE)
+  imoments1<-imoments(x=sortedx,dtype1=1,Itype1=4,releaseall=TRUE,standist_d=d_values,standist_I=I_values,standist_Ismoments=Ismoments_values,standist_Imoments=Imoments_values,orderlist1_sorted20=orderlist1_AB2_asymptotic,orderlist1_sorted30=orderlist1_AB3_asymptotic,orderlist1_sorted40=orderlist1_AB4_asymptotic,orderlist1_hlsmall=orderlist1_hllarge_asymptotic,orderlist1_hllarge=orderlist1_hllarge_asymptotic,percentage=1/24,batch="auto",stepsize=1000,criterion=1e-10,boot=TRUE)
   imoments1<-unlist(imoments1)
   momentsx<-standardizedmoments(x=sortedx,releaseall = TRUE)
   
@@ -3291,7 +3291,7 @@ simulatedbatch_ABSE<-foreach(batchnumber =c((1:length(allkurtgnorm))), .combine 
     
     Huberx<-Huber_estimator(x=sortedx, tol = 1e-10)
     SMWM9<-SWA9(x=sortedx,interval=9,batch=1,sorted=TRUE)
-    imoments1<-imoments(x=sortedx,dtype1=1,releaseall=TRUE,standist_d=d_values,standist_I=I_values,standist_Ismoments=Ismoments_values,standist_Imoments=Imoments_values,orderlist1_sorted20=orderlist1_AB20,orderlist1_sorted30=orderlist1_AB30,orderlist1_sorted40=orderlist1_AB40,orderlist1_hlsmall=orderlist1_hlsmall,orderlist1_hllarge=orderlist1_hllarge,percentage=1/24,batch="auto",stepsize=1000,criterion=1e-10,boot=TRUE)
+    imoments1<-imoments(x=sortedx,dtype1=1,Itype1=4,releaseall=TRUE,standist_d=d_values,standist_I=I_values,standist_Ismoments=Ismoments_values,standist_Imoments=Imoments_values,orderlist1_sorted20=orderlist1_AB20,orderlist1_sorted30=orderlist1_AB30,orderlist1_sorted40=orderlist1_AB40,orderlist1_hlsmall=orderlist1_hlsmall,orderlist1_hllarge=orderlist1_hllarge,percentage=1/24,batch="auto",stepsize=1000,criterion=1e-10,boot=TRUE)
     imoments1<-unlist(imoments1)
     momentsx<-standardizedmoments(x=sortedx,releaseall = TRUE)
     
@@ -3643,7 +3643,7 @@ simulatedbatch_bias_Monte<-foreach(batchnumber =c((1:100)), .combine = 'rbind') 
     
     Huberx<-Huber_estimator(x=sortedx, tol = 1e-10)
     SMWM9<-SWA9(x=sortedx,interval=9,batch=1,sorted=TRUE)
-    imoments1<-imoments(x=sortedx,dtype1=1,releaseall=TRUE,standist_d=d_values,standist_I=I_values,standist_Ismoments=Ismoments_values,standist_Imoments=Imoments_values,orderlist1_sorted20=orderlist1_AB20,orderlist1_sorted30=orderlist1_AB30,orderlist1_sorted40=orderlist1_AB40,orderlist1_hlsmall=orderlist1_hlsmall,orderlist1_hllarge=orderlist1_hllarge,percentage=1/24,batch="auto",stepsize=1000,criterion=1e-10,boot=TRUE)
+    imoments1<-imoments(x=sortedx,dtype1=1,Itype1=4,releaseall=TRUE,standist_d=d_values,standist_I=I_values,standist_Ismoments=Ismoments_values,standist_Imoments=Imoments_values,orderlist1_sorted20=orderlist1_AB20,orderlist1_sorted30=orderlist1_AB30,orderlist1_sorted40=orderlist1_AB40,orderlist1_hlsmall=orderlist1_hlsmall,orderlist1_hllarge=orderlist1_hllarge,percentage=1/24,batch="auto",stepsize=1000,criterion=1e-10,boot=TRUE)
     imoments1<-unlist(imoments1)
     momentsx<-standardizedmoments(x=sortedx,releaseall = TRUE)
     
