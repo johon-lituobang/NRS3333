@@ -51,7 +51,7 @@ quasiuni_sorted4 <- na.omit(rowSort(quasiuni, descend = FALSE, stable = FALSE, p
 #set the stop criterion
 criterionset=1e-10
 
-kurtlognorm<- read.csv(("kurtgnorm_21260.csv"))
+kurtlognorm<- read.csv(("kurtlognorm_31260.csv"))
 allkurtlognorm<-unlist(kurtlognorm)
 
 samplesize=331776*8
