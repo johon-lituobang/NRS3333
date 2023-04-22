@@ -228,7 +228,7 @@ simulatedbatch_bias_Monte<-foreach(batchnumber =c((1:length(allkurtgnorm))), .co
   rqskew<-sqrt(colMeans((RMSEbataches[1:batchsize,c(729:1768,2689:3728)]-skewx)^2))
   
   rankkurtall1<-rank(rqkurt)
-  rankskewall1<-rank(rqskew)
+  rankskewall1<-rep(1,length(rqskew))
   
   allresultsRMSE<-c(samplesize=samplesize,type=5,kurtx=kurtx,skewx=skewx,rankkurtall1,rankskewall1,RMSEbatachesmean,RMSErqkurt=rqkurt,RMSErqskew=rqskew)
 }
