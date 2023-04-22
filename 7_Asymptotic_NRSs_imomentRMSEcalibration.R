@@ -287,13 +287,6 @@ simulatedbatch_bias_Monte_SE<-foreach(batchnumber =c((1:length(allkurtgnorm))), 
 write.csv(simulatedbatch_bias_Monte_SE,paste("asymptotic_gnorm_Imomentscalibration_raw_error",largesize,".csv", sep = ","), row.names = FALSE)
 
 
-
-asymptotic_I_lognorm<- read.csv(("asymptotic_Imoments_lognorm.csv"))
-
-
-write.csv(asymptotic_I_lognorm,paste("asymptotic_Imoments.csv", sep = ","), row.names = FALSE)
-
-
 asymptotic_I_gnorm<- read.csv(("asymptotic_Imoments_gnorm.csv"))
 asymptotic_I_lognorm<- read.csv(("asymptotic_Imoments_lognorm.csv"))
 names(asymptotic_I_lognorm)<-1:ncol(asymptotic_I_lognorm)
