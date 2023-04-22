@@ -270,7 +270,7 @@ finite_I_lognorm<-( read.csv(("finite_I_lognorm.csv")))
 names(finite_I_lognorm)<-1:ncol(finite_I_lognorm)
 names(finite_I_gnorm)<-1:ncol(finite_I_lognorm)
 finite_I_lognorm<-rbind(finite_I_lognorm,finite_I_gnorm)
-finite_I_gnorm<- read.csv(("finite_I_gnorm.csv"))
+finite_I_gnorm<- read.csv(("finite_I_lognorm.csv"))
 names(finite_I_lognorm)<-names(finite_I_gnorm)
 
 asymptotic_I_lognorm<- read.csv(paste("asymptotic_I.csv", sep = ","))
