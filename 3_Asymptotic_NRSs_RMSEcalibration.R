@@ -278,7 +278,7 @@ asymptotic_I_lognorm<- read.csv(("asymptotic_I_lognorm.csv"))
 names(asymptotic_I_lognorm)<-1:ncol(asymptotic_I_lognorm)
 names(asymptotic_I_gnorm)<-1:ncol(asymptotic_I_lognorm)
 asymptotic_I_lognorm<-rbind(asymptotic_I_lognorm,asymptotic_I_gnorm)
-asymptotic_I_gnorm<- read.csv(("asymptotic_I_gnorm.csv"))
+asymptotic_I_gnorm<- read.csv(("asymptotic_I_lognorm.csv"))
 names(asymptotic_I_lognorm)<-names(asymptotic_I_gnorm)
 write.csv(asymptotic_I_lognorm,paste("asymptotic_I.csv", sep = ","), row.names = FALSE)
 
