@@ -184,7 +184,7 @@ write.csv(simulatedbatch_bias_Monte_SE,paste("asymptotic_lognorm_Icalibration_ra
 
 asymptotic_I_lognorm<- read.csv(("asymptotic_I_lognorm.csv"))
 
-kurtgnorm<- read.csv(("kurtgnorm_31180.csv"))
+kurtgnorm<- read.csv(("kurtgnorm_21180.csv"))
 allkurtgnorm<-unlist(kurtgnorm)
 
 simulatedbatch_bias_Monte<-foreach(batchnumber =c((1:length(allkurtgnorm))), .combine = 'rbind') %dopar% {
