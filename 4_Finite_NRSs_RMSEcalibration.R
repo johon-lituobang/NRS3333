@@ -175,7 +175,7 @@ simulatedbatch_bias_Monte_SE<-foreach(batchnumber =c((1:length(allkurtlognorm)))
 write.csv(simulatedbatch_bias_Monte_SE,paste("finite_lognorm_Icalibration_raw_error",samplesize,".csv", sep = ","), row.names = FALSE)
 
 
-kurtgnorm<- read.csv(("kurtgnorm_31180.csv"))
+kurtgnorm<- read.csv(("kurtgnorm_21180.csv"))
 allkurtgnorm<-unlist(kurtgnorm)
 
 simulatedbatch_bias_Monte<-foreach(batchnumber =c((1:length(allkurtgnorm))), .combine = 'rbind') %dopar% {
@@ -265,10 +265,10 @@ simulatedbatch_bias_Monte_SE<-foreach(batchnumber =c((1:length(allkurtgnorm))), 
 write.csv(simulatedbatch_bias_Monte_SE,paste("finite_gnorm_Icalibration_raw_error",samplesize,".csv", sep = ","), row.names = FALSE)
 
 
-finite_I_gnorm<- read.csv(("finite_I_gnorm.csv"))
-finite_I_lognorm<- read.csv(("finite_I_lognorm.csv"))
-names(finite_I_lognorm)<-NULL
-names(finite_I_gnorm)<-NULL
+finite_I_gnorm<-( read.csv(("finite_I_gnorm.csv")))
+finite_I_lognorm<-( read.csv(("finite_I_lognorm.csv")))
+names(finite_I_lognorm)<-1:ncol(finite_I_lognorm)
+names(finite_I_gnorm)<-1:ncol(finite_I_lognorm)
 finite_I_lognorm<-rbind(finite_I_lognorm,finite_I_gnorm)
 finite_I_gnorm<- read.csv(("finite_I_gnorm.csv"))
 names(finite_I_lognorm)<-names(finite_I_gnorm)
