@@ -104,7 +104,7 @@ simulatedbatch_bias_Monte<-foreach(batchnumber =c((1:length(allkurtlognorm))), .
     targetall<-c(targetm=targetm,targetvar=targetvar,targettm=targettm,targetfm=targetfm)
     x<-c()
     
-    rqmomentselect1<-rqmoments2(x=sortedx,iall1=iall11,dtype1=1,Itype1=4,releaseall=TRUE,standist_d=d_values,standist_I=I_values,orderlist1_sorted20=orderlist1_AB20,orderlist1_sorted30=orderlist1_AB30,orderlist1_sorted40=orderlist1_AB40,percentage=1/24,batch="auto",stepsize=1000,criterion=1e-10,boot=TRUE)
+    rqmomentselect1<-rqmoments2(x=sortedx,iall1=iall11,dtype1=1,Iskewtype1 = 4,Ikurttype1 = 4,releaseall=TRUE,standist_d=d_values,standist_I=I_values,orderlist1_sorted20=orderlist1_AB20,orderlist1_sorted30=orderlist1_AB30,orderlist1_sorted40=orderlist1_AB40,percentage=1/24,batch="auto",stepsize=1000,criterion=1e-10,boot=TRUE)
     
     standardizedmomentsx<-standardizedmoments(x=sortedx)
     
@@ -165,8 +165,110 @@ simulatedbatch_bias_Monte_SE<-foreach(batchnumber =c((1:length(allkurtlognorm)))
 
 write.csv(simulatedbatch_bias_Monte_SE,paste("finite_lognorm_Ismomentscalibration_raw_error",samplesize,".csv", sep = ","), row.names = FALSE)
 
-finite_I_lognorm<- read.csv(("finite_Ismoments_lognorm.csv"))
 
+kurtgnorm<- read.csv(("kurtgnorm_21180.csv"))
+allkurtgnorm<-unlist(kurtgnorm)
+
+
+
+simulatedbatch_bias_Monte<-foreach(batchnumber =c((1:length(allkurtgnorm))), .combine = 'rbind') %dopar% {
+  library(Rfast)
+  library(matrixStats)
+  library(NRSReview)
+  set.seed(1)
+  a=allkurtgnorm[batchnumber]
+  
+  targetm<-0
+  targetvar<-gamma(3/a)/((gamma(1/a)))
+  targettm<-0
+  targetfm<-((gamma(3/a)/((gamma(1/a))))^2)*gamma(5/a)*gamma(1/a)/((gamma(3/a))^2)
+  kurtx<-targetfm/(targetvar^(4/2))
+  skewx<-targettm/(targetvar^(3/2))
+  
+  RMSEbataches<- read.csv(paste("finite_gnorm_Icalibration_raw",samplesize,round(kurtx,digits = 1),".csv", sep = ","))
+  
+  RMSEbataches2<-c()
+  for (batch1 in c(1:batchsize)){
+    iall11<-RMSEbataches[batch1,]
+    
+    x<-c(dsgnorm(uni=unibatch[,batch1], shape=a/1, scale = 1))
+    sortedx<-Sort(x,descending=FALSE,partial=NULL,stable=FALSE,na.last=NULL)
+    targetall<-c(targetm=targetm,targetvar=targetvar,targettm=targettm,targetfm=targetfm)
+    x<-c()
+    
+    rqmomentselect1<-rqmoments2(x=sortedx,iall1=iall11,dtype1=1,Iskewtype1 = 5,Ikurttype1 = 5,releaseall=TRUE,standist_d=d_values,standist_I=I_values,orderlist1_sorted20=orderlist1_AB20,orderlist1_sorted30=orderlist1_AB30,orderlist1_sorted40=orderlist1_AB40,percentage=1/24,batch="auto",stepsize=1000,criterion=1e-10,boot=TRUE)
+    
+    standardizedmomentsx<-standardizedmoments(x=sortedx)
+    
+    sortedx<-c()
+    
+    all1<-(c(rqmomentselect1,targetall,standardizedmomentsx))
+    
+    RMSEbataches2<-rbind(RMSEbataches2,all1)
+  }
+  
+  write.csv(RMSEbataches2,paste("finite_gnorm_Ismomentscalibration_raw",samplesize,round(kurtx,digits = 1),".csv", sep = ","), row.names = FALSE)
+  
+  RMSEbatachesmean <-apply(RMSEbataches2, 2, calculate_column_mean)
+  
+  ikurt2<-sqrt(colMeans((RMSEbataches2[1:batchsize,c(1,3)]-kurtx)^2))
+  
+  iskew2<-sqrt(colMeans((RMSEbataches2[1:batchsize,c(2,4)]-skewx)^2))
+  
+  rankikurt2<-rank(ikurt2)
+  rankiskew2<-rep(1,length(iskew2))
+  
+  allresultsSE<-c(samplesize=samplesize,type=5,kurtx,skewx,rankikurt2,rankiskew2,RMSEbatachesmean,RMSEikurt2=ikurt2,RMSEiskew2=iskew2)
+}
+
+write.csv(simulatedbatch_bias_Monte,paste("finite_gnorm_Ismomentscalibration_raw",samplesize,".csv", sep = ","), row.names = FALSE)
+
+Optimum_RMSE<-simulatedbatch_bias_Monte[,1:8]
+
+write.csv(Optimum_RMSE,paste("finite_Ismoments_gnorm.csv", sep = ","), row.names = FALSE)
+
+simulatedbatch_bias_Monte_SE<-foreach(batchnumber =c((1:length(allkurtgnorm))), .combine = 'rbind') %dopar% {
+  library(Rfast)
+  library(matrixStats)
+  library(NRSReview)
+  
+  a=allkurtgnorm[batchnumber]
+  
+  targetm<-0
+  targetvar<-gamma(3/a)/((gamma(1/a)))
+  targettm<-0
+  targetfm<-((gamma(3/a)/((gamma(1/a))))^2)*gamma(5/a)*gamma(1/a)/((gamma(3/a))^2)
+  kurtx<-targetfm/(targetvar^(4/2))
+  skewx<-targettm/(targetvar^(3/2))
+  
+  
+  SEbataches<- read.csv(paste("finite_gnorm_Ismomentscalibration_raw",samplesize,round(kurtx,digits = 1),".csv", sep = ","))
+  
+  se_mean_all1<-apply((SEbataches[1:batchsize,]), 2, se_mean)
+  
+  ikurt2_se<-apply(((SEbataches[1:batchsize,c(1,3)])), 2, se_sd)
+  
+  iskew2_se<-apply((SEbataches[1:batchsize,c(2,4)]), 2, se_sd)
+  
+  allresultsSE<-c(samplesize=samplesize,type=5,kurtx,skewx,se_mean_all1,ikurt2_se,iskew2_se)
+  
+  allresultsSE
+}
+
+write.csv(simulatedbatch_bias_Monte_SE,paste("finite_gnorm_Ismomentscalibration_raw_error",samplesize,".csv", sep = ","), row.names = FALSE)
+
+
+finite_I_gnorm<-( read.csv(("finite_Ismoments_gnorm.csv")))
+finite_I_lognorm<-( read.csv(("finite_Ismoments_lognorm.csv")))
+names(finite_I_lognorm)<-1:ncol(finite_I_lognorm)
+names(finite_I_gnorm)<-1:ncol(finite_I_lognorm)
+finite_I_lognorm<-rbind(finite_I_lognorm,finite_I_gnorm)
+finite_I_gnorm<- read.csv(("finite_Ismoments_lognorm.csv"))
+names(finite_I_lognorm)<-names(finite_I_gnorm)
+
+asymptotic_I_lognorm<- read.csv(paste("asymptotic_Ismoments.csv", sep = ","))
+colnames(finite_I_lognorm)<-colnames(asymptotic_I_lognorm)
+all1<-rbind(asymptotic_I_lognorm,finite_I_lognorm)
 
 finite_I_lognorm<-data.frame(finite_I_lognorm)
 
