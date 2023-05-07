@@ -78,6 +78,13 @@ d_values<- read.csv(("d_values.csv"))
 I_values<-read.csv(("I_values.csv"))
 Ismoments_values<-read.csv(("Ismoments_values.csv"))
 #Then, start the Monte Simulation
+generate_indices <- function(start, end, step = 192,step2=71) {
+  indices <- c()
+  for (i in seq(start, end, step)) {
+    indices <- c(indices, seq(i, i + step2))
+  }
+  return(indices)
+}
 
 simulatedbatch_bias_Monte<-foreach(batchnumber =c((1:length(allkurtlognorm))), .combine = 'rbind') %dopar% {
   library(Rfast)
@@ -122,13 +129,13 @@ simulatedbatch_bias_Monte<-foreach(batchnumber =c((1:length(allkurtlognorm))), .
   
   RMSEbatachesmean <-apply(RMSEbataches3, 2, calculate_column_mean)
   
-  rqmean<-sqrt(colMeans((RMSEbataches3[1:batchsize,c(3:74,195:266,387:458,579:650,771:842,963:1034,1155:1226,1347:1418,1539:1610,1731:1802,1923:1994,2115:2186)]-targetm)^2))
+  rqmean<-sqrt(colMeans((RMSEbataches3[1:batchsize,c(generate_indices(start=3, end=192*20-1+3-27-39-1-51-1-71-1, step = 192,step2=71))]-targetm)^2))
   
-  rqvar<-sqrt(colMeans((RMSEbataches3[1:batchsize,c(75:126,267:318,459:510,651:702,843:894,1035:1086,1227:1278,1419:1470,1611:1662,1803:1854,1995:2046,2187:2238)]-targetvar)^2))
+  rqvar<-sqrt(colMeans((RMSEbataches3[1:batchsize,c(generate_indices(start=75, end=192*20-1+3-27-39-1-51-1, step = 192,step2=51))]-targetvar)^2))
   
-  rqtm<-sqrt(colMeans((RMSEbataches3[1:batchsize,c(127:166,319:358,511:550,703:742,895:934,1087:1126,1279:1318,1471:1510,1663:1702,1855:1894,2047:2086,2239:2278)]-targettm)^2))
+  rqtm<-sqrt(colMeans((RMSEbataches3[1:batchsize,c(generate_indices(start=127, end=192*20-1+3-27-39-1, step = 192,step2=39))]-targettm)^2))
   
-  rqfm<-sqrt(colMeans((RMSEbataches3[1:batchsize,c(167:194,359:386,551:578,743:770,935:962,1127:1154,1319:1346,1511:1538,1703:1730,1895:1922,2087:2114,2279:2306)]-targetfm)^2))
+  rqfm<-sqrt(colMeans((RMSEbataches3[1:batchsize,c(generate_indices(start=167, end=192*20-1+3-27, step = 192,step2=27))]-targetfm)^2))
   
   rankmean1<-rank(rqmean)
   rankvar1<-rank(rqvar)
@@ -165,13 +172,13 @@ simulatedbatch_bias_Monte_SE<-foreach(batchnumber =c((1:length(allkurtlognorm)))
   se_mean_all1<-apply((SEbataches[1:batchsize,]), 2, se_mean)
   
   
-  rqmean_se<-apply(((SEbataches[1:batchsize,c(3:74,195:266,387:458,579:650,771:842,963:1034,1155:1226,1347:1418,1539:1610,1731:1802,1923:1994,2115:2186)])), 2, se_sd)
+  rqmean_se<-apply(((SEbataches[1:batchsize,c(generate_indices(start=3, end=192*20-1+3-27-39-1-51-1-71-1, step = 192,step2=71))])), 2, se_sd)
   
-  rqvar_se<-apply((SEbataches[1:batchsize,c(75:126,267:318,459:510,651:702,843:894,1035:1086,1227:1278,1419:1470,1611:1662,1803:1854,1995:2046,2187:2238)]), 2, se_sd)
+  rqvar_se<-apply((SEbataches[1:batchsize,c(generate_indices(start=75, end=192*20-1+3-27-39-1-51-1, step = 192,step2=51))]), 2, se_sd)
   
-  rqtm_se<-apply((SEbataches[1:batchsize,c(127:166,319:358,511:550,703:742,895:934,1087:1126,1279:1318,1471:1510,1663:1702,1855:1894,2047:2086,2239:2278)]), 2, se_sd)
+  rqtm_se<-apply((SEbataches[1:batchsize,c(generate_indices(start=127, end=192*20-1+3-27-39-1, step = 192,step2=39))]), 2, se_sd)
   
-  rqfm_se<-apply((SEbataches[1:batchsize,c(167:194,359:386,551:578,743:770,935:962,1127:1154,1319:1346,1511:1538,1703:1730,1895:1922,2087:2114,2279:2306)]), 2, se_sd)
+  rqfm_se<-apply((SEbataches[1:batchsize,c(generate_indices(start=167, end=192*20-1+3-27, step = 192,step2=27))]), 2, se_sd)
   
   
   allresultsSE<-c(samplesize=samplesize,type=4,kurtx,skewx,se_mean_all1,rqmean_se,rqvar_se,rqtm_se,rqfm_se)
@@ -231,13 +238,13 @@ simulatedbatch_bias_Monte<-foreach(batchnumber =c((1:length(allkurtgnorm))), .co
   
   RMSEbatachesmean <-apply(RMSEbataches3, 2, calculate_column_mean)
   
-  rqmean<-sqrt(colMeans((RMSEbataches3[1:batchsize,c(3:74,195:266,387:458,579:650,771:842,963:1034,1155:1226,1347:1418,1539:1610,1731:1802,1923:1994,2115:2186)]-targetm)^2))
+  rqmean<-sqrt(colMeans((RMSEbataches3[1:batchsize,c(generate_indices(start=3, end=192*20-1+3-27-39-1-51-1-71-1, step = 192,step2=71))]-targetm)^2))
   
-  rqvar<-sqrt(colMeans((RMSEbataches3[1:batchsize,c(75:126,267:318,459:510,651:702,843:894,1035:1086,1227:1278,1419:1470,1611:1662,1803:1854,1995:2046,2187:2238)]-targetvar)^2))
+  rqvar<-sqrt(colMeans((RMSEbataches3[1:batchsize,c(generate_indices(start=75, end=192*20-1+3-27-39-1-51-1, step = 192,step2=51))]-targetvar)^2))
   
-  rqtm<-sqrt(colMeans((RMSEbataches3[1:batchsize,c(127:166,319:358,511:550,703:742,895:934,1087:1126,1279:1318,1471:1510,1663:1702,1855:1894,2047:2086,2239:2278)]-targettm)^2))
+  rqtm<-sqrt(colMeans((RMSEbataches3[1:batchsize,c(generate_indices(start=127, end=192*20-1+3-27-39-1, step = 192,step2=39))]-targettm)^2))
   
-  rqfm<-sqrt(colMeans((RMSEbataches3[1:batchsize,c(167:194,359:386,551:578,743:770,935:962,1127:1154,1319:1346,1511:1538,1703:1730,1895:1922,2087:2114,2279:2306)]-targetfm)^2))
+  rqfm<-sqrt(colMeans((RMSEbataches3[1:batchsize,c(generate_indices(start=167, end=192*20-1+3-27, step = 192,step2=27))]-targetfm)^2))
   
   rankmean1<-rank(rqmean)
   rankvar1<-rank(rqvar)
@@ -274,13 +281,13 @@ simulatedbatch_bias_Monte_SE<-foreach(batchnumber =c((1:length(allkurtgnorm))), 
   se_mean_all1<-apply((SEbataches[1:batchsize,]), 2, se_mean)
   
   
-  rqmean_se<-apply(((SEbataches[1:batchsize,c(3:74,195:266,387:458,579:650,771:842,963:1034,1155:1226,1347:1418,1539:1610,1731:1802,1923:1994,2115:2186)])), 2, se_sd)
+  rqmean_se<-apply(((SEbataches[1:batchsize,c(generate_indices(start=3, end=192*20-1+3-27-39-1-51-1-71-1, step = 192,step2=71))])), 2, se_sd)
   
-  rqvar_se<-apply((SEbataches[1:batchsize,c(75:126,267:318,459:510,651:702,843:894,1035:1086,1227:1278,1419:1470,1611:1662,1803:1854,1995:2046,2187:2238)]), 2, se_sd)
+  rqvar_se<-apply((SEbataches[1:batchsize,c(generate_indices(start=75, end=192*20-1+3-27-39-1-51-1, step = 192,step2=51))]), 2, se_sd)
   
-  rqtm_se<-apply((SEbataches[1:batchsize,c(127:166,319:358,511:550,703:742,895:934,1087:1126,1279:1318,1471:1510,1663:1702,1855:1894,2047:2086,2239:2278)]), 2, se_sd)
+  rqtm_se<-apply((SEbataches[1:batchsize,c(generate_indices(start=127, end=192*20-1+3-27-39-1, step = 192,step2=39))]), 2, se_sd)
   
-  rqfm_se<-apply((SEbataches[1:batchsize,c(167:194,359:386,551:578,743:770,935:962,1127:1154,1319:1346,1511:1538,1703:1730,1895:1922,2087:2114,2279:2306)]), 2, se_sd)
+  rqfm_se<-apply((SEbataches[1:batchsize,c(generate_indices(start=167, end=192*20-1+3-27, step = 192,step2=27))]), 2, se_sd)
   
   allresultsSE<-c(samplesize=samplesize,type=5,kurtx,skewx,se_mean_all1,rqmean_se,rqvar_se,rqtm_se,rqfm_se)
   
