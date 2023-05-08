@@ -148,7 +148,7 @@ simulatedbatch_bias_Monte<-foreach(batchnumber =c((1:length(allkurtlognorm))), .
 
 write.csv(simulatedbatch_bias_Monte,paste("finite_lognorm_Imomentscalibration_raw",samplesize,".csv", sep = ","), row.names = FALSE)
 
-Optimum_RMSE<-simulatedbatch_bias_Monte[,1:2308]
+Optimum_RMSE<-simulatedbatch_bias_Monte[,1:(192*20-1+5)]
 
 write.csv(Optimum_RMSE,paste("finite_Imoments_lognorm.csv", sep = ","), row.names = FALSE)
 
@@ -257,7 +257,7 @@ simulatedbatch_bias_Monte<-foreach(batchnumber =c((1:length(allkurtgnorm))), .co
 
 write.csv(simulatedbatch_bias_Monte,paste("finite_gnorm_Imomentscalibration_raw",samplesize,".csv", sep = ","), row.names = FALSE)
 
-Optimum_RMSE<-simulatedbatch_bias_Monte[,1:2308]
+Optimum_RMSE<-simulatedbatch_bias_Monte[,1:(192*20-1+5)]
 
 write.csv(Optimum_RMSE,paste("finite_Imoments_gnorm.csv", sep = ","), row.names = FALSE)
 
