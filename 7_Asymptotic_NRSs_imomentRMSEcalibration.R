@@ -81,6 +81,13 @@ d_values<- read.csv(("d_values.csv"))
 I_values<-read.csv(("I_values.csv"))
 Ismoments_values<-read.csv(("Ismoments_values.csv"))
 #Then, start the Monte Simulation
+generate_indices <- function(start, end, step = 192,step2=71) {
+  indices <- c()
+  for (i in seq(start, end, step)) {
+    indices <- c(indices, seq(i, i + step2))
+  }
+  return(indices)
+}
 
 simulatedbatch_bias_Monte<-foreach(batchnumber =c((1:length(allkurtlognorm))), .combine = 'rbind') %dopar% {
   library(Rfast)
@@ -143,7 +150,7 @@ simulatedbatch_bias_Monte<-foreach(batchnumber =c((1:length(allkurtlognorm))), .
 
 write.csv(simulatedbatch_bias_Monte,paste("asymptotic_lognorm_Imomentscalibration_raw",largesize,".csv", sep = ","), row.names = FALSE)
 
-Optimum_RMSE<-simulatedbatch_bias_Monte[,1:2308]
+Optimum_RMSE<-simulatedbatch_bias_Monte[,1:(192*20-1+5)]
 
 write.csv(Optimum_RMSE,paste("asymptotic_Imoments_lognorm.csv", sep = ","), row.names = FALSE)
 
@@ -253,7 +260,7 @@ simulatedbatch_bias_Monte<-foreach(batchnumber =c((1:length(allkurtgnorm))), .co
 
 write.csv(simulatedbatch_bias_Monte,paste("asymptotic_gnorm_Imomentscalibration_raw",largesize,".csv", sep = ","), row.names = FALSE)
 
-Optimum_RMSE<-simulatedbatch_bias_Monte[,1:2308]
+Optimum_RMSE<-simulatedbatch_bias_Monte[,1:(192*20-1+5)]
 
 write.csv(Optimum_RMSE,paste("asymptotic_Imoments_gnorm.csv", sep = ","), row.names = FALSE)
 
